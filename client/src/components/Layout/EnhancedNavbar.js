@@ -265,6 +265,12 @@ const EnhancedNavbar = ({ children }) => {
     handleNotificationClose();
   };
 
+  const handleMarkAllAsRead = () => {
+    // Mark all notifications as read
+    setNotificationCount(0);
+    handleNotificationClose();
+  };
+
   const handleLogout = () => {
     handleMenuClose();
     logout();
@@ -708,7 +714,7 @@ const EnhancedNavbar = ({ children }) => {
         )}
         
         <Divider />
-        <MenuItem onClick={handleNotificationClose}>
+        <MenuItem onClick={handleMarkAllAsRead}>
           <Typography variant="body2" color="primary" sx={{ textAlign: 'center', width: '100%' }}>
             Mark all as read
           </Typography>
