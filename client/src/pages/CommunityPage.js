@@ -43,7 +43,8 @@ import {
   Share,
   MoreVert,
   Send,
-  NavigateNext
+  NavigateNext,
+  KeyboardArrowUp
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -87,9 +88,10 @@ const CommunityPage = () => {
     const params = new URLSearchParams(location.search);
     const section = params.get('section');
     if (section) {
+      // Use a longer delay to ensure the page is fully rendered
       setTimeout(() => {
         scrollToSection(section);
-      }, 100);
+      }, 500);
     }
   }, [location.search]);
 
@@ -381,7 +383,16 @@ const CommunityPage = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Add a small delay to ensure the page is fully loaded
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Add a subtle highlight effect
+        element.style.transition = 'box-shadow 0.3s ease';
+        element.style.boxShadow = '0 0 20px rgba(25, 118, 210, 0.3)';
+        setTimeout(() => {
+          element.style.boxShadow = '';
+        }, 2000);
+      }, 200);
     }
   };
 
@@ -469,9 +480,9 @@ const CommunityPage = () => {
           <Card id="neighborhood-watch">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
                   <Security color="primary" />
-                  Neighborhood Watch
+                  🛡️ Neighborhood Watch
                 </Typography>
                 <Chip 
                   label={isJoined ? "Member" : "Join Now"} 
@@ -566,9 +577,9 @@ const CommunityPage = () => {
         <Grid item xs={12} md={4}>
           <Card id="community-events">
             <CardContent>
-              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
                 <Event color="primary" />
-                Upcoming Events
+                📅 Upcoming Events
               </Typography>
               
               {upcomingEvents.length > 0 ? (
@@ -642,9 +653,9 @@ const CommunityPage = () => {
           <Card id="community-forum">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
                   <Forum color="primary" />
-                  Community Forum
+                  💬 Community Forum
                 </Typography>
                 <Button 
                   variant="contained" 
@@ -1030,6 +1041,27 @@ const CommunityPage = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Back to Top Button */}
+      <Box sx={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          sx={{
+            borderRadius: '50%',
+            width: 56,
+            height: 56,
+            minWidth: 'auto',
+            boxShadow: 3,
+            '&:hover': {
+              boxShadow: 6,
+            }
+          }}
+        >
+          <KeyboardArrowUp />
+        </Button>
+      </Box>
     </Container>
   );
 };
