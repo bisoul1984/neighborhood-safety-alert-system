@@ -36,7 +36,13 @@ import {
   Email,
   CheckCircle,
   Add,
-  Close
+  Close,
+  Forum,
+  Comment,
+  ThumbUp,
+  Share,
+  MoreVert,
+  Send
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -66,6 +72,13 @@ const CommunityPage = () => {
     organizerPhone: ''
   });
   const [showEventSuccess, setShowEventSuccess] = useState(false);
+  const [forumDialogOpen, setForumDialogOpen] = useState(false);
+  const [newPostForm, setNewPostForm] = useState({
+    title: '',
+    content: '',
+    category: ''
+  });
+  const [showPostSuccess, setShowPostSuccess] = useState(false);
 
   // Sample community data
   const neighborhoodWatchMembers = [
@@ -131,6 +144,57 @@ const CommunityPage = () => {
       description: 'Volunteer event to clean up the neighborhood and improve safety.',
       attendees: 40,
       type: 'volunteer'
+    }
+  ];
+
+  const forumPosts = [
+    {
+      id: 1,
+      title: 'Suspicious Activity on Main Street',
+      content: 'I noticed some suspicious activity near the corner store on Main Street yesterday evening. Has anyone else seen anything unusual in that area?',
+      author: 'Sarah Johnson',
+      authorAvatar: 'S',
+      category: 'Safety Alert',
+      timestamp: '2024-02-10T14:30:00',
+      likes: 12,
+      comments: 8,
+      isLiked: false
+    },
+    {
+      id: 2,
+      title: 'Neighborhood Watch Success Story',
+      content: 'Thanks to our neighborhood watch program, we were able to prevent a potential break-in last week. The quick response from our community members made all the difference!',
+      author: 'Michael Chen',
+      authorAvatar: 'M',
+      category: 'Success Story',
+      timestamp: '2024-02-08T10:15:00',
+      likes: 25,
+      comments: 15,
+      isLiked: true
+    },
+    {
+      id: 3,
+      title: 'Community Garden Project Proposal',
+      content: 'I\'m proposing we start a community garden in the vacant lot on Oak Street. This could help bring neighbors together and improve the area. What do you think?',
+      author: 'Amina Hassan',
+      authorAvatar: 'A',
+      category: 'Community Project',
+      timestamp: '2024-02-05T16:45:00',
+      likes: 18,
+      comments: 12,
+      isLiked: false
+    },
+    {
+      id: 4,
+      title: 'Street Light Outage Report',
+      content: 'The street light on Pine Street has been out for 3 days now. I\'ve reported it to the city, but thought I should let everyone know to be extra careful when walking in that area at night.',
+      author: 'David Wilson',
+      authorAvatar: 'D',
+      category: 'Infrastructure',
+      timestamp: '2024-02-03T19:20:00',
+      likes: 9,
+      comments: 6,
+      isLiked: false
     }
   ];
 
@@ -235,6 +299,72 @@ const CommunityPage = () => {
     }));
   };
 
+  const handleForumClick = () => {
+    setForumDialogOpen(true);
+  };
+
+  const handleForumClose = () => {
+    setForumDialogOpen(false);
+    setNewPostForm({
+      title: '',
+      content: '',
+      category: ''
+    });
+  };
+
+  const handleNewPostSubmit = () => {
+    // Simulate API call
+    console.log('Creating new forum post:', newPostForm);
+    
+    // Show success message
+    setShowPostSuccess(true);
+    setForumDialogOpen(false);
+    
+    // Reset form
+    setNewPostForm({
+      title: '',
+      content: '',
+      category: ''
+    });
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setShowPostSuccess(false);
+    }, 5000);
+  };
+
+  const handlePostInputChange = (field, value) => {
+    setNewPostForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleLikePost = (postId) => {
+    // Simulate like functionality
+    console.log('Liked post:', postId);
+  };
+
+  const handleCommentPost = (postId) => {
+    // Simulate comment functionality
+    console.log('Comment on post:', postId);
+  };
+
+  const handleSharePost = (postId) => {
+    // Simulate share functionality
+    console.log('Share post:', postId);
+  };
+
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case 'Safety Alert': return 'error';
+      case 'Success Story': return 'success';
+      case 'Community Project': return 'primary';
+      case 'Infrastructure': return 'warning';
+      default: return 'default';
+    }
+  };
+
   const getEventIcon = (type) => {
     switch (type) {
       case 'meeting': return <People color="primary" />;
@@ -268,6 +398,12 @@ const CommunityPage = () => {
       {showEventSuccess && (
         <Alert severity="success" sx={{ mb: 3 }} onClose={() => setShowEventSuccess(false)}>
           🎉 Event suggestion submitted successfully! We'll review your suggestion and get back to you soon.
+        </Alert>
+      )}
+
+      {showPostSuccess && (
+        <Alert severity="success" sx={{ mb: 3 }} onClose={() => setShowPostSuccess(false)}>
+          🎉 Forum post created successfully! Your post is now visible to the community.
         </Alert>
       )}
 
@@ -439,6 +575,101 @@ const CommunityPage = () => {
               >
                 Suggest Event
               </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      {/* Community Forum Section */}
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Forum color="primary" />
+                  Community Forum
+                </Typography>
+                <Button 
+                  variant="contained" 
+                  onClick={handleForumClick}
+                  startIcon={<Add />}
+                >
+                  New Post
+                </Button>
+              </Box>
+              
+              <Typography variant="body2" color="text.secondary" paragraph>
+                Connect with your neighbors, share updates, and discuss community matters. Stay informed about what's happening in your neighborhood.
+              </Typography>
+
+              <Divider sx={{ my: 2 }} />
+
+              {/* Forum Posts */}
+              <Box>
+                {forumPosts.map((post) => (
+                  <Card key={post.id} variant="outlined" sx={{ mb: 2 }}>
+                    <CardContent>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                          <Avatar sx={{ bgcolor: 'primary.main' }}>
+                            {post.authorAvatar}
+                          </Avatar>
+                          <Box>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                              {post.title}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              by {post.author} • {new Date(post.timestamp).toLocaleDateString()}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Chip 
+                            label={post.category} 
+                            size="small" 
+                            color={getCategoryColor(post.category)}
+                            variant="outlined"
+                          />
+                          <IconButton size="small">
+                            <MoreVert />
+                          </IconButton>
+                        </Box>
+                      </Box>
+                      
+                      <Typography variant="body2" color="text.secondary" paragraph>
+                        {post.content}
+                      </Typography>
+                      
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Button
+                          size="small"
+                          startIcon={<ThumbUp />}
+                          onClick={() => handleLikePost(post.id)}
+                          color={post.isLiked ? "primary" : "inherit"}
+                          variant={post.isLiked ? "contained" : "text"}
+                        >
+                          {post.likes}
+                        </Button>
+                        <Button
+                          size="small"
+                          startIcon={<Comment />}
+                          onClick={() => handleCommentPost(post.id)}
+                        >
+                          {post.comments}
+                        </Button>
+                        <Button
+                          size="small"
+                          startIcon={<Share />}
+                          onClick={() => handleSharePost(post.id)}
+                        >
+                          Share
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
             </CardContent>
           </Card>
         </Grid>
@@ -664,6 +895,82 @@ const CommunityPage = () => {
             disabled={!suggestEventForm.title || !suggestEventForm.description || !suggestEventForm.date || !suggestEventForm.location || !suggestEventForm.type || !suggestEventForm.organizerName || !suggestEventForm.organizerEmail}
           >
             Submit Event Suggestion
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Community Forum Dialog */}
+      <Dialog open={forumDialogOpen} onClose={handleForumClose} maxWidth="md" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Forum color="primary" />
+            Create New Forum Post
+          </Typography>
+          <IconButton onClick={handleForumClose}>
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        
+        <DialogContent>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              Share updates, ask questions, or start discussions with your neighbors. Keep the community informed about what's happening in your area.
+            </Typography>
+          </Alert>
+          
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Post Title"
+                value={newPostForm.title}
+                onChange={(e) => handlePostInputChange('title', e.target.value)}
+                required
+                placeholder="What would you like to discuss?"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  value={newPostForm.category}
+                  label="Category"
+                  onChange={(e) => handlePostInputChange('category', e.target.value)}
+                  required
+                >
+                  <MenuItem value="Safety Alert">Safety Alert</MenuItem>
+                  <MenuItem value="Success Story">Success Story</MenuItem>
+                  <MenuItem value="Community Project">Community Project</MenuItem>
+                  <MenuItem value="Infrastructure">Infrastructure</MenuItem>
+                  <MenuItem value="General Discussion">General Discussion</MenuItem>
+                  <MenuItem value="Question">Question</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Post Content"
+                multiline
+                rows={6}
+                value={newPostForm.content}
+                onChange={(e) => handlePostInputChange('content', e.target.value)}
+                required
+                placeholder="Share your thoughts, updates, or questions with the community..."
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={handleForumClose}>Cancel</Button>
+          <Button 
+            onClick={handleNewPostSubmit} 
+            variant="contained"
+            startIcon={<Send />}
+            disabled={!newPostForm.title || !newPostForm.content || !newPostForm.category}
+          >
+            Create Post
           </Button>
         </DialogActions>
       </Dialog>
