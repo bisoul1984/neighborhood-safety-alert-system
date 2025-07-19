@@ -82,6 +82,7 @@ const CommunityPage = () => {
     category: ''
   });
   const [showPostSuccess, setShowPostSuccess] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   // Handle URL parameters for section scrolling
   useEffect(() => {
@@ -91,7 +92,7 @@ const CommunityPage = () => {
       // Use a longer delay to ensure the page is fully rendered
       setTimeout(() => {
         scrollToSection(section);
-      }, 500);
+      }, 800);
     }
   }, [location.search]);
 
@@ -381,18 +382,41 @@ const CommunityPage = () => {
   };
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      // Add a small delay to ensure the page is fully loaded
-      setTimeout(() => {
+    // Set active section
+    setActiveSection(sectionId);
+    
+    // Wait for the page to be fully rendered
+    const waitForElement = () => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Scroll to the element
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Add a subtle highlight effect
-        element.style.transition = 'box-shadow 0.3s ease';
-        element.style.boxShadow = '0 0 20px rgba(25, 118, 210, 0.3)';
+        
+        // Add highlight effect
+        element.style.transition = 'all 0.3s ease';
+        element.style.boxShadow = '0 0 30px rgba(25, 118, 210, 0.5)';
+        element.style.transform = 'scale(1.02)';
+        
+        // Remove highlight after 3 seconds
         setTimeout(() => {
           element.style.boxShadow = '';
-        }, 2000);
-      }, 200);
+          element.style.transform = '';
+        }, 3000);
+        
+        return true;
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (!waitForElement()) {
+      // If not found, try again after a short delay
+      setTimeout(() => {
+        if (!waitForElement()) {
+          // If still not found, try one more time with longer delay
+          setTimeout(waitForElement, 500);
+        }
+      }, 100);
     }
   };
 
@@ -480,10 +504,20 @@ const CommunityPage = () => {
           <Card id="neighborhood-watch">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
-                  <Security color="primary" />
-                  🛡️ Neighborhood Watch
-                </Typography>
+                              <Typography 
+                variant="h6" 
+                sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1, 
+                  color: activeSection === 'neighborhood-watch' ? 'secondary.main' : 'primary.main',
+                  fontWeight: activeSection === 'neighborhood-watch' ? 'bold' : 'normal'
+                }}
+              >
+                <Security color={activeSection === 'neighborhood-watch' ? 'secondary' : 'primary'} />
+                🛡️ Neighborhood Watch
+                {activeSection === 'neighborhood-watch' && ' (Active)'}
+              </Typography>
                 <Chip 
                   label={isJoined ? "Member" : "Join Now"} 
                   color={isJoined ? "success" : "primary"}
@@ -577,9 +611,20 @@ const CommunityPage = () => {
         <Grid item xs={12} md={4}>
           <Card id="community-events">
             <CardContent>
-              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
-                <Event color="primary" />
+              <Typography 
+                variant="h6" 
+                gutterBottom 
+                sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1, 
+                  color: activeSection === 'community-events' ? 'secondary.main' : 'primary.main',
+                  fontWeight: activeSection === 'community-events' ? 'bold' : 'normal'
+                }}
+              >
+                <Event color={activeSection === 'community-events' ? 'secondary' : 'primary'} />
                 📅 Upcoming Events
+                {activeSection === 'community-events' && ' (Active)'}
               </Typography>
               
               {upcomingEvents.length > 0 ? (
@@ -653,9 +698,19 @@ const CommunityPage = () => {
           <Card id="community-forum">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.main' }}>
-                  <Forum color="primary" />
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 1, 
+                    color: activeSection === 'community-forum' ? 'secondary.main' : 'primary.main',
+                    fontWeight: activeSection === 'community-forum' ? 'bold' : 'normal'
+                  }}
+                >
+                  <Forum color={activeSection === 'community-forum' ? 'secondary' : 'primary'} />
                   💬 Community Forum
+                  {activeSection === 'community-forum' && ' (Active)'}
                 </Typography>
                 <Button 
                   variant="contained" 
