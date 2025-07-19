@@ -43,6 +43,7 @@ const IncidentsPage = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [severityFilter, setSeverityFilter] = useState('all');
   const [isMyReports, setIsMyReports] = useState(false);
+  const [isRecent, setIsRecent] = useState(false);
 
   // Sample incidents data (same as map)
   const sampleIncidents = [
@@ -144,6 +145,49 @@ const IncidentsPage = () => {
       type: "Infrastructure",
       reporter: "You",
       userId: "currentUser"
+    },
+    // Add some very recent incidents for the recent filter
+    {
+      id: 8,
+      title: "Recent Alert - Pickpocket Activity",
+      description: "Multiple pickpocket incidents reported in Mercato area",
+      location: "Mercato, Addis Ababa",
+      coordinates: [9.0272, 38.7369],
+      severity: "High",
+      status: "Active",
+      date: new Date().toISOString().split('T')[0], // Today's date
+      time: "12:30",
+      type: "Theft",
+      reporter: "Local Police",
+      userId: "user303"
+    },
+    {
+      id: 9,
+      title: "Recent Alert - Traffic Accident",
+      description: "Major traffic accident on Ring Road near Bole",
+      location: "Bole, Addis Ababa",
+      coordinates: [8.9779, 38.7997],
+      severity: "High",
+      status: "Active",
+      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 2 days ago
+      time: "08:15",
+      type: "Traffic Incident",
+      reporter: "Traffic Police",
+      userId: "user404"
+    },
+    {
+      id: 10,
+      title: "Recent Alert - Suspicious Package",
+      description: "Suspicious package found near National Bank",
+      location: "Piazza, Addis Ababa",
+      coordinates: [9.0321, 38.7489],
+      severity: "High",
+      status: "Resolved",
+      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 day ago
+      time: "16:45",
+      type: "Suspicious Activity",
+      reporter: "Security Guard",
+      userId: "user505"
     }
   ];
 
@@ -154,8 +198,13 @@ const IncidentsPage = () => {
     
     if (filterParam === 'my-reports') {
       setIsMyReports(true);
+      setIsRecent(false);
+    } else if (filterParam === 'recent') {
+      setIsRecent(true);
+      setIsMyReports(false);
     } else {
       setIsMyReports(false);
+      setIsRecent(false);
     }
   }, [location.search]);
 
@@ -170,6 +219,17 @@ const IncidentsPage = () => {
     // My Reports filter (highest priority)
     if (isMyReports) {
       filtered = filtered.filter(incident => incident.userId === 'currentUser');
+    }
+
+    // Recent filter (shows incidents from last 7 days)
+    if (isRecent) {
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      
+      filtered = filtered.filter(incident => {
+        const incidentDate = new Date(incident.date);
+        return incidentDate >= sevenDaysAgo;
+      });
     }
 
     // Search filter
@@ -193,7 +253,7 @@ const IncidentsPage = () => {
     }
 
     setFilteredIncidents(filtered);
-  }, [incidents, searchQuery, statusFilter, severityFilter, isMyReports]);
+  }, [incidents, searchQuery, statusFilter, severityFilter, isMyReports, isRecent]);
 
   const getSeverityColor = (severity) => {
     switch (severity.toLowerCase()) {
@@ -233,10 +293,10 @@ const IncidentsPage = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {isMyReports ? '📋 My Reports' : '🚨 All Incidents'}
+          {isMyReports ? '📋 My Reports' : isRecent ? '🕒 Recent Incidents' : '🚨 All Incidents'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {isMyReports && (
+          {(isMyReports || isRecent) && (
             <Button 
               variant="outlined"
               onClick={() => navigate('/incidents')}
@@ -257,6 +317,8 @@ const IncidentsPage = () => {
       <Alert severity="info" sx={{ mb: 3 }}>
         {isMyReports 
           ? "View and manage your reported incidents. Track their status and updates."
+          : isRecent
+          ? "View recent safety incidents from the last 7 days in Addis Ababa. Stay updated with the latest community safety alerts."
           : "View and track safety incidents in Addis Ababa. Report new incidents to help keep your community safe."
         }
       </Alert>
