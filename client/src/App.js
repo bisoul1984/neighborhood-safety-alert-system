@@ -15,6 +15,7 @@ import IncidentDetailPage from './pages/IncidentDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import SafetyPage from './pages/SafetyPage';
 import EmergencyContactsPage from './pages/EmergencyContactsPage';
+import SafetyGuidelinesPage from './pages/SafetyGuidelinesPage';
 import CommunityPage from './pages/CommunityPage';
 import SettingsPage from './pages/SettingsPage';
 import SearchPage from './pages/SearchPage';
@@ -99,6 +100,14 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <EmergencyContactsPage />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/safety/guidelines" element={
+          <ProtectedRoute>
+            <Layout>
+              <SafetyGuidelinesPage />
             </Layout>
           </ProtectedRoute>
         } />
