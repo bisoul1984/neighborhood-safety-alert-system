@@ -104,12 +104,41 @@ const EnhancedNavbar = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [emergencyAlert, setEmergencyAlert] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(0);
+  const [notificationCount, setNotificationCount] = useState(3);
   const [expandedMenu, setExpandedMenu] = useState({});
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
   const { sendTestNotification } = useSocket();
+
+  // Mock notifications data
+  const notifications = [
+    {
+      id: 1,
+      title: 'New Incident Reported',
+      message: 'Suspicious activity reported in your neighborhood',
+      time: '2 minutes ago',
+      type: 'incident',
+      read: false
+    },
+    {
+      id: 2,
+      title: 'Community Meeting',
+      message: 'Monthly neighborhood watch meeting scheduled for tomorrow',
+      time: '1 hour ago',
+      type: 'community',
+      read: false
+    },
+    {
+      id: 3,
+      title: 'Safety Alert',
+      message: 'Street light outage reported on Main Street',
+      time: '3 hours ago',
+      type: 'alert',
+      read: false
+    }
+  ];
 
   // Emergency alert state
   const [emergencySnackbar, setEmergencySnackbar] = useState({
@@ -220,6 +249,20 @@ const EnhancedNavbar = ({ children }) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleNotificationOpen = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationClose = () => {
+    setNotificationAnchorEl(null);
+  };
+
+  const handleNotificationClick = (notificationId) => {
+    // Mark notification as read
+    setNotificationCount(prev => Math.max(0, prev - 1));
+    handleNotificationClose();
   };
 
   const handleLogout = () => {
@@ -483,7 +526,7 @@ const EnhancedNavbar = ({ children }) => {
             <Tooltip title="Notifications">
               <IconButton
                 color="inherit"
-                onClick={sendTestNotification}
+                onClick={handleNotificationOpen}
                 sx={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   '&:hover': {
@@ -592,6 +635,83 @@ const EnhancedNavbar = ({ children }) => {
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
+        </MenuItem>
+      </Menu>
+
+      {/* Notifications Menu */}
+      <Menu
+        anchorEl={notificationAnchorEl}
+        open={Boolean(notificationAnchorEl)}
+        onClose={handleNotificationClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        PaperProps={{
+          sx: { 
+            minWidth: 350,
+            maxHeight: 400
+          }
+        }}
+      >
+        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Notifications fontSize="small" />
+            Notifications
+          </Typography>
+        </Box>
+        
+        {notifications.length > 0 ? (
+          notifications.map((notification) => (
+            <MenuItem 
+              key={notification.id}
+              onClick={() => handleNotificationClick(notification.id)}
+              sx={{ 
+                p: 2,
+                borderBottom: 1,
+                borderColor: 'divider',
+                '&:last-child': { borderBottom: 0 }
+              }}
+            >
+              <Box sx={{ width: '100%' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                    {notification.title}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {notification.time}
+                  </Typography>
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  {notification.message}
+                </Typography>
+                <Chip 
+                  label={notification.type} 
+                  size="small" 
+                  color={notification.type === 'incident' ? 'error' : notification.type === 'alert' ? 'warning' : 'primary'}
+                  variant="outlined"
+                  sx={{ mt: 1, fontSize: '0.7rem' }}
+                />
+              </Box>
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem disabled>
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', width: '100%', py: 2 }}>
+              No new notifications
+            </Typography>
+          </MenuItem>
+        )}
+        
+        <Divider />
+        <MenuItem onClick={handleNotificationClose}>
+          <Typography variant="body2" color="primary" sx={{ textAlign: 'center', width: '100%' }}>
+            Mark all as read
+          </Typography>
         </MenuItem>
       </Menu>
 
