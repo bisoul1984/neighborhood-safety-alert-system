@@ -19,7 +19,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
   ListItemAvatar,
   Avatar,
   Chip,
@@ -36,8 +35,6 @@ import {
   Phone,
   Email,
   CheckCircle,
-  Warning,
-  Info,
   Add,
   Close
 } from '@mui/icons-material';
@@ -216,6 +213,9 @@ const CommunityPage = () => {
                   label={isJoined ? "Member" : "Join Now"} 
                   color={isJoined ? "success" : "primary"}
                   icon={isJoined ? <CheckCircle /> : <Add />}
+                  onClick={!isJoined ? handleJoinClick : undefined}
+                  clickable={!isJoined}
+                  sx={{ cursor: !isJoined ? 'pointer' : 'default' }}
                 />
               </Box>
               
