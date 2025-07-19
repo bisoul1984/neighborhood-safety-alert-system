@@ -14,6 +14,7 @@ import ReportIncidentPage from './pages/ReportIncidentPage';
 import IncidentDetailPage from './pages/IncidentDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import SafetyPage from './pages/SafetyPage';
+import EmergencyContactsPage from './pages/EmergencyContactsPage';
 import CommunityPage from './pages/CommunityPage';
 import SettingsPage from './pages/SettingsPage';
 import SearchPage from './pages/SearchPage';
@@ -90,6 +91,14 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <SafetyPage />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/safety/contacts" element={
+          <ProtectedRoute>
+            <Layout>
+              <EmergencyContactsPage />
             </Layout>
           </ProtectedRoute>
         } />
