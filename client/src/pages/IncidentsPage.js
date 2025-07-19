@@ -32,15 +32,17 @@ import {
   Edit,
   Delete
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const IncidentsPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [incidents, setIncidents] = useState([]);
   const [filteredIncidents, setFilteredIncidents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [severityFilter, setSeverityFilter] = useState('all');
+  const [isMyReports, setIsMyReports] = useState(false);
 
   // Sample incidents data (same as map)
   const sampleIncidents = [
@@ -55,7 +57,8 @@ const IncidentsPage = () => {
       date: "2024-01-15",
       time: "14:30",
       type: "Suspicious Activity",
-      reporter: "Community Member"
+      reporter: "Community Member",
+      userId: "user123"
     },
     {
       id: 2,
@@ -68,7 +71,8 @@ const IncidentsPage = () => {
       date: "2024-01-14",
       time: "22:15",
       type: "Vehicle Crime",
-      reporter: "Local Business Owner"
+      reporter: "Local Business Owner",
+      userId: "user456"
     },
     {
       id: 3,
@@ -81,7 +85,8 @@ const IncidentsPage = () => {
       date: "2024-01-15",
       time: "08:45",
       type: "Traffic Incident",
-      reporter: "Traffic Police"
+      reporter: "Traffic Police",
+      userId: "user789"
     },
     {
       id: 4,
@@ -94,7 +99,8 @@ const IncidentsPage = () => {
       date: "2024-01-13",
       time: "16:20",
       type: "Theft",
-      reporter: "Local Police"
+      reporter: "Local Police",
+      userId: "user101"
     },
     {
       id: 5,
@@ -107,9 +113,51 @@ const IncidentsPage = () => {
       date: "2024-01-20",
       time: "19:00",
       type: "Community Event",
-      reporter: "Community Leader"
+      reporter: "Community Leader",
+      userId: "user202"
+    },
+    // Add some user's own reports
+    {
+      id: 6,
+      title: "My Report - Suspicious Vehicle",
+      description: "Suspicious vehicle parked outside my house for several hours",
+      location: "Bole, Addis Ababa",
+      coordinates: [8.9779, 38.7997],
+      severity: "Medium",
+      status: "Active",
+      date: "2024-01-16",
+      time: "10:30",
+      type: "Suspicious Activity",
+      reporter: "You",
+      userId: "currentUser"
+    },
+    {
+      id: 7,
+      title: "My Report - Broken Street Light",
+      description: "Street light broken on main road, creating safety hazard",
+      location: "Kazanchis, Addis Ababa",
+      coordinates: [9.0272, 38.7369],
+      severity: "Low",
+      status: "Pending",
+      date: "2024-01-17",
+      time: "18:45",
+      type: "Infrastructure",
+      reporter: "You",
+      userId: "currentUser"
     }
   ];
+
+  // Check URL parameters for filtering
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const filterParam = searchParams.get('filter');
+    
+    if (filterParam === 'my-reports') {
+      setIsMyReports(true);
+    } else {
+      setIsMyReports(false);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     setIncidents(sampleIncidents);
@@ -118,6 +166,11 @@ const IncidentsPage = () => {
 
   useEffect(() => {
     let filtered = incidents;
+
+    // My Reports filter (highest priority)
+    if (isMyReports) {
+      filtered = filtered.filter(incident => incident.userId === 'currentUser');
+    }
 
     // Search filter
     if (searchQuery) {
@@ -140,7 +193,7 @@ const IncidentsPage = () => {
     }
 
     setFilteredIncidents(filtered);
-  }, [incidents, searchQuery, statusFilter, severityFilter]);
+  }, [incidents, searchQuery, statusFilter, severityFilter, isMyReports]);
 
   const getSeverityColor = (severity) => {
     switch (severity.toLowerCase()) {
@@ -180,19 +233,32 @@ const IncidentsPage = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          🚨 All Incidents
+          {isMyReports ? '📋 My Reports' : '🚨 All Incidents'}
         </Typography>
-        <Button 
-          variant="contained" 
-          startIcon={<Add />}
-          onClick={() => navigate('/report')}
-        >
-          Report Incident
-        </Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {isMyReports && (
+            <Button 
+              variant="outlined"
+              onClick={() => navigate('/incidents')}
+            >
+              View All Incidents
+            </Button>
+          )}
+          <Button 
+            variant="contained" 
+            startIcon={<Add />}
+            onClick={() => navigate('/report')}
+          >
+            Report Incident
+          </Button>
+        </Box>
       </Box>
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        View and track safety incidents in Addis Ababa. Report new incidents to help keep your community safe.
+        {isMyReports 
+          ? "View and manage your reported incidents. Track their status and updates."
+          : "View and track safety incidents in Addis Ababa. Report new incidents to help keep your community safe."
+        }
       </Alert>
 
       {/* Search and Filters */}
