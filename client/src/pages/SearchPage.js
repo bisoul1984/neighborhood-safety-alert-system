@@ -117,12 +117,6 @@ const SearchPage = () => {
     ]
   };
 
-  useEffect(() => {
-    if (searchQuery) {
-      performSearch();
-    }
-  }, [performSearch]);
-
   const performSearch = useCallback(async () => {
     setLoading(true);
     // Simulate API call delay
@@ -152,6 +146,12 @@ const SearchPage = () => {
     setSearchResults(filteredResults);
     setLoading(false);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      performSearch();
+    }
+  }, [performSearch]);
 
   const handleSearch = (event) => {
     event.preventDefault();

@@ -181,9 +181,13 @@ const EnhancedNavbar = ({ children }) => {
   // Handle search functionality
   const handleSearch = (event) => {
     event.preventDefault();
+    console.log('Search submitted:', searchQuery);
     if (searchQuery.trim()) {
+      console.log('Navigating to search page with query:', searchQuery);
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
+    } else {
+      console.log('Search query is empty');
     }
   };
 
@@ -449,6 +453,13 @@ const EnhancedNavbar = ({ children }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               inputProps={{ 'aria-label': 'search' }}
             />
+            <IconButton 
+              type="submit" 
+              sx={{ p: '10px', color: 'white' }}
+              aria-label="search"
+            >
+              <Search />
+            </IconButton>
           </Paper>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
