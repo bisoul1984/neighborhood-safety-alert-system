@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Typography, 
@@ -42,12 +42,14 @@ import {
   ThumbUp,
   Share,
   MoreVert,
-  Send
+  Send,
+  NavigateNext
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [joinDialogOpen, setJoinDialogOpen] = useState(false);
   const [joinForm, setJoinForm] = useState({
     name: '',
@@ -79,6 +81,17 @@ const CommunityPage = () => {
     category: ''
   });
   const [showPostSuccess, setShowPostSuccess] = useState(false);
+
+  // Handle URL parameters for section scrolling
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const section = params.get('section');
+    if (section) {
+      setTimeout(() => {
+        scrollToSection(section);
+      }, 100);
+    }
+  }, [location.search]);
 
   // Sample community data
   const neighborhoodWatchMembers = [
@@ -365,6 +378,13 @@ const CommunityPage = () => {
     }
   };
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const getEventIcon = (type) => {
     switch (type) {
       case 'meeting': return <People color="primary" />;
@@ -407,10 +427,46 @@ const CommunityPage = () => {
         </Alert>
       )}
 
+      {/* Quick Navigation */}
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <NavigateNext color="primary" />
+            Quick Navigation
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <Button
+              variant="outlined"
+              startIcon={<Security />}
+              onClick={() => scrollToSection('neighborhood-watch')}
+              sx={{ minWidth: 200 }}
+            >
+              Neighborhood Watch
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<Event />}
+              onClick={() => scrollToSection('community-events')}
+              sx={{ minWidth: 200 }}
+            >
+              Community Events
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<Forum />}
+              onClick={() => scrollToSection('community-forum')}
+              sx={{ minWidth: 200 }}
+            >
+              Community Forum
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+
       <Grid container spacing={3}>
         {/* Neighborhood Watch Section */}
         <Grid item xs={12} md={8}>
-          <Card>
+          <Card id="neighborhood-watch">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -508,7 +564,7 @@ const CommunityPage = () => {
 
         {/* Community Events Section */}
         <Grid item xs={12} md={4}>
-          <Card>
+          <Card id="community-events">
             <CardContent>
               <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Event color="primary" />
@@ -583,7 +639,7 @@ const CommunityPage = () => {
       {/* Community Forum Section */}
       <Grid container spacing={3} sx={{ mt: 2 }}>
         <Grid item xs={12}>
-          <Card>
+          <Card id="community-forum">
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
