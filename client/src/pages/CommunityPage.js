@@ -83,6 +83,9 @@ const CommunityPage = () => {
   });
   const [showPostSuccess, setShowPostSuccess] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [commentDialogOpen, setCommentDialogOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const [commentText, setCommentText] = useState('');
 
   // Handle URL parameters for section scrolling
   useEffect(() => {
@@ -163,7 +166,7 @@ const CommunityPage = () => {
     }
   ];
 
-  const forumPosts = [
+  const [forumPosts, setForumPosts] = useState([
     {
       id: 1,
       title: 'Suspicious Activity on Main Street',
@@ -212,7 +215,7 @@ const CommunityPage = () => {
       comments: 6,
       isLiked: false
     }
-  ];
+  ]);
 
   const handleJoinClick = () => {
     setJoinDialogOpen(true);
@@ -329,8 +332,22 @@ const CommunityPage = () => {
   };
 
   const handleNewPostSubmit = () => {
-    // Simulate API call
-    console.log('Creating new forum post:', newPostForm);
+    // Create new post
+    const newPost = {
+      id: Date.now(), // Simple ID generation
+      title: newPostForm.title,
+      content: newPostForm.content,
+      author: 'You',
+      authorAvatar: 'Y',
+      category: newPostForm.category,
+      timestamp: new Date().toISOString(),
+      likes: 0,
+      comments: 0,
+      isLiked: false
+    };
+    
+    // Add to forum posts
+    setForumPosts(prevPosts => [newPost, ...prevPosts]);
     
     // Show success message
     setShowPostSuccess(true);
@@ -357,18 +374,69 @@ const CommunityPage = () => {
   };
 
   const handleLikePost = (postId) => {
-    // Simulate like functionality
-    console.log('Liked post:', postId);
+    setForumPosts(prevPosts => 
+      prevPosts.map(post => 
+        post.id === postId 
+          ? { 
+              ...post, 
+              likes: post.isLiked ? post.likes - 1 : post.likes + 1,
+              isLiked: !post.isLiked 
+            }
+          : post
+      )
+    );
   };
 
   const handleCommentPost = (postId) => {
-    // Simulate comment functionality
-    console.log('Comment on post:', postId);
+    // Open comment dialog for the specific post
+    setCommentDialogOpen(true);
+    setSelectedPostId(postId);
   };
 
   const handleSharePost = (postId) => {
-    // Simulate share functionality
-    console.log('Share post:', postId);
+    const post = forumPosts.find(p => p.id === postId);
+    if (post && navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: post.content,
+        url: window.location.href
+      }).catch(err => {
+        console.log('Share failed:', err);
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(`${post.title}\n\n${post.content}\n\nShared from Community Forum`);
+        alert('Post content copied to clipboard!');
+      });
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      const post = forumPosts.find(p => p.id === postId);
+      navigator.clipboard.writeText(`${post.title}\n\n${post.content}\n\nShared from Community Forum`);
+      alert('Post content copied to clipboard!');
+    }
+  };
+
+  const handleCommentClose = () => {
+    setCommentDialogOpen(false);
+    setSelectedPostId(null);
+    setCommentText('');
+  };
+
+  const handleCommentSubmit = () => {
+    if (commentText.trim()) {
+      // Add comment to the post
+      setForumPosts(prevPosts => 
+        prevPosts.map(post => 
+          post.id === selectedPostId 
+            ? { ...post, comments: post.comments + 1 }
+            : post
+        )
+      );
+      
+      // Show success message
+      alert('Comment added successfully!');
+      
+      // Close dialog and reset
+      handleCommentClose();
+    }
   };
 
   const getCategoryColor = (category) => {
@@ -1093,6 +1161,50 @@ const CommunityPage = () => {
             disabled={!newPostForm.title || !newPostForm.content || !newPostForm.category}
           >
             Create Post
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Comment Dialog */}
+      <Dialog open={commentDialogOpen} onClose={handleCommentClose} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Comment color="primary" />
+            Add Comment
+          </Typography>
+          <IconButton onClick={handleCommentClose}>
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        
+        <DialogContent>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              Share your thoughts on this post. Be respectful and constructive in your comments.
+            </Typography>
+          </Alert>
+          
+          <TextField
+            fullWidth
+            label="Your Comment"
+            multiline
+            rows={4}
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            required
+            placeholder="Write your comment here..."
+          />
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={handleCommentClose}>Cancel</Button>
+          <Button 
+            onClick={handleCommentSubmit} 
+            variant="contained"
+            startIcon={<Send />}
+            disabled={!commentText.trim()}
+          >
+            Post Comment
           </Button>
         </DialogActions>
       </Dialog>
