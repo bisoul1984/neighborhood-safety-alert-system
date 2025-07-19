@@ -17,9 +17,11 @@ import {
   Security 
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardPage = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -43,7 +45,11 @@ const DashboardPage = () => {
               <Typography variant="body2" color="text.secondary">
                 No recent incidents in your area.
               </Typography>
-              <Button variant="outlined" sx={{ mt: 2 }}>
+              <Button 
+                variant="outlined" 
+                sx={{ mt: 2 }}
+                onClick={() => navigate('/incidents')}
+              >
                 View All Incidents
               </Button>
             </CardContent>
@@ -97,13 +103,27 @@ const DashboardPage = () => {
               avatar={<LocationOn color="action" />}
             />
             <CardContent>
-              <Button variant="contained" fullWidth sx={{ mb: 1 }}>
+              <Button 
+                variant="contained" 
+                fullWidth 
+                sx={{ mb: 1 }}
+                onClick={() => navigate('/report')}
+              >
                 Report Incident
               </Button>
-              <Button variant="outlined" fullWidth sx={{ mb: 1 }}>
+              <Button 
+                variant="outlined" 
+                fullWidth 
+                sx={{ mb: 1 }}
+                onClick={() => navigate('/map')}
+              >
                 View Map
               </Button>
-              <Button variant="outlined" fullWidth>
+              <Button 
+                variant="outlined" 
+                fullWidth
+                onClick={() => navigate('/safety')}
+              >
                 Safety Resources
               </Button>
             </CardContent>

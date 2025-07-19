@@ -12,15 +12,22 @@ import {
   Alert
 } from '@mui/material';
 import { Warning, Add } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const IncidentsPage = () => {
+  const navigate = useNavigate();
+  
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1">
           Incidents
         </Typography>
-        <Button variant="contained" startIcon={<Add />}>
+        <Button 
+          variant="contained" 
+          startIcon={<Add />}
+          onClick={() => navigate('/report')}
+        >
           Report Incident
         </Button>
       </Box>
