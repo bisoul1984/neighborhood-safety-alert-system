@@ -53,6 +53,19 @@ const CommunityPage = () => {
   });
   const [isJoined, setIsJoined] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [suggestEventDialogOpen, setSuggestEventDialogOpen] = useState(false);
+  const [suggestEventForm, setSuggestEventForm] = useState({
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    location: '',
+    type: '',
+    organizerName: '',
+    organizerEmail: '',
+    organizerPhone: ''
+  });
+  const [showEventSuccess, setShowEventSuccess] = useState(false);
 
   // Sample community data
   const neighborhoodWatchMembers = [
@@ -169,6 +182,59 @@ const CommunityPage = () => {
     }));
   };
 
+  const handleSuggestEventClick = () => {
+    setSuggestEventDialogOpen(true);
+  };
+
+  const handleSuggestEventClose = () => {
+    setSuggestEventDialogOpen(false);
+    setSuggestEventForm({
+      title: '',
+      description: '',
+      date: '',
+      time: '',
+      location: '',
+      type: '',
+      organizerName: '',
+      organizerEmail: '',
+      organizerPhone: ''
+    });
+  };
+
+  const handleSuggestEventSubmit = () => {
+    // Simulate API call
+    console.log('Suggesting event:', suggestEventForm);
+    
+    // Show success message
+    setShowEventSuccess(true);
+    setSuggestEventDialogOpen(false);
+    
+    // Reset form
+    setSuggestEventForm({
+      title: '',
+      description: '',
+      date: '',
+      time: '',
+      location: '',
+      type: '',
+      organizerName: '',
+      organizerEmail: '',
+      organizerPhone: ''
+    });
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setShowEventSuccess(false);
+    }, 5000);
+  };
+
+  const handleEventInputChange = (field, value) => {
+    setSuggestEventForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   const getEventIcon = (type) => {
     switch (type) {
       case 'meeting': return <People color="primary" />;
@@ -196,6 +262,12 @@ const CommunityPage = () => {
       {showSuccess && (
         <Alert severity="success" sx={{ mb: 3 }} onClose={() => setShowSuccess(false)}>
           🎉 Successfully joined the Neighborhood Watch! Welcome to the community. You'll receive updates about meetings and events.
+        </Alert>
+      )}
+
+      {showEventSuccess && (
+        <Alert severity="success" sx={{ mb: 3 }} onClose={() => setShowEventSuccess(false)}>
+          🎉 Event suggestion submitted successfully! We'll review your suggestion and get back to you soon.
         </Alert>
       )}
 
@@ -363,6 +435,7 @@ const CommunityPage = () => {
                 fullWidth 
                 sx={{ mt: 2 }}
                 startIcon={<Add />}
+                onClick={handleSuggestEventClick}
               >
                 Suggest Event
               </Button>
@@ -454,6 +527,143 @@ const CommunityPage = () => {
             disabled={!joinForm.name || !joinForm.email || !joinForm.phone}
           >
             Join Program
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Suggest Event Dialog */}
+      <Dialog open={suggestEventDialogOpen} onClose={handleSuggestEventClose} maxWidth="md" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Event color="primary" />
+            Suggest Community Event
+          </Typography>
+          <IconButton onClick={handleSuggestEventClose}>
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        
+        <DialogContent>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              Suggest a community event to help bring neighbors together and improve neighborhood safety. We'll review your suggestion and get back to you.
+            </Typography>
+          </Alert>
+          
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Event Title"
+                value={suggestEventForm.title}
+                onChange={(e) => handleEventInputChange('title', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Event Description"
+                multiline
+                rows={3}
+                value={suggestEventForm.description}
+                onChange={(e) => handleEventInputChange('description', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Date"
+                type="date"
+                value={suggestEventForm.date}
+                onChange={(e) => handleEventInputChange('date', e.target.value)}
+                required
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Time"
+                type="time"
+                value={suggestEventForm.time}
+                onChange={(e) => handleEventInputChange('time', e.target.value)}
+                required
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Location"
+                value={suggestEventForm.location}
+                onChange={(e) => handleEventInputChange('location', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Event Type</InputLabel>
+                <Select
+                  value={suggestEventForm.type}
+                  label="Event Type"
+                  onChange={(e) => handleEventInputChange('type', e.target.value)}
+                  required
+                >
+                  <MenuItem value="meeting">Community Meeting</MenuItem>
+                  <MenuItem value="training">Training Session</MenuItem>
+                  <MenuItem value="volunteer">Volunteer Event</MenuItem>
+                  <MenuItem value="social">Social Gathering</MenuItem>
+                  <MenuItem value="safety">Safety Workshop</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
+                Organizer Information
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Organizer Name"
+                value={suggestEventForm.organizerName}
+                onChange={(e) => handleEventInputChange('organizerName', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Organizer Email"
+                type="email"
+                value={suggestEventForm.organizerEmail}
+                onChange={(e) => handleEventInputChange('organizerEmail', e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Organizer Phone"
+                value={suggestEventForm.organizerPhone}
+                onChange={(e) => handleEventInputChange('organizerPhone', e.target.value)}
+                required
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={handleSuggestEventClose}>Cancel</Button>
+          <Button 
+            onClick={handleSuggestEventSubmit} 
+            variant="contained"
+            disabled={!suggestEventForm.title || !suggestEventForm.description || !suggestEventForm.date || !suggestEventForm.location || !suggestEventForm.type || !suggestEventForm.organizerName || !suggestEventForm.organizerEmail}
+          >
+            Submit Event Suggestion
           </Button>
         </DialogActions>
       </Dialog>
