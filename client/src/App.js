@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import SafetyPage from './pages/SafetyPage';
 import CommunityPage from './pages/CommunityPage';
 import SettingsPage from './pages/SettingsPage';
+import SearchPage from './pages/SearchPage';
 
 import { useAuth } from './contexts/AuthContext';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
@@ -105,6 +106,14 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <SettingsPage />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/search" element={
+          <ProtectedRoute>
+            <Layout>
+              <SearchPage />
             </Layout>
           </ProtectedRoute>
         } />

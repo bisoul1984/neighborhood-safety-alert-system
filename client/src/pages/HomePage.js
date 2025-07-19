@@ -11,7 +11,11 @@ import {
   Stack,
   Chip,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Avatar
 } from '@mui/material';
 import {
   Security,
@@ -23,7 +27,9 @@ import {
   ArrowForward,
   Shield,
   LocationOn,
-  Warning
+  Warning,
+  Menu as MenuIcon,
+  AccountCircle
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -90,12 +96,66 @@ const HomePage = () => {
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
+      {/* Navigation Bar */}
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+          boxShadow: 3
+        }}
+      >
+        <Toolbar>
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              flexGrow: 1,
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1
+            }}
+          >
+            🛡️ Neighborhood Safety Alert System
+          </Typography>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Button
+              color="inherit"
+              onClick={() => navigate('/login')}
+              sx={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                }
+              }}
+            >
+              Sign In
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/register')}
+              sx={{ 
+                bgcolor: 'white',
+                color: 'primary.main',
+                '&:hover': {
+                  bgcolor: 'grey.100'
+                }
+              }}
+            >
+              Register
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
       {/* Hero Section */}
       <Box
         sx={{
           background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
           color: 'white',
           py: { xs: 8, md: 12 },
+          pt: { xs: 12, md: 16 }, // Add top padding to account for fixed navbar
           position: 'relative',
           overflow: 'hidden'
         }}
