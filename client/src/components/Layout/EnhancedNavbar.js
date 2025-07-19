@@ -166,8 +166,8 @@ const EnhancedNavbar = ({ children }) => {
       description: 'Connect with neighbors',
       subItems: [
         { text: 'Community Forum', path: '/community' },
-        { text: 'Neighborhood Watch', path: '/community/watch' },
-        { text: 'Events', path: '/community/events' }
+        { text: 'Neighborhood Watch', path: '/community' },
+        { text: 'Events', path: '/community' }
       ]
     },
     {
