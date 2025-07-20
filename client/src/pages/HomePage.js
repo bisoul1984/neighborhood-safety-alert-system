@@ -100,8 +100,9 @@ const HomePage = () => {
       <AppBar 
         position="fixed" 
         sx={{ 
-          background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
-          boxShadow: 3
+          background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
+          boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
         <Toolbar>
@@ -113,7 +114,8 @@ const HomePage = () => {
               fontWeight: 'bold',
               display: 'flex',
               alignItems: 'center',
-              gap: 1
+              gap: 1,
+              color: 'white'
             }}
           >
             🛡️ Neighborhood Safety Alert System
@@ -125,8 +127,10 @@ const HomePage = () => {
               onClick={() => navigate('/login')}
               sx={{ 
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  borderColor: 'rgba(255, 255, 255, 0.3)'
                 }
               }}
             >
@@ -137,9 +141,10 @@ const HomePage = () => {
               onClick={() => navigate('/register')}
               sx={{ 
                 bgcolor: 'white',
-                color: 'primary.main',
+                color: '#081f37',
+                fontWeight: 600,
                 '&:hover': {
-                  bgcolor: 'grey.100'
+                  bgcolor: '#f8f9fa'
                 }
               }}
             >
@@ -152,7 +157,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+          background: '#081f37',
           color: 'white',
           py: { xs: 8, md: 12 },
           pt: { xs: 12, md: 16 }, // Add top padding to account for fixed navbar
@@ -254,7 +259,7 @@ const HomePage = () => {
       </Box>
 
       {/* Stats Section */}
-      <Box sx={{ py: 6, bgcolor: 'grey.50' }}>
+      <Box sx={{ py: 6, bgcolor: '#f8f9fa' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {stats.map((stat, index) => (
@@ -265,16 +270,22 @@ const HomePage = () => {
                     p: 3,
                     bgcolor: 'white',
                     borderRadius: 2,
-                    boxShadow: 1
+                    boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)',
+                    border: '1px solid rgba(8, 31, 55, 0.05)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 24px rgba(8, 31, 55, 0.15)'
+                    }
                   }}
                 >
-                  <Box sx={{ color: 'primary.main', mb: 1 }}>
+                  <Box sx={{ color: '#081f37', mb: 1 }}>
                     {stat.icon}
                   </Box>
-                  <Typography variant="h4" component="div" sx={{ fontWeight: 700, mb: 1 }}>
+                  <Typography variant="h4" component="div" sx={{ fontWeight: 700, mb: 1, color: '#081f37' }}>
                     {stat.value}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
                     {stat.label}
                   </Typography>
                 </Box>
@@ -285,13 +296,13 @@ const HomePage = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 8 }}>
+      <Box sx={{ py: 8, bgcolor: 'white' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2 }}>
+            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37' }}>
               Why Choose Our Platform?
             </Typography>
-            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+            <Typography variant="h6" sx={{ maxWidth: 600, mx: 'auto', color: '#5a6c7d' }}>
               Comprehensive safety features designed to keep your community informed and protected
             </Typography>
           </Box>
@@ -303,20 +314,22 @@ const HomePage = () => {
                   sx={{
                     height: '100%',
                     transition: 'transform 0.2s, box-shadow 0.2s',
+                    border: '1px solid rgba(8, 31, 55, 0.1)',
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      boxShadow: 4
+                      boxShadow: '0 12px 32px rgba(8, 31, 55, 0.15)',
+                      borderColor: '#081f37'
                     }
                   }}
                 >
                   <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                    <Box sx={{ color: feature.color, mb: 2 }}>
+                    <Box sx={{ color: '#081f37', mb: 2 }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2 }}>
+                    <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, color: '#081f37' }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -330,7 +343,7 @@ const HomePage = () => {
       {/* CTA Section */}
       <Box
         sx={{
-          bgcolor: 'primary.main',
+          background: 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
           color: 'white',
           py: 8
         }}
@@ -349,13 +362,13 @@ const HomePage = () => {
               onClick={handleGetStarted}
               sx={{
                 bgcolor: 'white',
-                color: 'primary.main',
+                color: '#081f37',
                 px: 6,
                 py: 2,
                 fontSize: '1.2rem',
                 fontWeight: 600,
                 '&:hover': {
-                  bgcolor: 'grey.100'
+                  bgcolor: '#f8f9fa'
                 }
               }}
             >
@@ -367,7 +380,7 @@ const HomePage = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: 'grey.900', color: 'white', py: 4 }}>
+      <Box sx={{ bgcolor: '#081f37', color: 'white', py: 4 }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
@@ -407,7 +420,7 @@ const HomePage = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Box sx={{ borderTop: 1, borderColor: 'grey.800', mt: 4, pt: 2, textAlign: 'center' }}>
+          <Box sx={{ borderTop: 1, borderColor: 'rgba(255,255,255,0.2)', mt: 4, pt: 2, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ opacity: 0.6 }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
             </Typography>

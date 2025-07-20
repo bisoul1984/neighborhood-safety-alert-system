@@ -11,7 +11,7 @@ import {
   Avatar,
   Grid
 } from '@mui/material';
-import { PersonAddOutlined } from '@mui/icons-material';
+import { PersonAddOutlined, ArrowBack } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -74,6 +74,23 @@ const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
+        {/* Back to Home Link */}
+        <Box sx={{ width: '100%', mb: 2 }}>
+          <Button
+            component={RouterLink}
+            to="/"
+            startIcon={<ArrowBack />}
+            sx={{
+              color: '#081f37',
+              '&:hover': {
+                backgroundColor: 'rgba(8, 31, 55, 0.1)'
+              }
+            }}
+          >
+            Back to Home
+          </Button>
+        </Box>
+
         <Paper
           elevation={3}
           sx={{
@@ -84,11 +101,11 @@ const RegisterPage = () => {
             width: '100%',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#081f37' }}>
             <PersonAddOutlined />
           </Avatar>
           
-          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+          <Typography component="h1" variant="h5" sx={{ mb: 3, color: '#081f37' }}>
             Create Account
           </Typography>
 
