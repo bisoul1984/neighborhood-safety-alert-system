@@ -280,13 +280,19 @@ const IncidentsPage = () => {
   };
 
   const handleEdit = (incidentId) => {
-    // Navigate to edit page or open edit modal
-    console.log('Edit incident:', incidentId);
+    // Navigate to incident detail page where editing is available
+    navigate(`/incidents/${incidentId}`);
   };
 
   const handleDelete = (incidentId) => {
-    // Handle delete with confirmation
-    console.log('Delete incident:', incidentId);
+    // Show confirmation dialog
+    if (window.confirm('Are you sure you want to delete this incident? This action cannot be undone.')) {
+      // Remove from local state (in real app, this would be an API call)
+      const updatedIncidents = incidents.filter(incident => incident.id !== incidentId);
+      setIncidents(updatedIncidents);
+      setFilteredIncidents(updatedIncidents);
+      alert('Incident deleted successfully!');
+    }
   };
 
   return (

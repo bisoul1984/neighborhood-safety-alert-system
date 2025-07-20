@@ -42,37 +42,18 @@ import {
   Notifications,
   AccountCircle,
   Logout,
-  Home,
   Search,
   Warning,
-  Info,
   ExpandLess,
   ExpandMore,
-  LocationOn,
-  Phone,
-  Email
+  Phone
 } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSocket } from '../../contexts/SocketContext';
 
-// Styled search component
-const SearchWrapper = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
+
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -103,8 +84,6 @@ const EnhancedNavbar = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [emergencyAlert, setEmergencyAlert] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(3);
   const [expandedMenu, setExpandedMenu] = useState({});
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -112,33 +91,48 @@ const EnhancedNavbar = ({ children }) => {
   const { user, logout } = useAuth();
   const { sendTestNotification } = useSocket();
 
-  // Mock notifications data
-  const notifications = [
-    {
-      id: 1,
-      title: 'New Incident Reported',
-      message: 'Suspicious activity reported in your neighborhood',
-      time: '2 minutes ago',
-      type: 'incident',
-      read: false
-    },
-    {
-      id: 2,
-      title: 'Community Meeting',
-      message: 'Monthly neighborhood watch meeting scheduled for tomorrow',
-      time: '1 hour ago',
-      type: 'community',
-      read: false
-    },
-    {
-      id: 3,
-      title: 'Safety Alert',
-      message: 'Street light outage reported on Main Street',
-      time: '3 hours ago',
-      type: 'alert',
-      read: false
+  // Mock notifications data with state management
+  const [notifications, setNotifications] = useState([]);
+
+  // Update notification count based on unread notifications
+  const unreadNotifications = notifications.filter(n => !n.read);
+  const currentNotificationCount = unreadNotifications.length;
+
+  // Reset notifications when user authentication state changes
+  useEffect(() => {
+    if (user) {
+      // User is logged in - set notifications
+      setNotifications([
+        {
+          id: 1,
+          title: 'New Incident Reported',
+          message: 'Suspicious activity reported in your neighborhood',
+          time: '2 minutes ago',
+          type: 'incident',
+          read: false
+        },
+        {
+          id: 2,
+          title: 'Community Meeting',
+          message: 'Monthly neighborhood watch meeting scheduled for tomorrow',
+          time: '1 hour ago',
+          type: 'community',
+          read: false
+        },
+        {
+          id: 3,
+          title: 'Safety Alert',
+          message: 'Street light outage reported on Main Street',
+          time: '3 hours ago',
+          type: 'alert',
+          read: false
+        }
+      ]);
+    } else {
+      // User is logged out - clear notifications
+      setNotifications([]);
     }
-  ];
+  }, [user]);
 
   // Emergency alert state
   const [emergencySnackbar, setEmergencySnackbar] = useState({
@@ -194,6 +188,7 @@ const EnhancedNavbar = ({ children }) => {
       path: '/community',
       description: 'Connect with neighbors',
       subItems: [
+        { text: 'All Members', path: '/members' },
         { text: 'Community Forum', path: '/community?section=community-forum' },
         { text: 'Neighborhood Watch', path: '/community?section=neighborhood-watch' },
         { text: 'Events', path: '/community?section=community-events' }
@@ -261,13 +256,21 @@ const EnhancedNavbar = ({ children }) => {
 
   const handleNotificationClick = (notificationId) => {
     // Mark notification as read
-    setNotificationCount(prev => Math.max(0, prev - 1));
+    setNotifications(prevNotifications => 
+      prevNotifications.map(notification => 
+        notification.id === notificationId 
+          ? { ...notification, read: true }
+          : notification
+      )
+    );
     handleNotificationClose();
   };
 
   const handleMarkAllAsRead = () => {
     // Mark all notifications as read
-    setNotificationCount(0);
+    setNotifications(prevNotifications => 
+      prevNotifications.map(notification => ({ ...notification, read: true }))
+    );
     handleNotificationClose();
   };
 
@@ -463,19 +466,26 @@ const EnhancedNavbar = ({ children }) => {
             <MenuIcon />
           </IconButton>
 
-          <Typography 
-            variant="h6" 
-            component="div" 
-            sx={{ 
-              flexGrow: 1,
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1
-            }}
-          >
-            🛡️ Neighborhood Safety Alert System
-          </Typography>
+          <Tooltip title="Go to Home Page">
+            <Typography 
+              variant="h6" 
+              component="div" 
+              onClick={() => navigate('/')}
+              sx={{ 
+                flexGrow: 1,
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                cursor: 'pointer',
+                '&:hover': {
+                  opacity: 0.8
+                }
+              }}
+            >
+              🛡️ Neighborhood Safety Alert System
+            </Typography>
+          </Tooltip>
 
           {/* Search Bar */}
           <Paper
@@ -512,60 +522,66 @@ const EnhancedNavbar = ({ children }) => {
           </Paper>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {/* Emergency Alert Button */}
-            <Tooltip title="Emergency Alert">
-              <IconButton
-                color="inherit"
-                onClick={handleEmergencyAlert}
-                sx={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  }
-                }}
-              >
-                <Warning />
-              </IconButton>
-            </Tooltip>
+            {/* Emergency Alert Button - Only show when authenticated */}
+            {user && (
+              <Tooltip title="Emergency Alert">
+                <IconButton
+                  color="inherit"
+                  onClick={handleEmergencyAlert}
+                  sx={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    }
+                  }}
+                >
+                  <Warning />
+                </IconButton>
+              </Tooltip>
+            )}
 
-            {/* Notifications */}
-            <Tooltip title="Notifications">
-              <IconButton
-                color="inherit"
-                onClick={handleNotificationOpen}
-                sx={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  }
-                }}
-              >
-                <Badge badgeContent={notificationCount} color="error">
-                  <Notifications />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+            {/* Notifications - Only show when authenticated */}
+            {user && (
+              <Tooltip title="Notifications">
+                <IconButton
+                  color="inherit"
+                  onClick={handleNotificationOpen}
+                  sx={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    }
+                  }}
+                >
+                  <Badge badgeContent={currentNotificationCount} color="error">
+                    <Notifications />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            )}
 
-            {/* User Menu */}
-            <Tooltip title="User Menu">
-              <IconButton
-                color="inherit"
-                onClick={handleMenuOpen}
-                sx={{ 
-                  ml: 1,
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  }
-                }}
-              >
-                {user?.profile?.avatar ? (
-                  <Avatar src={user.profile.avatar} sx={{ width: 32, height: 32 }} />
-                ) : (
-                  <AccountCircle />
-                )}
-              </IconButton>
-            </Tooltip>
+            {/* User Menu - Only show when authenticated */}
+            {user && (
+              <Tooltip title="User Menu">
+                <IconButton
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                  sx={{ 
+                    ml: 1,
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    }
+                  }}
+                >
+                  {user?.profile?.avatar ? (
+                    <Avatar src={user.profile.avatar} sx={{ width: 32, height: 32 }} />
+                  ) : (
+                    <AccountCircle />
+                  )}
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -737,21 +753,23 @@ const EnhancedNavbar = ({ children }) => {
         </Alert>
       </Snackbar>
 
-      {/* Speed Dial for Quick Actions */}
-      <SpeedDial
-        ariaLabel="Quick actions"
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
-      >
-        {speedDialActions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={action.action}
-          />
-        ))}
-      </SpeedDial>
+      {/* Speed Dial for Quick Actions - Only show when authenticated */}
+      {user && (
+        <SpeedDial
+          ariaLabel="Quick actions"
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        >
+          {speedDialActions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={action.action}
+            />
+          ))}
+        </SpeedDial>
+      )}
     </Box>
   );
 };

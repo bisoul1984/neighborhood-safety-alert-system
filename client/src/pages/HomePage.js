@@ -115,8 +115,13 @@ const HomePage = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 1,
-              color: 'white'
+              color: 'white',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8
+              }
             }}
+            onClick={() => navigate('/')}
           >
             🛡️ Neighborhood Safety Alert System
           </Typography>
@@ -459,9 +464,9 @@ const HomePage = () => {
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
                 Emergency: 911
                 <br />
-                Support: support@safetyalert.com
+                Support: fikeretetadesse1403@gmail.com
                 <br />
-                Phone: (555) 123-4567
+                Phone: +251967044111
               </Typography>
             </Grid>
           </Grid>

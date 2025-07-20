@@ -17,6 +17,7 @@ import SafetyPage from './pages/SafetyPage';
 import EmergencyContactsPage from './pages/EmergencyContactsPage';
 import SafetyGuidelinesPage from './pages/SafetyGuidelinesPage';
 import CommunityPage from './pages/CommunityPage';
+import AllMembersPage from './pages/AllMembersPage';
 import SettingsPage from './pages/SettingsPage';
 import SearchPage from './pages/SearchPage';
 
@@ -116,6 +117,14 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <CommunityPage />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/members" element={
+          <ProtectedRoute>
+            <Layout>
+              <AllMembersPage />
             </Layout>
           </ProtectedRoute>
         } />
