@@ -396,13 +396,58 @@ const HomePage = () => {
                 Quick Links
               </Typography>
               <Stack spacing={1}>
-                <Button color="inherit" onClick={() => navigate('/login')}>
+                <Button 
+                  onClick={() => navigate('/login')}
+                  sx={{
+                    color: 'white',
+                    textAlign: 'left',
+                    justifyContent: 'flex-start',
+                    padding: '8px 0',
+                    minHeight: 'auto',
+                    textTransform: 'none',
+                    fontSize: '0.9rem',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      color: '#f0f0f0'
+                    }
+                  }}
+                >
                   Sign In
                 </Button>
-                <Button color="inherit" onClick={() => navigate('/register')}>
+                <Button 
+                  onClick={() => navigate('/register')}
+                  sx={{
+                    color: 'white',
+                    textAlign: 'left',
+                    justifyContent: 'flex-start',
+                    padding: '8px 0',
+                    minHeight: 'auto',
+                    textTransform: 'none',
+                    fontSize: '0.9rem',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      color: '#f0f0f0'
+                    }
+                  }}
+                >
                   Register
                 </Button>
-                <Button color="inherit" onClick={() => navigate('/safety')}>
+                <Button 
+                  onClick={() => navigate('/safety')}
+                  sx={{
+                    color: 'white',
+                    textAlign: 'left',
+                    justifyContent: 'flex-start',
+                    padding: '8px 0',
+                    minHeight: 'auto',
+                    textTransform: 'none',
+                    fontSize: '0.9rem',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      color: '#f0f0f0'
+                    }
+                  }}
+                >
                   Safety Tips
                 </Button>
               </Stack>
