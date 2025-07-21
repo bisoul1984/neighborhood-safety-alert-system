@@ -15,7 +15,8 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Avatar
+  Avatar,
+  Link
 } from '@mui/material';
 import {
   Security,
@@ -473,6 +474,22 @@ const HomePage = () => {
           <Box sx={{ borderTop: 1, borderColor: 'rgba(255,255,255,0.2)', mt: 4, pt: 2, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ opacity: 0.6 }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
+            </Typography>
+            <Typography variant="body2" sx={{ opacity: 0.6, mt: 1 }}>
+              Built by{' '}
+              <Link
+                href="https://www.bisrat-tadesse.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: 'white',
+                  '&:hover': {
+                    opacity: 0.8
+                  }
+                }}
+              >
+                Bisrate Tadesse
+              </Link>
             </Typography>
           </Box>
         </Container>
