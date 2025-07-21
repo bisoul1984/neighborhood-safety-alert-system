@@ -26,9 +26,14 @@ import {
   Error
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSocket } from '../contexts/SocketContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const ReportIncidentPage = () => {
   const navigate = useNavigate();
+  const { token } = useAuth();
+  const { emitNewIncident } = useSocket();
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -37,6 +42,7 @@ const ReportIncidentPage = () => {
   });
   
   const [formData, setFormData] = useState({
+    title: '',
     type: '',
     description: '',
     location: '',
@@ -49,12 +55,14 @@ const ReportIncidentPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+    if (!formData.title || formData.title.trim().length < 5) {
+      newErrors.title = 'Title is required (min 5 characters)';
+    }
     if (!formData.type) {
       newErrors.type = 'Incident type is required';
     }
-    if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+    if (!formData.description || formData.description.trim().length < 10) {
+      newErrors.description = 'Description is required (min 10 characters)';
     }
     if (!formData.location.trim()) {
       newErrors.location = 'Location is required';
@@ -65,14 +73,12 @@ const ReportIncidentPage = () => {
     if (!formData.time) {
       newErrors.time = 'Time is required';
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) {
       setSnackbar({
         open: true,
@@ -81,47 +87,68 @@ const ReportIncidentPage = () => {
       });
       return;
     }
-
     setLoading(true);
-    
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would typically send the data to your backend
-      console.log('Incident report submitted:', formData);
-      
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        type: formData.type,
+        severity: formData.severity,
+        location: {
+          address: {
+            street: formData.location || '',
+            city: 'Addis Ababa',
+            state: '',
+            zipCode: ''
+          },
+          coordinates: {
+            lat: 9.03, // Default Addis Ababa
+            lng: 38.74
+          }
+        },
+        isAnonymous: false
+      };
+      const response = await axios.post('/api/incidents', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      // Emit real-time notification to others
+      if (emitNewIncident) {
+        emitNewIncident(response.data);
+      }
       setSnackbar({
         open: true,
-        message: 'Incident report submitted successfully! Community members will be notified.',
+        message: 'Incident reported successfully!',
         severity: 'success'
       });
-      
-      // Reset form after successful submission
-      setTimeout(() => {
-        setFormData({
-          type: '',
-          description: '',
-          location: '',
-          date: '',
-          time: '',
-          severity: 'medium'
-        });
-        setErrors({});
-        navigate('/incidents');
-      }, 2000);
-      
+      setFormData({
+        title: '',
+        type: '',
+        description: '',
+        location: '',
+        date: '',
+        time: '',
+        severity: 'medium'
+      });
+      setLoading(false);
+      setTimeout(() => navigate('/incidents'), 1000);
     } catch (error) {
-      console.error('Error submitting report:', error);
+      setLoading(false);
       setSnackbar({
         open: true,
-        message: 'Failed to submit report. Please try again.',
+        message: error.response?.data?.message || 'Failed to submit report. Please try again.',
         severity: 'error'
       });
-    } finally {
-      setLoading(false);
     }
   };
+
+  const severityOptions = [
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' },
+    { value: 'critical', label: 'Critical' }
+  ];
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -137,6 +164,16 @@ const ReportIncidentPage = () => {
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Title *"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                error={!!errors.title}
+                helperText={errors.title || "Enter a short, descriptive title for the incident"}
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControl fullWidth error={!!errors.type}>
                 <InputLabel>Incident Type *</InputLabel>
                 <Select
@@ -144,12 +181,17 @@ const ReportIncidentPage = () => {
                   label="Incident Type *"
                   onChange={(e) => setFormData({...formData, type: e.target.value})}
                 >
-                  <MenuItem value="suspicious">🚨 Suspicious Activity</MenuItem>
                   <MenuItem value="theft">💰 Theft</MenuItem>
                   <MenuItem value="vandalism">🏚️ Vandalism</MenuItem>
-                  <MenuItem value="traffic">🚦 Traffic Violation</MenuItem>
                   <MenuItem value="assault">👊 Assault</MenuItem>
-                  <MenuItem value="vehicle">🚗 Vehicle Crime</MenuItem>
+                  <MenuItem value="suspicious-activity">🚨 Suspicious Activity</MenuItem>
+                  <MenuItem value="fire">🔥 Fire</MenuItem>
+                  <MenuItem value="accident">💥 Accident</MenuItem>
+                  <MenuItem value="medical-emergency">🚑 Medical Emergency</MenuItem>
+                  <MenuItem value="road-hazard">🛣️ Road Hazard</MenuItem>
+                  <MenuItem value="broken-infrastructure">🏗️ Broken Infrastructure</MenuItem>
+                  <MenuItem value="noise-disturbance">🔊 Noise Disturbance</MenuItem>
+                  <MenuItem value="traffic-violation">🚦 Traffic Violation</MenuItem>
                   <MenuItem value="other">❓ Other</MenuItem>
                 </Select>
                 {errors.type && (
@@ -219,10 +261,11 @@ const ReportIncidentPage = () => {
                   label="Severity Level"
                   onChange={(e) => setFormData({...formData, severity: e.target.value})}
                 >
-                  <MenuItem value="low">🟢 Low - Minor incident</MenuItem>
-                  <MenuItem value="medium">🟡 Medium - Concerning activity</MenuItem>
-                  <MenuItem value="high">🔴 High - Serious incident</MenuItem>
-                  <MenuItem value="emergency">🚨 Emergency - Immediate attention required</MenuItem>
+                  {severityOptions.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>

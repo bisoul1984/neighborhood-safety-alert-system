@@ -54,184 +54,181 @@ const DashboardPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Welcome back, {user?.firstName || 'User'}!
-      </Typography>
-      
-      <Alert severity="info" sx={{ mb: 3 }}>
-        {user?.firstName 
-          ? `Welcome to your neighborhood safety dashboard, ${user.firstName}! Stay informed about safety in your area and connect with your community.`
-          : "Welcome to your neighborhood safety dashboard! Stay informed about safety in your area and connect with your community."
-        }
-      </Alert>
-
-      <Grid container spacing={3}>
-        {/* Recent Incidents */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader 
-              title="Recent Incidents" 
-              avatar={<Warning color="error" />}
-              action={
-                <Chip 
-                  label={dashboardData.recentIncidents} 
-                  color={dashboardData.recentIncidents > 0 ? "error" : "success"}
-                  size="small"
-                />
-              }
-            />
-            <CardContent>
-              {dashboardData.recentIncidents > 0 ? (
-                <Typography variant="body2" color="text.secondary">
-                  {dashboardData.recentIncidents} incident{dashboardData.recentIncidents !== 1 ? 's' : ''} reported in the last 24 hours.
-                </Typography>
-              ) : (
-                <Typography variant="body2" color="text.secondary">
-                  No recent incidents in your area. Great job keeping the community safe!
-                </Typography>
-              )}
-              <Button 
-                variant="outlined" 
-                sx={{ mt: 2 }}
-                onClick={() => navigate('/incidents')}
-              >
-                View All Incidents
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Neighborhood Stats */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader 
-              title="Neighborhood Stats" 
-              avatar={<People color="primary" />}
-              action={
-                <Chip 
-                  label="Live" 
-                  color="success" 
-                  size="small"
-                  icon={<CheckCircle />}
-                />
-              }
-            />
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Active Members: {dashboardData.activeMembers}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {dashboardData.activeMembers > 0 
-                  ? `${dashboardData.activeMembers} community members are currently active and monitoring the neighborhood.`
-                  : "Join your neighborhood to connect with neighbors and stay informed."
+      <Box>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 700, color: '#081f37' }}>
+          Welcome back, {user?.firstName || 'User'}!
+        </Typography>
+        <Alert severity="info" sx={{ mb: 3 }}>
+          {user?.firstName 
+            ? `Welcome to your neighborhood safety dashboard, ${user.firstName}! Stay informed about safety in your area and connect with your community.`
+            : "Welcome to your neighborhood safety dashboard! Stay informed about safety in your area and connect with your community."
+          }
+        </Alert>
+        <Grid container spacing={4}>
+          {/* Recent Incidents */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ bgcolor: 'white', color: '#081f37', borderRadius: 3, boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)', border: '1px solid rgba(8, 31, 55, 0.05)' }}>
+              <CardHeader 
+                title="Recent Incidents" 
+                avatar={<Warning sx={{ color: '#d32f2f' }} />}
+                action={
+                  <Chip 
+                    label={dashboardData.recentIncidents} 
+                    sx={{ bgcolor: dashboardData.recentIncidents > 0 ? '#d32f2f' : '#4caf50', color: 'white', fontWeight: 600 }}
+                    size="small"
+                  />
                 }
-              </Typography>
-              <Button 
-                variant="outlined" 
-                size="small" 
-                sx={{ mb: 1 }}
-                onClick={() => navigate('/members')}
-              >
-                View All Members
-              </Button>
-              <Typography variant="caption" color="text.secondary">
-                Last updated: {dashboardData.lastUpdated}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Safety Score */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader 
-              title="Neighborhood Safety Score" 
-              avatar={<Security color="success" />}
-              action={
-                <Chip 
-                  label={dashboardData.neighborhoodStatus} 
-                  color="success"
-                  size="small"
-                />
-              }
-            />
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h4" sx={{ mr: 2, fontWeight: 'bold' }}>
-                  {dashboardData.safetyScore}%
-                </Typography>
-                <TrendingUp color="success" />
-              </Box>
-              <LinearProgress 
-                variant="determinate" 
-                value={dashboardData.safetyScore} 
-                sx={{ mb: 2, height: 8, borderRadius: 4 }}
-                color={dashboardData.safetyScore >= 80 ? "success" : dashboardData.safetyScore >= 60 ? "warning" : "error"}
               />
-              <Typography variant="body2" color="text.secondary">
-                Your neighborhood has a {dashboardData.safetyScore >= 80 ? 'high' : dashboardData.safetyScore >= 60 ? 'moderate' : 'low'} safety rating.
-                {dashboardData.safetyScore >= 80 && " Keep up the great work!"}
-              </Typography>
-            </CardContent>
-          </Card>
+              <CardContent>
+                {dashboardData.recentIncidents > 0 ? (
+                  <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                    {dashboardData.recentIncidents} incident{dashboardData.recentIncidents !== 1 ? 's' : ''} reported in the last 24 hours.
+                  </Typography>
+                ) : (
+                  <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                    No recent incidents in your area. Great job keeping the community safe!
+                  </Typography>
+                )}
+                <Button 
+                  variant="outlined" 
+                  sx={{ mt: 2, borderColor: '#081f37', color: '#081f37', fontWeight: 600, '&:hover': { bgcolor: '#f8f9fa', borderColor: '#1a4a6b' } }}
+                  onClick={() => navigate('/incidents')}
+                >
+                  View All Incidents
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+          {/* Neighborhood Stats */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ bgcolor: 'white', color: '#081f37', borderRadius: 3, boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)', border: '1px solid rgba(8, 31, 55, 0.05)' }}>
+              <CardHeader 
+                title="Neighborhood Stats" 
+                avatar={<People sx={{ color: '#1976d2' }} />}
+                action={
+                  <Chip 
+                    label="Live" 
+                    sx={{ bgcolor: '#4caf50', color: 'white', fontWeight: 600 }}
+                    size="small"
+                    icon={<CheckCircle sx={{ color: 'white' }} />}
+                  />
+                }
+              />
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Active Members: {dashboardData.activeMembers}
+                </Typography>
+                <Typography variant="body2" sx={{ color: '#5a6c7d', mb: 2 }}>
+                  {dashboardData.activeMembers > 0 
+                    ? `${dashboardData.activeMembers} community members are currently active and monitoring the neighborhood.`
+                    : "Join your neighborhood to connect with neighbors and stay informed."
+                  }
+                </Typography>
+                <Button 
+                  variant="outlined" 
+                  size="small" 
+                  sx={{ mb: 1, borderColor: '#081f37', color: '#081f37', fontWeight: 600, '&:hover': { bgcolor: '#f8f9fa', borderColor: '#1a4a6b' } }}
+                  onClick={() => navigate('/members')}
+                >
+                  View All Members
+                </Button>
+                <Typography variant="caption" sx={{ color: '#5a6c7d' }}>
+                  Last updated: {dashboardData.lastUpdated}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          {/* Safety Score */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ bgcolor: 'white', color: '#081f37', borderRadius: 3, boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)', border: '1px solid rgba(8, 31, 55, 0.05)' }}>
+              <CardHeader 
+                title="Neighborhood Safety Score" 
+                avatar={<Security sx={{ color: '#4caf50' }} />}
+                action={
+                  <Chip 
+                    label={dashboardData.neighborhoodStatus} 
+                    sx={{ bgcolor: '#4caf50', color: 'white', fontWeight: 600 }}
+                    size="small"
+                  />
+                }
+              />
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h4" sx={{ mr: 2, fontWeight: 'bold', color: '#081f37' }}>
+                    {dashboardData.safetyScore}%
+                  </Typography>
+                  <TrendingUp sx={{ color: '#4caf50' }} />
+                </Box>
+                <LinearProgress 
+                  variant="determinate" 
+                  value={dashboardData.safetyScore} 
+                  sx={{ mb: 2, height: 8, borderRadius: 4, background: '#e3eaf6', '& .MuiLinearProgress-bar': { background: '#1976d2' } }}
+                  color={dashboardData.safetyScore >= 80 ? "success" : dashboardData.safetyScore >= 60 ? "warning" : "error"}
+                />
+                <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                  Your neighborhood has a {dashboardData.safetyScore >= 80 ? 'high' : dashboardData.safetyScore >= 60 ? 'moderate' : 'low'} safety rating.
+                  {dashboardData.safetyScore >= 80 && " Keep up the great work!"}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          {/* Safety Tips */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ bgcolor: 'white', color: '#081f37', borderRadius: 3, boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)', border: '1px solid rgba(8, 31, 55, 0.05)' }}>
+              <CardHeader 
+                title="Safety Tips" 
+                avatar={<Security sx={{ color: '#1976d2' }} />}
+              />
+              <CardContent>
+                <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                  • Always lock your doors and windows
+                </Typography>
+                <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                  • Report suspicious activity immediately
+                </Typography>
+                <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                  • Keep emergency contacts handy
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          {/* Quick Actions */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ bgcolor: 'white', color: '#081f37', borderRadius: 3, boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)', border: '1px solid rgba(8, 31, 55, 0.05)' }}>
+              <CardHeader 
+                title="Quick Actions" 
+                avatar={<LocationOn sx={{ color: '#1a4a6b' }} />}
+              />
+              <CardContent>
+                <Button 
+                  variant="contained" 
+                  fullWidth 
+                  sx={{ mb: 1, bgcolor: '#1976d2', color: 'white', fontWeight: 600, '&:hover': { bgcolor: '#1565c0' } }}
+                  onClick={() => navigate('/report')}
+                >
+                  Report Incident
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  fullWidth 
+                  sx={{ mb: 1, borderColor: '#081f37', color: '#081f37', fontWeight: 600, '&:hover': { bgcolor: '#f8f9fa', borderColor: '#1a4a6b' } }}
+                  onClick={() => navigate('/map')}
+                >
+                  View Map
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  fullWidth
+                  sx={{ borderColor: '#081f37', color: '#081f37', fontWeight: 600, '&:hover': { bgcolor: '#f8f9fa', borderColor: '#1a4a6b' } }}
+                  onClick={() => navigate('/safety')}
+                >
+                  Safety Resources
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-
-        {/* Safety Tips */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader 
-              title="Safety Tips" 
-              avatar={<Security color="info" />}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                • Always lock your doors and windows
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                • Report suspicious activity immediately
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                • Keep emergency contacts handy
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Quick Actions */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader 
-              title="Quick Actions" 
-              avatar={<LocationOn color="action" />}
-            />
-            <CardContent>
-              <Button 
-                variant="contained" 
-                fullWidth 
-                sx={{ mb: 1 }}
-                onClick={() => navigate('/report')}
-              >
-                Report Incident
-              </Button>
-              <Button 
-                variant="outlined" 
-                fullWidth 
-                sx={{ mb: 1 }}
-                onClick={() => navigate('/map')}
-              >
-                View Map
-              </Button>
-              <Button 
-                variant="outlined" 
-                fullWidth
-                onClick={() => navigate('/safety')}
-              >
-                Safety Resources
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 };

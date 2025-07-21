@@ -33,83 +33,30 @@ import {
   Visibility
 } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const IncidentDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [incident, setIncident] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editForm, setEditForm] = useState({});
 
-  // Mock incident data - in real app, fetch from API
-  const mockIncidents = [
-    {
-      id: 1,
-      title: "Suspicious Activity - Bole Area",
-      description: "Suspicious person loitering around Bole International Airport area. The individual was seen walking back and forth near the parking area for over an hour. Multiple witnesses reported the same behavior.",
-      location: "Bole, Addis Ababa",
-      coordinates: [8.9779, 38.7997],
-      severity: "Medium",
-      status: "Active",
-      date: "2024-01-15",
-      time: "14:30",
-      type: "Suspicious Activity",
-      reporter: "Community Member",
-      userId: "user123",
-      updates: [
-        { date: "2024-01-15", time: "15:30", message: "Police notified and responding" },
-        { date: "2024-01-15", time: "16:00", message: "Area secured, investigation ongoing" }
-      ]
-    },
-    {
-      id: 2,
-      title: "Vehicle Break-in - Kazanchis",
-      description: "Attempted break-in of parked vehicle near Kazanchis commercial area. Vehicle alarm was triggered and suspect fled the scene.",
-      location: "Kazanchis, Addis Ababa",
-      coordinates: [9.0272, 38.7369],
-      severity: "High",
-      status: "Resolved",
-      date: "2024-01-14",
-      time: "22:15",
-      type: "Vehicle Crime",
-      reporter: "Local Business Owner",
-      userId: "user456",
-      updates: [
-        { date: "2024-01-14", time: "22:30", message: "Police arrived on scene" },
-        { date: "2024-01-15", time: "09:00", message: "Case resolved, suspect identified" }
-      ]
-    },
-    {
-      id: 6,
-      title: "My Report - Suspicious Vehicle",
-      description: "Suspicious vehicle parked outside my house for several hours. Dark colored sedan with tinted windows. No one has entered or exited the vehicle.",
-      location: "Bole, Addis Ababa",
-      coordinates: [8.9779, 38.7997],
-      severity: "Medium",
-      status: "Active",
-      date: "2024-01-16",
-      time: "10:30",
-      type: "Suspicious Activity",
-      reporter: "You",
-      userId: "currentUser",
-      updates: [
-        { date: "2024-01-16", time: "11:00", message: "Community watch notified" },
-        { date: "2024-01-16", time: "12:00", message: "Vehicle still present, police contacted" }
-      ]
-    }
-  ];
-
   useEffect(() => {
-    // Simulate API call
-    const timer = setTimeout(() => {
-      const foundIncident = mockIncidents.find(inc => inc.id === parseInt(id));
-      setIncident(foundIncident);
-      setLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
+    setLoading(true);
+    setError(null);
+    axios.get(`/api/incidents/${id}`)
+      .then(res => {
+        setIncident(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Incident not found or server error.');
+        setLoading(false);
+      });
   }, [id]);
 
   const handleEdit = () => {
@@ -166,14 +113,14 @@ const IncidentDetailPage = () => {
     );
   }
 
-  if (!incident) {
+  if (error || !incident) {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Incident Not Found
         </Typography>
         <Alert severity="error" sx={{ mb: 3 }}>
-          The incident you're looking for doesn't exist or has been removed.
+          {error || "The incident you're looking for doesn't exist or has been removed."}
         </Alert>
         <Button 
           variant="contained" 
@@ -253,7 +200,10 @@ const IncidentDetailPage = () => {
                     <Typography variant="body2" fontWeight="medium">Location:</Typography>
                   </Box>
                   <Typography variant="body2" color="text.secondary" sx={{ ml: 3 }}>
-                    {incident.location}
+                    {typeof incident.location === 'string' ? incident.location :
+                      incident.location && incident.location.address
+                        ? `${incident.location.address.street || ''}${incident.location.address.city ? ', ' + incident.location.address.city : ''}`
+                        : ''}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -271,7 +221,9 @@ const IncidentDetailPage = () => {
                     <Typography variant="body2" fontWeight="medium">Reported by:</Typography>
                   </Box>
                   <Typography variant="body2" color="text.secondary" sx={{ ml: 3 }}>
-                    {incident.reporter}
+                    {incident.reporter && typeof incident.reporter === 'object'
+                      ? `${incident.reporter.firstName || ''} ${incident.reporter.lastName || ''}`.trim()
+                      : incident.reporter || ''}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>

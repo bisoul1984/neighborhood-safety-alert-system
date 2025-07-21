@@ -300,16 +300,17 @@ const EnhancedNavbar = ({ children }) => {
   ];
 
   const drawer = (
-    <Box sx={{ width: 280 }}>
+    <Box sx={{ width: 280, height: '100%', background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)', color: 'white', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
       <Box sx={{ 
         p: 2, 
         borderBottom: 1, 
-        borderColor: 'divider',
-        background: 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)',
-        color: 'white'
+        borderColor: 'rgba(255,255,255,0.1)',
+        background: 'transparent',
+        color: 'white',
+        boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)'
       }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: 1 }}>
           🛡️ Safety Alert System
         </Typography>
         <Typography variant="caption" sx={{ opacity: 0.8 }}>
@@ -319,17 +320,17 @@ const EnhancedNavbar = ({ children }) => {
 
       {/* User Info */}
       {user && (
-        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <Avatar 
               src={user.profile?.avatar} 
-              sx={{ width: 40, height: 40, mr: 2 }}
+              sx={{ width: 40, height: 40, mr: 2, border: '2px solid #1a4a6b' }}
             />
             <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: 'white' }}>
                 {user.name || user.email}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
                 {user.role || 'Community Member'}
               </Typography>
             </Box>
@@ -339,7 +340,7 @@ const EnhancedNavbar = ({ children }) => {
             size="small" 
             color="success" 
             variant="outlined"
-            sx={{ fontSize: '0.7rem' }}
+            sx={{ fontSize: '0.7rem', color: 'white', borderColor: '#4caf50' }}
           />
         </Box>
       )}
@@ -360,18 +361,22 @@ const EnhancedNavbar = ({ children }) => {
                 selected={isActiveRoute(item.path)}
                 sx={{
                   '&.Mui-selected': {
-                    backgroundColor: 'primary.light',
-                    '&:hover': {
-                      backgroundColor: 'primary.light',
-                    },
+                    background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(25, 118, 210, 0.15)',
+                    '& .MuiListItemIcon-root': { color: 'white' },
                   },
                   borderRadius: 1,
                   mx: 1,
                   mb: 0.5,
+                  color: 'white',
+                  '&:hover': {
+                    background: 'rgba(26, 74, 107, 0.2)',
+                  },
                 }}
               >
                 <ListItemIcon sx={{ 
-                  color: isActiveRoute(item.path) ? 'primary.main' : 'inherit',
+                  color: isActiveRoute(item.path) ? 'white' : '#90caf9',
                   minWidth: 40
                 }}>
                   {item.icon}
@@ -380,32 +385,32 @@ const EnhancedNavbar = ({ children }) => {
                   primary={item.text}
                   secondary={item.description}
                   sx={{ 
-                    color: isActiveRoute(item.path) ? 'primary.main' : 'inherit',
+                    color: 'white',
                     '& .MuiListItemText-secondary': {
                       fontSize: '0.75rem',
-                      opacity: 0.7
+                      opacity: 0.7,
+                      color: '#b0bec5'
                     }
                   }}
                 />
                 {item.subItems && (
-                  expandedMenu[item.text] ? <ExpandLess /> : <ExpandMore />
+                  expandedMenu[item.text] ? <ExpandLess sx={{ color: 'white' }} /> : <ExpandMore sx={{ color: 'white' }} />
                 )}
               </ListItemButton>
             </ListItem>
-            
             {/* Sub-menu items */}
             {item.subItems && (
               <Collapse in={expandedMenu[item.text]} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
+                <List component="div" disablePadding sx={{ background: 'rgba(255,255,255,0.02)' }}>
                   {item.subItems.map((subItem) => (
                     <ListItemButton
                       key={subItem.text}
-                      sx={{ pl: 4, py: 0.5 }}
+                      sx={{ pl: 4, py: 0.5, color: 'white', '&:hover': { background: 'rgba(26, 74, 107, 0.15)' } }}
                       onClick={() => handleNavigation(subItem.path)}
                     >
                       <ListItemText 
                         primary={subItem.text}
-                        sx={{ fontSize: '0.9rem' }}
+                        sx={{ fontSize: '0.9rem', color: 'white' }}
                       />
                     </ListItemButton>
                   ))}
@@ -417,8 +422,8 @@ const EnhancedNavbar = ({ children }) => {
       </List>
 
       {/* Emergency Section */}
-      <Box sx={{ p: 2, mt: 'auto' }}>
-        <Divider sx={{ mb: 2 }} />
+      <Box sx={{ p: 2, mt: 'auto', background: 'rgba(255,255,255,0.03)' }}>
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.1)' }} />
         <Typography variant="subtitle2" color="error" sx={{ mb: 1 }}>
           🚨 Emergency
         </Typography>
@@ -428,7 +433,7 @@ const EnhancedNavbar = ({ children }) => {
           fullWidth
           startIcon={<Warning />}
           onClick={handleEmergencyAlert}
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, fontWeight: 600 }}
         >
           Emergency Alert
         </Button>
@@ -438,6 +443,7 @@ const EnhancedNavbar = ({ children }) => {
           fullWidth
           startIcon={<Phone />}
           onClick={() => window.open('tel:911')}
+          sx={{ fontWeight: 600, borderColor: '#d32f2f', color: '#d32f2f' }}
         >
           Call 911
         </Button>
@@ -452,8 +458,9 @@ const EnhancedNavbar = ({ children }) => {
         position="fixed" 
         sx={{ 
           zIndex: theme.zIndex.drawer + 1,
-          background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
-          boxShadow: 3
+          background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
+          boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
         <Toolbar>
@@ -461,7 +468,7 @@ const EnhancedNavbar = ({ children }) => {
             color="inherit"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            sx={{ mr: 2, display: { md: 'none' }, background: 'rgba(255,255,255,0.08)' }}
           >
             <MenuIcon />
           </IconButton>
@@ -470,14 +477,16 @@ const EnhancedNavbar = ({ children }) => {
             <Typography 
               variant="h6" 
               component="div" 
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/')} 
               sx={{ 
                 flexGrow: 1,
                 fontWeight: 'bold',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
+                color: 'white',
                 cursor: 'pointer',
+                letterSpacing: 1,
                 '&:hover': {
                   opacity: 0.8
                 }
@@ -497,10 +506,9 @@ const EnhancedNavbar = ({ children }) => {
               alignItems: 'center',
               width: { xs: '200px', sm: '300px' },
               mr: 2,
-              backgroundColor: 'rgba(255, 255, 255, 0.15)',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.25)',
-              },
+              backgroundColor: 'rgba(255, 255, 255, 0.10)',
+              boxShadow: 'none',
+              borderRadius: 2,
             }}
           >
             <SearchIconWrapper>
@@ -529,9 +537,9 @@ const EnhancedNavbar = ({ children }) => {
                   color="inherit"
                   onClick={handleEmergencyAlert}
                   sx={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
                     }
                   }}
                 >
@@ -547,9 +555,9 @@ const EnhancedNavbar = ({ children }) => {
                   color="inherit"
                   onClick={handleNotificationOpen}
                   sx={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
                     }
                   }}
                 >
@@ -568,9 +576,9 @@ const EnhancedNavbar = ({ children }) => {
                   onClick={handleMenuOpen}
                   sx={{ 
                     ml: 1,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
                     }
                   }}
                 >
@@ -600,6 +608,8 @@ const EnhancedNavbar = ({ children }) => {
             top: 0,
             height: '100%',
             zIndex: theme.zIndex.drawer,
+            background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
+            color: 'white',
           },
         }}
       >

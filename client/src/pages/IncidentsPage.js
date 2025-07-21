@@ -33,10 +33,13 @@ import {
   Delete
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const IncidentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   const [incidents, setIncidents] = useState([]);
   const [filteredIncidents, setFilteredIncidents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,152 +47,8 @@ const IncidentsPage = () => {
   const [severityFilter, setSeverityFilter] = useState('all');
   const [isMyReports, setIsMyReports] = useState(false);
   const [isRecent, setIsRecent] = useState(false);
-
-  // Sample incidents data (same as map)
-  const sampleIncidents = [
-    {
-      id: 1,
-      title: "Suspicious Activity - Bole Area",
-      description: "Suspicious person loitering around Bole International Airport area",
-      location: "Bole, Addis Ababa",
-      coordinates: [8.9779, 38.7997],
-      severity: "Medium",
-      status: "Active",
-      date: "2024-01-15",
-      time: "14:30",
-      type: "Suspicious Activity",
-      reporter: "Community Member",
-      userId: "user123"
-    },
-    {
-      id: 2,
-      title: "Vehicle Break-in - Kazanchis",
-      description: "Attempted break-in of parked vehicle near Kazanchis commercial area",
-      location: "Kazanchis, Addis Ababa",
-      coordinates: [9.0272, 38.7369],
-      severity: "High",
-      status: "Resolved",
-      date: "2024-01-14",
-      time: "22:15",
-      type: "Vehicle Crime",
-      reporter: "Local Business Owner",
-      userId: "user456"
-    },
-    {
-      id: 3,
-      title: "Traffic Incident - Meskel Square",
-      description: "Minor traffic accident at Meskel Square intersection",
-      location: "Meskel Square, Addis Ababa",
-      coordinates: [9.0054, 38.7636],
-      severity: "Low",
-      status: "Active",
-      date: "2024-01-15",
-      time: "08:45",
-      type: "Traffic Incident",
-      reporter: "Traffic Police",
-      userId: "user789"
-    },
-    {
-      id: 4,
-      title: "Safety Alert - Piazza Area",
-      description: "Increased pickpocket activity reported in Piazza area",
-      location: "Piazza, Addis Ababa",
-      coordinates: [9.0321, 38.7489],
-      severity: "Medium",
-      status: "Active",
-      date: "2024-01-13",
-      time: "16:20",
-      type: "Theft",
-      reporter: "Local Police",
-      userId: "user101"
-    },
-    {
-      id: 5,
-      title: "Community Watch - Entoto",
-      description: "Neighborhood watch meeting scheduled for Entoto area",
-      location: "Entoto, Addis Ababa",
-      coordinates: [9.0084, 38.7636],
-      severity: "Info",
-      status: "Scheduled",
-      date: "2024-01-20",
-      time: "19:00",
-      type: "Community Event",
-      reporter: "Community Leader",
-      userId: "user202"
-    },
-    // Add some user's own reports
-    {
-      id: 6,
-      title: "My Report - Suspicious Vehicle",
-      description: "Suspicious vehicle parked outside my house for several hours",
-      location: "Bole, Addis Ababa",
-      coordinates: [8.9779, 38.7997],
-      severity: "Medium",
-      status: "Active",
-      date: "2024-01-16",
-      time: "10:30",
-      type: "Suspicious Activity",
-      reporter: "You",
-      userId: "currentUser"
-    },
-    {
-      id: 7,
-      title: "My Report - Broken Street Light",
-      description: "Street light broken on main road, creating safety hazard",
-      location: "Kazanchis, Addis Ababa",
-      coordinates: [9.0272, 38.7369],
-      severity: "Low",
-      status: "Pending",
-      date: "2024-01-17",
-      time: "18:45",
-      type: "Infrastructure",
-      reporter: "You",
-      userId: "currentUser"
-    },
-    // Add some very recent incidents for the recent filter
-    {
-      id: 8,
-      title: "Recent Alert - Pickpocket Activity",
-      description: "Multiple pickpocket incidents reported in Mercato area",
-      location: "Mercato, Addis Ababa",
-      coordinates: [9.0272, 38.7369],
-      severity: "High",
-      status: "Active",
-      date: new Date().toISOString().split('T')[0], // Today's date
-      time: "12:30",
-      type: "Theft",
-      reporter: "Local Police",
-      userId: "user303"
-    },
-    {
-      id: 9,
-      title: "Recent Alert - Traffic Accident",
-      description: "Major traffic accident on Ring Road near Bole",
-      location: "Bole, Addis Ababa",
-      coordinates: [8.9779, 38.7997],
-      severity: "High",
-      status: "Active",
-      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 2 days ago
-      time: "08:15",
-      type: "Traffic Incident",
-      reporter: "Traffic Police",
-      userId: "user404"
-    },
-    {
-      id: 10,
-      title: "Recent Alert - Suspicious Package",
-      description: "Suspicious package found near National Bank",
-      location: "Piazza, Addis Ababa",
-      coordinates: [9.0321, 38.7489],
-      severity: "High",
-      status: "Resolved",
-      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 day ago
-      time: "16:45",
-      type: "Suspicious Activity",
-      reporter: "Security Guard",
-      userId: "user505"
-    }
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Check URL parameters for filtering
   useEffect(() => {
@@ -208,17 +67,30 @@ const IncidentsPage = () => {
     }
   }, [location.search]);
 
+  // Fetch incidents from backend
   useEffect(() => {
-    setIncidents(sampleIncidents);
-    setFilteredIncidents(sampleIncidents);
+    setLoading(true);
+    setError(null);
+    axios.get('/api/incidents')
+      .then(res => {
+        setIncidents(res.data.incidents || []);
+        setFilteredIncidents(res.data.incidents || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Failed to load incidents.');
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
     let filtered = incidents;
 
     // My Reports filter (highest priority)
-    if (isMyReports) {
-      filtered = filtered.filter(incident => incident.userId === 'currentUser');
+    if (isMyReports && user && user._id) {
+      filtered = filtered.filter(incident =>
+        incident.reporter && typeof incident.reporter === 'object' && incident.reporter._id === user._id
+      );
     }
 
     // Recent filter (shows incidents from last 7 days)
@@ -234,12 +106,19 @@ const IncidentsPage = () => {
 
     // Search filter
     if (searchQuery) {
-      filtered = filtered.filter(incident =>
-        incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        incident.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        incident.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        incident.type.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      filtered = filtered.filter(incident => {
+        const locationString = typeof incident.location === 'string'
+          ? incident.location
+          : incident.location && incident.location.address
+            ? `${incident.location.address.street || ''} ${incident.location.address.city || ''}`
+            : '';
+        return (
+          (incident.title && incident.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (incident.description && incident.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (locationString && locationString.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (incident.type && incident.type.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+      });
     }
 
     // Status filter
@@ -249,11 +128,13 @@ const IncidentsPage = () => {
 
     // Severity filter
     if (severityFilter !== 'all') {
-      filtered = filtered.filter(incident => incident.severity === severityFilter);
+      filtered = filtered.filter(incident =>
+        incident.severity && incident.severity.toLowerCase() === severityFilter.toLowerCase()
+      );
     }
 
     setFilteredIncidents(filtered);
-  }, [incidents, searchQuery, statusFilter, severityFilter, isMyReports, isRecent]);
+  }, [incidents, searchQuery, statusFilter, severityFilter, isMyReports, isRecent, user]);
 
   const getSeverityColor = (severity) => {
     switch (severity.toLowerCase()) {
@@ -288,7 +169,7 @@ const IncidentsPage = () => {
     // Show confirmation dialog
     if (window.confirm('Are you sure you want to delete this incident? This action cannot be undone.')) {
       // Remove from local state (in real app, this would be an API call)
-      const updatedIncidents = incidents.filter(incident => incident.id !== incidentId);
+      const updatedIncidents = incidents.filter(incident => incident._id !== incidentId); // Changed to _id for backend
       setIncidents(updatedIncidents);
       setFilteredIncidents(updatedIncidents);
       alert('Incident deleted successfully!');
@@ -369,10 +250,10 @@ const IncidentsPage = () => {
                   onChange={(e) => setSeverityFilter(e.target.value)}
                 >
                   <MenuItem value="all">All Severity</MenuItem>
-                  <MenuItem value="High">High</MenuItem>
-                  <MenuItem value="Medium">Medium</MenuItem>
-                  <MenuItem value="Low">Low</MenuItem>
-                  <MenuItem value="Info">Info</MenuItem>
+                  <MenuItem value="critical">Critical</MenuItem>
+                  <MenuItem value="high">High</MenuItem>
+                  <MenuItem value="medium">Medium</MenuItem>
+                  <MenuItem value="low">Low</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -386,91 +267,101 @@ const IncidentsPage = () => {
       </Card>
 
       {/* Incidents List */}
-      <Grid container spacing={3}>
-        {filteredIncidents.length > 0 ? (
-          filteredIncidents.map((incident) => (
-            <Grid item xs={12} key={incident.id}>
+      {loading ? (
+        <Typography align="center" sx={{ mt: 4 }}>Loading incidents...</Typography>
+      ) : error ? (
+        <Alert severity="error">{error}</Alert>
+      ) : (
+        <Grid container spacing={3}>
+          {filteredIncidents.length > 0 ? (
+            filteredIncidents.map((incident) => (
+              <Grid item xs={12} key={incident._id || incident.id}>
+                <Card>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography variant="h6" gutterBottom>
+                          {incident.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          {incident.description}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+                        <Chip
+                          label={incident.severity}
+                          color={getSeverityColor(incident.severity)}
+                          size="small"
+                        />
+                        <Chip
+                          label={incident.status}
+                          color={getStatusColor(incident.status)}
+                          size="small"
+                          variant="outlined"
+                        />
+                      </Box>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <LocationOn fontSize="small" color="action" />
+                        <Typography variant="body2">
+                          {typeof incident.location === 'string' ? incident.location :
+                            incident.location && incident.location.address
+                              ? `${incident.location.address.street || ''}${incident.location.address.city ? ', ' + incident.location.address.city : ''}`
+                              : ''}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Schedule fontSize="small" color="action" />
+                        <Typography variant="body2">
+                          {new Date(incident.date).toLocaleDateString()} at {incident.time}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Person fontSize="small" color="action" />
+                        <Typography variant="body2">
+                          {incident.reporter && typeof incident.reporter === 'object'
+                            ? `${incident.reporter.firstName || ''} ${incident.reporter.lastName || ''}`.trim()
+                            : incident.reporter || ''}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ my: 1 }} />
+                    
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label={incident.type} size="small" variant="outlined" />
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <Tooltip title="View Details">
+                          <IconButton size="small" onClick={() => handleViewDetails(incident._id || incident.id)}>
+                            <Visibility />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                          <IconButton size="small" onClick={() => handleDelete(incident._id || incident.id)}>
+                            <Delete />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Grid item xs={12}>
               <Card>
                 <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography variant="h6" gutterBottom>
-                        {incident.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {incident.description}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
-                      <Chip
-                        label={incident.severity}
-                        color={getSeverityColor(incident.severity)}
-                        size="small"
-                      />
-                      <Chip
-                        label={incident.status}
-                        color={getStatusColor(incident.status)}
-                        size="small"
-                        variant="outlined"
-                      />
-                    </Box>
-                  </Box>
-                  
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <LocationOn fontSize="small" color="action" />
-                      <Typography variant="body2">{incident.location}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Schedule fontSize="small" color="action" />
-                      <Typography variant="body2">
-                        {new Date(incident.date).toLocaleDateString()} at {incident.time}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Person fontSize="small" color="action" />
-                      <Typography variant="body2">{incident.reporter}</Typography>
-                    </Box>
-                  </Box>
-
-                  <Divider sx={{ my: 1 }} />
-                  
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Chip label={incident.type} size="small" variant="outlined" />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Tooltip title="View Details">
-                        <IconButton size="small" onClick={() => handleViewDetails(incident.id)}>
-                          <Visibility />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Edit">
-                        <IconButton size="small" onClick={() => handleEdit(incident.id)}>
-                          <Edit />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete">
-                        <IconButton size="small" onClick={() => handleDelete(incident.id)}>
-                          <Delete />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  </Box>
+                  <Typography variant="body1" color="text.secondary" align="center">
+                    No incidents found matching your criteria. Try adjusting your filters or search terms.
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
-          ))
-        ) : (
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Typography variant="body1" color="text.secondary" align="center">
-                  No incidents found matching your criteria. Try adjusting your filters or search terms.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-      </Grid>
+          )}
+        </Grid>
+      )}
     </Container>
   );
 };

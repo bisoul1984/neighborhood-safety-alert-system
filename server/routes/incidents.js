@@ -24,9 +24,12 @@ router.post('/', auth, [
   body('location.coordinates.lng').isFloat({ min: -180, max: 180 }),
   body('isAnonymous').optional().isBoolean()
 ], async (req, res) => {
+  // Add logging for debugging
+  console.log('POST /api/incidents body:', JSON.stringify(req.body, null, 2));
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -97,14 +100,16 @@ router.post('/', auth, [
     });
 
     // Emit real-time alert to neighborhood
-    io.to(`neighborhood-${neighborhood._id}`).emit('new-incident', {
-      id: incident._id,
-      title: incident.title,
-      type: incident.type,
-      severity: incident.severity,
-      location: incident.location,
-      createdAt: incident.createdAt
-    });
+    if (io && io.to) {
+      io.to(`neighborhood-${neighborhood._id}`).emit('new-incident', {
+        id: incident._id,
+        title: incident.title,
+        type: incident.type,
+        severity: incident.severity,
+        location: incident.location,
+        createdAt: incident.createdAt
+      });
+    }
 
     // Populate reporter info for response
     await incident.populate('reporter', 'firstName lastName');
