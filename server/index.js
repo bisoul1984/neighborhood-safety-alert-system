@@ -24,8 +24,22 @@ const io = socketIo(server, {
 
 // Security middleware
 app.use(helmet());
+// Update CORS configuration to allow multiple origins
+const allowedOrigins = [
+  'https://neighborhood-safety-alert-system-c8.vercel.app',
+  'https://neighborhood-safety-alert-system-c87h-pb68lqio5.vercel.app',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  origin: function(origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
