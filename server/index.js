@@ -22,7 +22,7 @@ const io = socketIo(server, {
   }
 });
 
-// CORS FIRST!
+// Minimal working CORS setup FIRST
 const allowedOrigins = [
   'https://neighborhood-safety-alert-system-c8.vercel.app',
   'https://neighborhood-safety-alert-system-c87h-pb68lqio5.vercel.app',
@@ -37,13 +37,10 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-// Explicit OPTIONS handler for preflight
 app.options('*', cors(corsOptions));
 
 // REMOVE helmet and rate limiting for CORS debugging
