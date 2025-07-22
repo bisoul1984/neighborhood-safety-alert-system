@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
       if (state.token) {
         try {
           dispatch({ type: 'AUTH_START' });
-          const response = await axios.get('/api/auth/me');
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/me`);
           dispatch({
             type: 'AUTH_SUCCESS',
             payload: { user: response.data, token: state.token }
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       dispatch({ type: 'AUTH_START' });
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, { email, password });
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       dispatch({ type: 'AUTH_START' });
-      const response = await axios.post('/api/auth/register', userData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, userData);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (profileData) => {
     try {
-      const response = await axios.put('/api/auth/profile', profileData);
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/profile`, profileData);
       dispatch({ type: 'UPDATE_USER', payload: response.data });
       toast.success('Profile updated successfully');
       return { success: true };
@@ -144,7 +144,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateNotifications = async (notificationPreferences) => {
     try {
-      const response = await axios.put('/api/auth/notifications', { notificationPreferences });
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/notifications`, { notificationPreferences });
       dispatch({ type: 'UPDATE_USER', payload: response.data });
       toast.success('Notification preferences updated');
       return { success: true };
@@ -157,7 +157,7 @@ export const AuthProvider = ({ children }) => {
 
   const changePassword = async (currentPassword, newPassword) => {
     try {
-      await axios.post('/api/auth/change-password', { currentPassword, newPassword });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/change-password`, { currentPassword, newPassword });
       toast.success('Password changed successfully');
       return { success: true };
     } catch (error) {
@@ -169,7 +169,7 @@ export const AuthProvider = ({ children }) => {
 
   const forgotPassword = async (email) => {
     try {
-      await axios.post('/api/auth/forgot-password', { email });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/forgot-password`, { email });
       toast.success('Password reset email sent');
       return { success: true };
     } catch (error) {
@@ -181,7 +181,7 @@ export const AuthProvider = ({ children }) => {
 
   const resetPassword = async (token, newPassword) => {
     try {
-      await axios.post('/api/auth/reset-password', { token, newPassword });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/reset-password`, { token, newPassword });
       toast.success('Password reset successfully');
       return { success: true };
     } catch (error) {

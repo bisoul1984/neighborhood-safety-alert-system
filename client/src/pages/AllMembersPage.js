@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 import {
   Box,
   Typography,
@@ -53,172 +55,43 @@ const AllMembersPage = () => {
   const [selectedMember, setSelectedMember] = useState(null);
   const [memberDialogOpen, setMemberDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState(null);
   const membersPerPage = 10;
+  const { user, token } = useAuth();
 
-  // Mock community members data - in a real app, this would come from API
-  const mockMembers = useMemo(() => [
-    {
-      id: 1,
-      firstName: 'Sarah',
-      lastName: 'Johnson',
-      email: 'sarah.j@email.com',
-      phone: '+251 91 123 4567',
-      role: 'Coordinator',
-      area: 'Bole District',
-      status: 'active',
-      joinedDate: '2023-01-15',
-      lastActive: '2024-02-10',
-      incidentsReported: 5,
-      neighborhood: 'Bole Community',
-      avatar: 'SJ'
-    },
-    {
-      id: 2,
-      firstName: 'Michael',
-      lastName: 'Chen',
-      email: 'michael.c@email.com',
-      phone: '+251 92 234 5678',
-      role: 'Patrol Leader',
-      area: 'Kazanchis District',
-      status: 'active',
-      joinedDate: '2023-02-20',
-      lastActive: '2024-02-11',
-      incidentsReported: 3,
-      neighborhood: 'Kazanchis Community',
-      avatar: 'MC'
-    },
-    {
-      id: 3,
-      firstName: 'Amina',
-      lastName: 'Hassan',
-      email: 'amina.h@email.com',
-      phone: '+251 93 345 6789',
-      role: 'Member',
-      area: 'Piazza District',
-      status: 'active',
-      joinedDate: '2023-03-10',
-      lastActive: '2024-02-09',
-      incidentsReported: 2,
-      neighborhood: 'Piazza Community',
-      avatar: 'AH'
-    },
-    {
-      id: 4,
-      firstName: 'David',
-      lastName: 'Wilson',
-      email: 'david.w@email.com',
-      phone: '+251 94 456 7890',
-      role: 'Member',
-      area: 'Bole District',
-      status: 'active',
-      joinedDate: '2023-04-05',
-      lastActive: '2024-02-12',
-      incidentsReported: 1,
-      neighborhood: 'Bole Community',
-      avatar: 'DW'
-    },
-    {
-      id: 5,
-      firstName: 'Fatima',
-      lastName: 'Ahmed',
-      email: 'fatima.a@email.com',
-      phone: '+251 95 567 8901',
-      role: 'Member',
-      area: 'Kazanchis District',
-      status: 'inactive',
-      joinedDate: '2023-05-12',
-      lastActive: '2024-01-15',
-      incidentsReported: 0,
-      neighborhood: 'Kazanchis Community',
-      avatar: 'FA'
-    },
-    {
-      id: 6,
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'john.s@email.com',
-      phone: '+251 96 678 9012',
-      role: 'Patrol Leader',
-      area: 'Piazza District',
-      status: 'active',
-      joinedDate: '2023-06-18',
-      lastActive: '2024-02-11',
-      incidentsReported: 4,
-      neighborhood: 'Piazza Community',
-      avatar: 'JS'
-    },
-    {
-      id: 7,
-      firstName: 'Maria',
-      lastName: 'Garcia',
-      email: 'maria.g@email.com',
-      phone: '+251 97 789 0123',
-      role: 'Member',
-      area: 'Bole District',
-      status: 'active',
-      joinedDate: '2023-07-22',
-      lastActive: '2024-02-10',
-      incidentsReported: 2,
-      neighborhood: 'Bole Community',
-      avatar: 'MG'
-    },
-    {
-      id: 8,
-      firstName: 'Ahmed',
-      lastName: 'Mohammed',
-      email: 'ahmed.m@email.com',
-      phone: '+251 98 890 1234',
-      role: 'Coordinator',
-      area: 'Kazanchis District',
-      status: 'active',
-      joinedDate: '2023-08-30',
-      lastActive: '2024-02-12',
-      incidentsReported: 6,
-      neighborhood: 'Kazanchis Community',
-      avatar: 'AM'
-    },
-    {
-      id: 9,
-      firstName: 'Fikerte',
-      lastName: 'Tadesse',
-      email: 'fikertetadesse1403@gmail.com',
-      phone: '+251967044111',
-      role: 'Member',
-      area: 'Bole District',
-      status: 'active',
-      joinedDate: '2024-02-12',
-      lastActive: '2024-02-12',
-      incidentsReported: 0,
-      neighborhood: 'Bole Community',
-      avatar: 'FT'
-    },
-    {
-      id: 10,
-      firstName: 'Sisay',
-      lastName: 'Tadesse',
-      email: 'sisayt.f@gmail.com',
-      phone: '+251912345678',
-      role: 'Member',
-      area: 'Bole District',
-      status: 'active',
-      joinedDate: '2024-02-12',
-      lastActive: '2024-02-12',
-      incidentsReported: 0,
-      neighborhood: 'Bole Community',
-      avatar: 'ST'
-    }
-  ], []);
-
-  // Simulate loading data
+  // Fetch real members from API
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMembers(mockMembers);
-      setFilteredMembers(mockMembers);
+    setLoading(true);
+    setError(null);
+    if (!user || !token) {
+      setError('You must be logged in to view members.');
       setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+      return;
+    }
+    const fetchMembers = async () => {
+      try {
+        let response;
+        if (user.role === 'admin') {
+          response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/admin/all`);
+          setMembers(response.data.users || []);
+          setFilteredMembers(response.data.users || []);
+        } else {
+          response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/community`);
+          setMembers(response.data.users || []);
+          setFilteredMembers(response.data.users || []);
+        }
+        setLoading(false);
+      } catch (err) {
+        if (err.response && err.response.data && err.response.data.error && err.response.data.error.includes('location')) {
+          setError('Please set your location in your profile to view community members.');
+        } else {
+          setError('Failed to load members.');
+        }
+        setLoading(false);
+      }
+    };
+    fetchMembers();
+  }, [user, token]);
 
   // Filter and search members
   useEffect(() => {
@@ -299,13 +172,9 @@ const AllMembersPage = () => {
         Connect with your neighbors and community members. Find contact information and see who's active in your neighborhood.
       </Alert>
 
-      {/* Debug info - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <Alert severity="warning" sx={{ mb: 3 }}>
-          Debug: Search query: "{searchQuery}" | Found: {filteredMembers.length} members | Total: {members.length} members
-          <br />
-          Note: This shows mock data. In production, this would fetch real registered users from the database.
-        </Alert>
+      {/* Error message */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
       )}
 
       {/* Search and Filters */}

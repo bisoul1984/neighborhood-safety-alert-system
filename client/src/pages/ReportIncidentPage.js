@@ -108,7 +108,7 @@ const ReportIncidentPage = () => {
         },
         isAnonymous: false
       };
-      const response = await axios.post('/api/incidents', payload, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/incidents`, payload, {
         headers: {
           Authorization: `Bearer ${token}`
         }

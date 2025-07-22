@@ -48,7 +48,7 @@ const IncidentDetailPage = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    axios.get(`/api/incidents/${id}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/incidents/${id}`)
       .then(res => {
         setIncident(res.data);
         setLoading(false);

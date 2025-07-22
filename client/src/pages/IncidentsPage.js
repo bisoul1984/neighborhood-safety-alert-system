@@ -71,7 +71,7 @@ const IncidentsPage = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    axios.get('/api/incidents')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/incidents`)
       .then(res => {
         setIncidents(res.data.incidents || []);
         setFilteredIncidents(res.data.incidents || []);
