@@ -99,7 +99,7 @@ const IncidentsPage = () => {
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       
       filtered = filtered.filter(incident => {
-        const incidentDate = new Date(incident.date);
+        const incidentDate = new Date(incident.createdAt);
         return incidentDate >= sevenDaysAgo;
       });
     }
