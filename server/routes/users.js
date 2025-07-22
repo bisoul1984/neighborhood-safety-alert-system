@@ -30,63 +30,31 @@ router.get('/profile/:id', async (req, res) => {
 // @route   GET /api/users/community
 // @desc    Get community members in user's area
 // @access  Private
-router.get('/community', auth, [
-  query('radius').optional().isFloat({ min: 1, max: 50 }),
-  query('page').optional().isInt({ min: 1 }),
-  query('limit').optional().isInt({ min: 1, max: 100 })
-], async (req, res) => {
+router.get('/community', auth, async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { radius = 5, page = 1, limit = 20 } = req.query;
-    const skip = (page - 1) * limit;
-
-    if (!req.user.address?.coordinates) {
-      return res.status(400).json({ error: 'User location not set' });
-    }
-
-    const users = await User.find({
-      _id: { $ne: req.user.id },
-      'address.coordinates': {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [req.user.address.coordinates.lng, req.user.address.coordinates.lat]
-          },
-          $maxDistance: radius * 1609.34
-        }
-      }
-    })
-    .select('firstName lastName profile stats lastActive')
-    .sort({ 'stats.communityScore': -1, lastActive: -1 })
-    .skip(skip)
-    .limit(parseInt(limit));
-
-    const total = await User.countDocuments({
-      _id: { $ne: req.user.id },
-      'address.coordinates': {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [req.user.address.coordinates.lng, req.user.address.coordinates.lat]
-          },
-          $maxDistance: radius * 1609.34
-        }
-      }
-    });
-
-    res.json({
-      users,
-      pagination: {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        total,
-        pages: Math.ceil(total / limit)
-      }
-    });
+    // Return all users, including the current user
+    const usersRaw = await User.find({})
+      .select('firstName lastName email phone profile stats lastActive address role status createdAt');
+    // Map users to include all expected fields with defaults
+    const users = usersRaw.map(user => ({
+      id: user._id,
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      email: user.email || '',
+      phone: user.phone || '',
+      avatar: (user.profile && user.profile.avatar) ? user.profile.avatar : (user.firstName ? user.firstName[0] : '?'),
+      area: (user.address && user.address.city) ? user.address.city : '',
+      neighborhood: (user.address && user.address.neighborhood) ? user.address.neighborhood : '',
+      role: user.role || 'Member',
+      status: user.status || 'active',
+      joinedDate: user.createdAt || (user._id.getTimestamp ? user._id.getTimestamp() : new Date()),
+      lastActive: user.lastActive || user.createdAt || (user._id.getTimestamp ? user._id.getTimestamp() : new Date()),
+      incidentsReported: (user.stats && user.stats.reportsSubmitted) ? user.stats.reportsSubmitted : 0
+    }));
+    // Debug log
+    console.log('API /api/users/community: returning', users.length, 'users');
+    users.forEach(u => console.log('User:', u.id, u.email));
+    res.json({ users });
   } catch (error) {
     console.error('Get community error:', error);
     res.status(500).json({ error: 'Server error' });
@@ -231,43 +199,19 @@ router.get('/stats', auth, async (req, res) => {
 // @access  Private
 router.put('/location', auth, async (req, res) => {
   try {
-    const { coordinates, address } = req.body;
-
-    if (!coordinates || !coordinates.lat || !coordinates.lng) {
-      return res.status(400).json({ error: 'Valid coordinates required' });
+    const { address } = req.body;
+    if (!address) {
+      return res.status(400).json({ error: 'Address is required' });
     }
-
-    // Find neighborhood for new location
-    const neighborhood = await Neighborhood.findOne({
-      'boundaries.center': {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [coordinates.lng, coordinates.lat]
-          },
-          $maxDistance: 5000
-        }
-      }
-    });
-
-    const updateData = {
-      address: {
-        ...req.user.address,
-        ...address,
-        coordinates
-      }
-    };
-
-    if (neighborhood) {
-      updateData.neighborhood = neighborhood._id;
-    }
-
+    // Only update address, remove coordinates if present
+    const updateData = { address };
+    // Optionally, remove coordinates field if it exists
+    updateData.$unset = { 'address.coordinates': '' };
     const user = await User.findByIdAndUpdate(
       req.user.id,
-      { $set: updateData },
+      { $set: { address }, $unset: { 'address.coordinates': '' } },
       { new: true, runValidators: true }
     ).populate('neighborhood', 'name city state');
-
     res.json(user);
   } catch (error) {
     console.error('Update location error:', error);
