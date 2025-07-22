@@ -29,8 +29,7 @@ import {
   Person, 
   Warning,
   Edit,
-  Delete,
-  Visibility
+  Delete
 } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';

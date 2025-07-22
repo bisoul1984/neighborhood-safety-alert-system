@@ -15,9 +15,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Chip,
-  Divider,
-  Paper
+  Divider
 } from '@mui/material';
 import { 
   Security, 

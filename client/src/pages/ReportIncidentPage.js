@@ -14,13 +14,9 @@ import {
   Paper,
   Snackbar,
   CircularProgress,
-  Chip,
   Divider
 } from '@mui/material';
 import { 
-  Warning,
-  LocationOn,
-  Schedule,
   Security,
   CheckCircle,
   Error

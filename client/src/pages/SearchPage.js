@@ -121,7 +121,6 @@ const SearchPage = () => {
     setLoading(true);
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
     // Filter mock results based on search query
     const filteredResults = {
       incidents: mockSearchResults.incidents.filter(item =>
@@ -142,16 +141,15 @@ const SearchPage = () => {
         item.description.toLowerCase().includes(searchQuery.toLowerCase())
       )
     };
-    
     setSearchResults(filteredResults);
     setLoading(false);
-  }, [searchQuery]);
+  }, [searchQuery, mockSearchResults]);
 
   useEffect(() => {
     if (searchQuery) {
       performSearch();
     }
-  }, [performSearch]);
+  }, [performSearch, searchQuery]);
 
   const handleSearch = (event) => {
     event.preventDefault();

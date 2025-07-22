@@ -21,9 +21,7 @@ import {
   LocalFireDepartment, 
   LocalHospital,
   Warning,
-  LocationOn,
-  AccessTime,
-  Language
+  AccessTime
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 

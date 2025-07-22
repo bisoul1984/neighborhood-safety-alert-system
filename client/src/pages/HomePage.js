@@ -7,15 +7,11 @@ import {
   Grid,
   Card,
   CardContent,
-  CardMedia,
   Stack,
-  Chip,
   useTheme,
   useMediaQuery,
   AppBar,
   Toolbar,
-  IconButton,
-  Avatar,
   Link
 } from '@mui/material';
 import {
@@ -26,18 +22,14 @@ import {
   Speed,
   VerifiedUser,
   ArrowForward,
-  Shield,
   LocationOn,
-  Warning,
-  Menu as MenuIcon,
-  AccountCircle
+  Warning
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const HomePage = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 

@@ -20,10 +20,6 @@ import {
   Circle
 } from 'react-leaflet';
 import { 
-  Warning,
-  Security,
-  LocationOn,
-  FilterList,
   Refresh
 } from '@mui/icons-material';
 import L from 'leaflet';
@@ -111,16 +107,6 @@ const MapPage = () => {
       case 'low': return '#2e7d32';
       case 'info': return '#1976d2';
       default: return '#757575';
-    }
-  };
-
-  const getSeverityIcon = (severity) => {
-    switch (severity.toLowerCase()) {
-      case 'high': return '🔴';
-      case 'medium': return '🟡';
-      case 'low': return '🟢';
-      case 'info': return '🔵';
-      default: return '⚪';
     }
   };
 

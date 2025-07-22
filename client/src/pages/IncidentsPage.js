@@ -5,7 +5,6 @@ import {
   Container, 
   Card, 
   CardContent, 
-  CardHeader,
   Button,
   Chip,
   Grid,
@@ -17,19 +16,15 @@ import {
   MenuItem,
   IconButton,
   Tooltip,
-  Divider,
-  Badge
+  Divider
 } from '@mui/material';
 import { 
-  Warning, 
   Add, 
-  FilterList, 
   Search, 
   LocationOn, 
   Schedule, 
   Person,
   Visibility,
-  Edit,
   Delete
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -157,11 +152,6 @@ const IncidentsPage = () => {
   };
 
   const handleViewDetails = (incidentId) => {
-    navigate(`/incidents/${incidentId}`);
-  };
-
-  const handleEdit = (incidentId) => {
-    // Navigate to incident detail page where editing is available
     navigate(`/incidents/${incidentId}`);
   };
 
