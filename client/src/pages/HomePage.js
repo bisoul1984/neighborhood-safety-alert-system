@@ -170,8 +170,9 @@ const HomePage = () => {
                 component="h1"
                 sx={{
                   fontWeight: 700,
-                  mb: 3,
-                  fontSize: { xs: '2.5rem', md: '3.5rem' }
+                  mb: { xs: 2, md: 3 },
+                  fontSize: { xs: '1.7rem', sm: '2.2rem', md: '3.2rem' },
+                  lineHeight: { xs: 1.25, md: 1.2 }
                 }}
               >
                 Stay Safe, Stay Informed
@@ -179,9 +180,10 @@ const HomePage = () => {
               <Typography
                 variant="h5"
                 sx={{
-                  mb: 4,
+                  mb: { xs: 2.5, md: 4 },
                   opacity: 0.9,
-                  lineHeight: 1.6
+                  fontSize: { xs: '1rem', md: '1.25rem' },
+                  lineHeight: { xs: 1.5, md: 1.6 }
                 }}
               >
                 Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
@@ -256,7 +258,7 @@ const HomePage = () => {
       </Box>
 
       {/* Stats Section */}
-      <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: '#f8f9fa', px: { xs: 2, sm: 4, md: 0 } }}>
+      <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: '#f8f9fa', px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {stats.map((stat, index) => (
@@ -293,13 +295,13 @@ const HomePage = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: { xs: 4, md: 8 }, bgcolor: 'white', px: { xs: 2, sm: 4, md: 0 } }}>
+      <Box sx={{ py: { xs: 4, md: 8 }, bgcolor: 'white', px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37' }}>
+            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37', fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
               Why Choose Our Platform?
             </Typography>
-            <Typography variant="h6" sx={{ maxWidth: 600, mx: 'auto', color: '#5a6c7d' }}>
+            <Typography variant="h6" sx={{ maxWidth: 600, mx: 'auto', color: '#5a6c7d', fontSize: { xs: '1rem', md: '1.15rem' }, lineHeight: { xs: 1.5, md: 1.6 } }}>
               Comprehensive safety features designed to keep your community informed and protected
             </Typography>
           </Box>
@@ -343,15 +345,16 @@ const HomePage = () => {
           background: 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
           color: 'white',
           py: { xs: 5, md: 8 },
-          px: { xs: 2, sm: 4, md: 0 }
+          px: { xs: 2, sm: 4, md: 0 },
+          mt: { xs: 2, md: 0 }
         }}
       >
         <Container maxWidth="md">
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 3 }}>
+            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 3, fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
               Ready to Make Your Neighborhood Safer?
             </Typography>
-            <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
+            <Typography variant="h6" sx={{ mb: 4, opacity: 0.9, fontSize: { xs: '1rem', md: '1.15rem' }, lineHeight: { xs: 1.5, md: 1.6 } }}>
               Join thousands of community members who are already using our platform to stay informed and stay safe.
             </Typography>
             <Button
@@ -378,11 +381,11 @@ const HomePage = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: '#081f37', color: 'white', py: { xs: 3, md: 4 }, px: { xs: 2, sm: 4, md: 0 } }}>
+      <Box sx={{ bgcolor: '#081f37', color: 'white', py: { xs: 3, md: 4 }, px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 Neighborhood Safety Alert System
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
@@ -390,7 +393,7 @@ const HomePage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 Quick Links
               </Typography>
               <Stack spacing={1}>
