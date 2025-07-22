@@ -155,8 +155,9 @@ const HomePage = () => {
         sx={{
           background: '#081f37',
           color: 'white',
-          py: { xs: 8, md: 12 },
-          pt: { xs: 12, md: 16 }, // Add top padding to account for fixed navbar
+          py: { xs: 6, md: 12 },
+          pt: { xs: 10, md: 16 }, // Add top padding to account for fixed navbar
+          px: { xs: 2, sm: 4, md: 0 }, // Add horizontal padding on mobile
           position: 'relative',
           overflow: 'hidden'
         }}
@@ -255,7 +256,7 @@ const HomePage = () => {
       </Box>
 
       {/* Stats Section */}
-      <Box sx={{ py: 6, bgcolor: '#f8f9fa' }}>
+      <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: '#f8f9fa', px: { xs: 2, sm: 4, md: 0 } }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {stats.map((stat, index) => (
@@ -292,7 +293,7 @@ const HomePage = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 8, bgcolor: 'white' }}>
+      <Box sx={{ py: { xs: 4, md: 8 }, bgcolor: 'white', px: { xs: 2, sm: 4, md: 0 } }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37' }}>
@@ -341,7 +342,8 @@ const HomePage = () => {
         sx={{
           background: 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
           color: 'white',
-          py: 8
+          py: { xs: 5, md: 8 },
+          px: { xs: 2, sm: 4, md: 0 }
         }}
       >
         <Container maxWidth="md">
@@ -376,7 +378,7 @@ const HomePage = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: '#081f37', color: 'white', py: 4 }}>
+      <Box sx={{ bgcolor: '#081f37', color: 'white', py: { xs: 3, md: 4 }, px: { xs: 2, sm: 4, md: 0 } }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
@@ -461,7 +463,7 @@ const HomePage = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Box sx={{ borderTop: 1, borderColor: 'rgba(255,255,255,0.2)', mt: 4, pt: 2, textAlign: 'center' }}>
+          <Box sx={{ borderTop: 1, borderColor: 'rgba(255,255,255,0.2)', mt: { xs: 2, md: 4 }, pt: 2, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ opacity: 0.6 }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
             </Typography>
