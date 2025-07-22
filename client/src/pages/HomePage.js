@@ -93,10 +93,11 @@ const HomePage = () => {
         sx={{ 
           background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
           boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          px: { xs: 1, md: 0 }
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ px: { xs: 0, md: 2 } }}>
           <Typography 
             variant="h6" 
             component="div" 
@@ -110,14 +111,16 @@ const HomePage = () => {
               cursor: 'pointer',
               '&:hover': {
                 opacity: 0.8
-              }
+              },
+              justifyContent: { xs: 'center', md: 'flex-start' },
+              textAlign: { xs: 'center', md: 'left' }
             }}
             onClick={() => navigate('/')}
           >
             🛡️ Neighborhood Safety Alert System
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
               color="inherit"
               onClick={() => navigate('/login')}
@@ -156,7 +159,7 @@ const HomePage = () => {
           background: '#081f37',
           color: 'white',
           py: { xs: 6, md: 12 },
-          pt: { xs: 10, md: 16 }, // Add top padding to account for fixed navbar
+          pt: { xs: 14, md: 16 }, // Add extra top padding for mobile
           px: { xs: 2, sm: 4, md: 0 }, // Add horizontal padding on mobile
           position: 'relative',
           overflow: 'hidden'
@@ -165,67 +168,74 @@ const HomePage = () => {
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="h2"
-                component="h1"
-                sx={{
-                  fontWeight: 700,
-                  mb: { xs: 2, md: 3 },
-                  fontSize: { xs: '1.7rem', sm: '2.2rem', md: '3.2rem' },
-                  lineHeight: { xs: 1.25, md: 1.2 }
-                }}
-              >
-                Stay Safe, Stay Informed
-              </Typography>
-              <Typography
-                variant="h5"
-                sx={{
-                  mb: { xs: 2.5, md: 4 },
-                  opacity: 0.9,
-                  fontSize: { xs: '1rem', md: '1.25rem' },
-                  lineHeight: { xs: 1.5, md: 1.6 }
-                }}
-              >
-                Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
-              </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={handleGetStarted}
+              <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                <Typography
+                  variant="h2"
+                  component="h1"
                   sx={{
-                    bgcolor: 'white',
-                    color: 'primary.main',
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    '&:hover': {
-                      bgcolor: 'grey.100'
-                    }
+                    fontWeight: 700,
+                    mb: { xs: 2, md: 3 },
+                    fontSize: { xs: '1.7rem', sm: '2.2rem', md: '3.2rem' },
+                    lineHeight: { xs: 1.25, md: 1.2 },
+                    textAlign: { xs: 'center', md: 'left' }
                   }}
                 >
-                  Get Started
-                  <ArrowForward sx={{ ml: 1 }} />
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  onClick={() => navigate('/login')}
+                  Stay Safe, Stay Informed
+                </Typography>
+                <Typography
+                  variant="h5"
                   sx={{
-                    borderColor: 'white',
-                    color: 'white',
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    '&:hover': {
+                    mb: { xs: 2.5, md: 4 },
+                    opacity: 0.9,
+                    fontSize: { xs: '1rem', md: '1.25rem' },
+                    lineHeight: { xs: 1.5, md: 1.6 },
+                    textAlign: { xs: 'center', md: 'left' }
+                  }}
+                >
+                  Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
+                </Typography>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ alignItems: { xs: 'center', sm: 'flex-start' }, mt: { xs: 2, md: 0 } }}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={handleGetStarted}
+                    sx={{
+                      bgcolor: 'white',
+                      color: 'primary.main',
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      '&:hover': {
+                        bgcolor: 'grey.100'
+                      },
+                      width: { xs: '100%', sm: 'auto' }
+                    }}
+                  >
+                    Get Started
+                    <ArrowForward sx={{ ml: 1 }} />
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={() => navigate('/login')}
+                    sx={{
                       borderColor: 'white',
-                      bgcolor: 'rgba(255,255,255,0.1)'
-                    }
-                  }}
-                >
-                  Sign In
-                </Button>
-              </Stack>
+                      color: 'white',
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      '&:hover': {
+                        borderColor: 'white',
+                        bgcolor: 'rgba(255,255,255,0.1)'
+                      },
+                      width: { xs: '100%', sm: 'auto' },
+                      mt: { xs: 1, sm: 0 }
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Stack>
+              </Box>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box
@@ -275,7 +285,8 @@ const HomePage = () => {
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 24px rgba(8, 31, 55, 0.15)'
-                    }
+                    },
+                    mb: { xs: 2, md: 0 }
                   }}
                 >
                   <Box sx={{ color: '#081f37', mb: 1 }}>
@@ -297,7 +308,7 @@ const HomePage = () => {
       {/* Features Section */}
       <Box sx={{ py: { xs: 4, md: 8 }, bgcolor: 'white', px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Box sx={{ textAlign: { xs: 'center', md: 'center' }, mb: 6 }}>
             <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37', fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
               Why Choose Our Platform?
             </Typography>
@@ -318,7 +329,8 @@ const HomePage = () => {
                       transform: 'translateY(-4px)',
                       boxShadow: '0 12px 32px rgba(8, 31, 55, 0.15)',
                       borderColor: '#081f37'
-                    }
+                    },
+                    mb: { xs: 2, md: 0 }
                   }}
                 >
                   <CardContent sx={{ textAlign: 'center', p: 4 }}>
@@ -350,7 +362,7 @@ const HomePage = () => {
         }}
       >
         <Container maxWidth="md">
-          <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{ textAlign: { xs: 'center', md: 'center' } }}>
             <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 3, fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
               Ready to Make Your Neighborhood Safer?
             </Typography>
@@ -385,7 +397,7 @@ const HomePage = () => {
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
+              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
                 Neighborhood Safety Alert System
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
@@ -393,7 +405,7 @@ const HomePage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
+              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
                 Quick Links
               </Typography>
               <Stack spacing={1}>
@@ -454,7 +466,7 @@ const HomePage = () => {
               </Stack>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
                 Contact
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
