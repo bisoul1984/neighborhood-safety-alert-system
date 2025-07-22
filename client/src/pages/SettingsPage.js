@@ -1,14 +1,12 @@
 import React from 'react';
 import { 
-  Box, 
-  Typography, 
   Container, 
+  Typography, 
   Card, 
   CardContent, 
   Grid,
   Switch,
-  FormControlLabel,
-  Button
+  FormControlLabel
 } from '@mui/material';
 
 const SettingsPage = () => {

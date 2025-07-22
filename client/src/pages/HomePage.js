@@ -9,7 +9,6 @@ import {
   CardContent,
   Stack,
   useTheme,
-  useMediaQuery,
   AppBar,
   Toolbar,
   Link
@@ -29,7 +28,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const HomePage = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 

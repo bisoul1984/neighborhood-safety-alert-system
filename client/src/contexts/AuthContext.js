@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [state.token]);
 
   const login = async (email, password) => {
     try {

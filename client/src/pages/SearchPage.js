@@ -27,6 +27,84 @@ import {
 } from '@mui/icons-material';
 import { useSearchParams } from 'react-router-dom';
 
+// Move mockSearchResults outside the component
+const mockSearchResults = {
+  incidents: [
+    {
+      id: 1,
+      title: 'Suspicious Activity Reported',
+      description: 'Suspicious person loitering around the park area',
+      location: 'Central Park',
+      date: '2024-01-15',
+      status: 'Active',
+      severity: 'Medium',
+      reporter: 'John Doe'
+    },
+    {
+      id: 2,
+      title: 'Vehicle Break-in Attempt',
+      description: 'Attempted break-in of parked vehicle on Main Street',
+      location: 'Main Street',
+      date: '2024-01-14',
+      status: 'Resolved',
+      severity: 'High',
+      reporter: 'Jane Smith'
+    }
+  ],
+  locations: [
+    {
+      id: 1,
+      name: 'Central Park',
+      type: 'Public Space',
+      safetyRating: 8.5,
+      recentIncidents: 2,
+      description: 'Popular community park with good lighting'
+    },
+    {
+      id: 2,
+      name: 'Main Street Shopping Center',
+      type: 'Commercial',
+      safetyRating: 7.2,
+      recentIncidents: 1,
+      description: 'Busy shopping area with security cameras'
+    }
+  ],
+  community: [
+    {
+      id: 1,
+      title: 'Neighborhood Watch Meeting',
+      description: 'Monthly meeting to discuss community safety',
+      date: '2024-01-20',
+      participants: 15,
+      organizer: 'Community Safety Committee'
+    },
+    {
+      id: 2,
+      title: 'Safety Awareness Campaign',
+      description: 'Campaign to raise awareness about home security',
+      date: '2024-01-25',
+      participants: 8,
+      organizer: 'Local Police Department'
+    }
+  ],
+  safety: [
+    {
+      id: 1,
+      title: 'Home Security Tips',
+      description: 'Essential tips for securing your home',
+      category: 'Home Security',
+      rating: 4.8
+    },
+    {
+      id: 2,
+      title: 'Emergency Contact Numbers',
+      description: 'Important emergency contact information',
+      category: 'Emergency',
+      rating: 4.9
+    }
+  ]
+};
+
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
@@ -38,84 +116,6 @@ const SearchPage = () => {
     community: [],
     safety: []
   });
-
-  // Mock search results for demonstration
-  const mockSearchResults = {
-    incidents: [
-      {
-        id: 1,
-        title: 'Suspicious Activity Reported',
-        description: 'Suspicious person loitering around the park area',
-        location: 'Central Park',
-        date: '2024-01-15',
-        status: 'Active',
-        severity: 'Medium',
-        reporter: 'John Doe'
-      },
-      {
-        id: 2,
-        title: 'Vehicle Break-in Attempt',
-        description: 'Attempted break-in of parked vehicle on Main Street',
-        location: 'Main Street',
-        date: '2024-01-14',
-        status: 'Resolved',
-        severity: 'High',
-        reporter: 'Jane Smith'
-      }
-    ],
-    locations: [
-      {
-        id: 1,
-        name: 'Central Park',
-        type: 'Public Space',
-        safetyRating: 8.5,
-        recentIncidents: 2,
-        description: 'Popular community park with good lighting'
-      },
-      {
-        id: 2,
-        name: 'Main Street Shopping Center',
-        type: 'Commercial',
-        safetyRating: 7.2,
-        recentIncidents: 1,
-        description: 'Busy shopping area with security cameras'
-      }
-    ],
-    community: [
-      {
-        id: 1,
-        title: 'Neighborhood Watch Meeting',
-        description: 'Monthly meeting to discuss community safety',
-        date: '2024-01-20',
-        participants: 15,
-        organizer: 'Community Safety Committee'
-      },
-      {
-        id: 2,
-        title: 'Safety Awareness Campaign',
-        description: 'Campaign to raise awareness about home security',
-        date: '2024-01-25',
-        participants: 8,
-        organizer: 'Local Police Department'
-      }
-    ],
-    safety: [
-      {
-        id: 1,
-        title: 'Home Security Tips',
-        description: 'Essential tips for securing your home',
-        category: 'Home Security',
-        rating: 4.8
-      },
-      {
-        id: 2,
-        title: 'Emergency Contact Numbers',
-        description: 'Important emergency contact information',
-        category: 'Emergency',
-        rating: 4.9
-      }
-    ]
-  };
 
   const performSearch = useCallback(async () => {
     setLoading(true);
@@ -143,7 +143,7 @@ const SearchPage = () => {
     };
     setSearchResults(filteredResults);
     setLoading(false);
-  }, [searchQuery, mockSearchResults]);
+  }, [searchQuery]);
 
   useEffect(() => {
     if (searchQuery) {
