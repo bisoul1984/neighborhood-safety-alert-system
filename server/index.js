@@ -22,16 +22,14 @@ const io = socketIo(server, {
   }
 });
 
-// Security middleware
-app.use(helmet());
-// Update CORS configuration to allow multiple origins
+// CORS FIRST!
 const allowedOrigins = [
   'https://neighborhood-safety-alert-system-c8.vercel.app',
   'https://neighborhood-safety-alert-system-c87h-pb68lqio5.vercel.app',
   'http://localhost:3000'
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function(origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -42,7 +40,14 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
+// Explicit OPTIONS handler for preflight
+app.options('*', cors(corsOptions));
+
+// Security middleware
+app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
@@ -107,7 +112,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
+// 404 handler should be last
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
