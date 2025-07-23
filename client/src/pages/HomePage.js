@@ -94,7 +94,8 @@ const HomePage = () => {
           background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
           boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          px: { xs: 1, md: 0 }
+          px: { xs: 1, md: 0 },
+          mt: { xs: 2, md: 0 }
         }}
       >
         <Toolbar sx={{ px: { xs: 0, md: 2 } }}>
