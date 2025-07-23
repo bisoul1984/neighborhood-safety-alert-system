@@ -14,7 +14,9 @@ import {
   Paper,
   Tabs,
   Tab,
-  IconButton
+  IconButton,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Search,
@@ -188,14 +190,27 @@ const SearchPage = () => {
     { label: 'Safety Resources', count: searchResults.safety.length }
   ];
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+    <Box sx={{ maxWidth: 1200, mx: 'auto', p: { xs: 1, md: 3 } }}>
+      <Typography 
+        variant={isMobile ? 'h5' : 'h4'} 
+        gutterBottom 
+        sx={{ 
+          fontWeight: 700, 
+          fontSize: { xs: '1.5rem', md: '2.125rem' },
+          textAlign: { xs: 'center', md: 'left' },
+          mb: { xs: 2, md: 3 },
+          lineHeight: { xs: 1.3, md: 1.2 }
+        }}
+      >
         🔍 Search Results
       </Typography>
 
       {/* Search Bar */}
-      <Paper sx={{ p: 2, mb: 3 }}>
+      <Paper sx={{ p: { xs: 1, md: 2 }, mb: { xs: 2, md: 3 } }}>
         <form onSubmit={handleSearch}>
           <TextField
             fullWidth
@@ -225,6 +240,7 @@ const SearchPage = () => {
                 </InputAdornment>
               ),
             }}
+            sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
           />
         </form>
       </Paper>
@@ -232,22 +248,24 @@ const SearchPage = () => {
       {searchQuery && (
         <>
           {/* Search Filters and Tabs */}
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: { xs: 2, md: 3 } }}>
             <Tabs value={activeTab} onChange={handleTabChange} variant="scrollable">
               {tabLabels.map((tab, index) => (
                 <Tab
                   key={index}
                   label={
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {tab.label}
                       <Chip
                         label={tab.count}
                         size="small"
                         color="primary"
                         variant="outlined"
+                        sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                       />
                     </Box>
                   }
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 />
               ))}
             </Tabs>
@@ -265,14 +283,14 @@ const SearchPage = () => {
             <Box>
               {/* Incidents Tab */}
               {activeTab === 0 && (
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                   {searchResults.incidents.length > 0 ? (
                     searchResults.incidents.map((incident) => (
                       <Grid item xs={12} md={6} key={incident.id}>
                         <Card sx={{ height: '100%' }}>
-                          <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                              <Typography variant="h6" component="h3">
+                          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: { xs: 1, md: 2 } }}>
+                              <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                                 {incident.title}
                               </Typography>
                               <Box sx={{ display: 'flex', gap: 1 }}>
@@ -280,34 +298,36 @@ const SearchPage = () => {
                                   label={incident.severity}
                                   color={getSeverityColor(incident.severity)}
                                   size="small"
+                                  sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                                 />
                                 <Chip
                                   label={incident.status}
                                   color={getStatusColor(incident.status)}
                                   size="small"
+                                  sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                                 />
                               </Box>
                             </Box>
-                            <Typography color="text.secondary" paragraph>
+                            <Typography color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                               {incident.description}
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                 <LocationOn fontSize="small" color="action" />
-                                <Typography variant="body2">{incident.location}</Typography>
+                                <Typography variant="body2" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>{incident.location}</Typography>
                               </Box>
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                                 {new Date(incident.date).toLocaleDateString()}
                               </Typography>
                             </Box>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                               Reported by: {incident.reporter}
                             </Typography>
                             <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                              <Button size="small" startIcon={<Visibility />}>
+                              <Button size="small" startIcon={<Visibility />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 View Details
                               </Button>
-                              <Button size="small" startIcon={<Edit />}>
+                              <Button size="small" startIcon={<Edit />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 Update
                               </Button>
                             </Box>
@@ -325,36 +345,37 @@ const SearchPage = () => {
 
               {/* Locations Tab */}
               {activeTab === 1 && (
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                   {searchResults.locations.length > 0 ? (
                     searchResults.locations.map((location) => (
                       <Grid item xs={12} md={6} key={location.id}>
                         <Card sx={{ height: '100%' }}>
-                          <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                              <Typography variant="h6" component="h3">
+                          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: { xs: 1, md: 2 } }}>
+                              <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                                 {location.name}
                               </Typography>
                               <Chip
                                 label={`${location.safetyRating}/10`}
                                 color="primary"
                                 size="small"
+                                sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                               />
                             </Box>
-                            <Typography color="text.secondary" paragraph>
+                            <Typography color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                               {location.description}
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                              <Chip label={location.type} size="small" variant="outlined" />
-                              <Typography variant="body2" color="text.secondary">
+                              <Chip label={location.type} size="small" variant="outlined" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }} />
+                              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                                 {location.recentIncidents} recent incidents
                               </Typography>
                             </Box>
                             <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                              <Button size="small" startIcon={<Visibility />}>
+                              <Button size="small" startIcon={<Visibility />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 View Details
                               </Button>
-                              <Button size="small" startIcon={<LocationOn />}>
+                              <Button size="small" startIcon={<LocationOn />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 View on Map
                               </Button>
                             </Box>
@@ -372,34 +393,34 @@ const SearchPage = () => {
 
               {/* Community Tab */}
               {activeTab === 2 && (
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                   {searchResults.community.length > 0 ? (
                     searchResults.community.map((event) => (
                       <Grid item xs={12} md={6} key={event.id}>
                         <Card sx={{ height: '100%' }}>
-                          <CardContent>
-                            <Typography variant="h6" component="h3" gutterBottom>
+                          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                            <Typography variant={isMobile ? 'h6' : 'h5'} component="h3" gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                               {event.title}
                             </Typography>
-                            <Typography color="text.secondary" paragraph>
+                            <Typography color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                               {event.description}
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                                 {new Date(event.date).toLocaleDateString()}
                               </Typography>
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                                 {event.participants} participants
                               </Typography>
                             </Box>
-                            <Typography variant="body2" color="text.secondary" paragraph>
+                            <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                               Organized by: {event.organizer}
                             </Typography>
                             <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                              <Button size="small" startIcon={<Event />}>
+                              <Button size="small" startIcon={<Event />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 Join Event
                               </Button>
-                              <Button size="small" startIcon={<Visibility />}>
+                              <Button size="small" startIcon={<Visibility />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 View Details
                               </Button>
                             </Box>
@@ -417,31 +438,32 @@ const SearchPage = () => {
 
               {/* Safety Resources Tab */}
               {activeTab === 3 && (
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                   {searchResults.safety.length > 0 ? (
                     searchResults.safety.map((resource) => (
                       <Grid item xs={12} md={6} key={resource.id}>
                         <Card sx={{ height: '100%' }}>
-                          <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                              <Typography variant="h6" component="h3">
+                          <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: { xs: 1, md: 2 } }}>
+                              <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                                 {resource.title}
                               </Typography>
                               <Chip
                                 label={`${resource.rating}/5`}
                                 color="primary"
                                 size="small"
+                                sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                               />
                             </Box>
-                            <Typography color="text.secondary" paragraph>
+                            <Typography color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                               {resource.description}
                             </Typography>
-                            <Chip label={resource.category} size="small" variant="outlined" />
+                            <Chip label={resource.category} size="small" variant="outlined" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }} />
                             <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                              <Button size="small" startIcon={<Visibility />}>
+                              <Button size="small" startIcon={<Visibility />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 View Resource
                               </Button>
-                              <Button size="small" startIcon={<Security />}>
+                              <Button size="small" startIcon={<Security />} sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}>
                                 Safety Tips
                               </Button>
                             </Box>
@@ -465,10 +487,10 @@ const SearchPage = () => {
       {!searchQuery && (
         <Box sx={{ textAlign: 'center', py: 8 }}>
           <Search sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
-          <Typography variant="h5" color="text.secondary" gutterBottom>
+          <Typography variant={isMobile ? 'h6' : 'h5'} color="text.secondary" gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
             Search for incidents, locations, community events, and safety resources
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
             Enter your search query above to get started
           </Typography>
         </Box>
