@@ -289,8 +289,15 @@ const ProfilePage = () => {
       {/* Profile Header */}
       <Card sx={{ mb: { xs: 2, md: 3 } }}>
         <CardContent>
-          <Grid container spacing={{ xs: 2, md: 3 }} alignItems="center">
-            <Grid item xs={12} sm="auto">
+          <Grid 
+            container 
+            spacing={{ xs: 2, md: 3 }} 
+            alignItems="center" 
+            direction={isMobile ? 'column' : 'row'}
+            justifyContent={isMobile ? 'center' : 'flex-start'}
+            sx={{ textAlign: isMobile ? 'center' : 'left' }}
+          >
+            <Grid item>
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -307,19 +314,19 @@ const ProfilePage = () => {
                   </IconButton>
                 }
               >
-                <Avatar sx={{ width: 100, height: 100, fontSize: { xs: '2.5rem', md: '3rem' } }}>
+                <Avatar sx={{ width: 100, height: 100, fontSize: { xs: '2.5rem', md: '3rem' }, mx: isMobile ? 'auto' : 0 }}>
                   {user?.firstName?.charAt(0) || 'U'}
                 </Avatar>
               </Badge>
             </Grid>
             <Grid item xs>
-              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
+              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mt: isMobile ? 2 : 0 }}>
                 {user?.firstName} {user?.lastName}
               </Typography>
               <Typography variant="body1" color="text.secondary" gutterBottom sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                 {user?.email}
               </Typography>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: isMobile ? 'center' : 'flex-start' }}>
                 <Chip 
                   icon={<VerifiedUser />} 
                   label="Verified Member" 
@@ -352,7 +359,7 @@ const ProfilePage = () => {
                 startIcon={<Edit />}
                 onClick={handleProfileEdit}
                 disabled={editMode}
-                sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', sm: 'auto' } }}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', sm: 'auto' }, mt: isMobile ? 2 : 0 }}
               >
                 Edit Profile
               </Button>
