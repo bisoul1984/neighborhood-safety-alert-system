@@ -14,7 +14,9 @@ import {
   Paper,
   Snackbar,
   CircularProgress,
-  Divider
+  Divider,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   Security,
@@ -146,19 +148,54 @@ const ReportIncidentPage = () => {
     { value: 'critical', label: 'Critical' }
   ];
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Container 
+      maxWidth="md" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Typography 
+        variant={isMobile ? 'h5' : 'h4'} 
+        component="h1" 
+        gutterBottom 
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1, 
+          fontWeight: 700, 
+          fontSize: { xs: '1.5rem', md: '2.125rem' },
+          textAlign: { xs: 'center', md: 'left' },
+          mb: { xs: 2, md: 3 },
+          lineHeight: { xs: 1.3, md: 1.2 }
+        }}
+      >
         🚨 Report Incident
       </Typography>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mb: { xs: 2, md: 3 },
+          fontSize: { xs: '0.95rem', md: '1rem' },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.95rem', md: '1rem' },
+            lineHeight: { xs: 1.4, md: 1.5 }
+          }
+        }}
+      >
         Help keep your neighborhood safe by reporting incidents. All reports are anonymous and will be reviewed by community moderators.
       </Alert>
 
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
         <Box component="form" onSubmit={handleSubmit}>
-          <Grid container spacing={3}>
+          <Grid container spacing={{ xs: 2, md: 3 }}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -167,15 +204,17 @@ const ReportIncidentPage = () => {
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 error={!!errors.title}
                 helperText={errors.title || "Enter a short, descriptive title for the incident"}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth error={!!errors.type}>
+              <FormControl fullWidth error={!!errors.type} size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Incident Type *</InputLabel>
                 <Select
                   value={formData.type}
                   label="Incident Type *"
                   onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   <MenuItem value="theft">💰 Theft</MenuItem>
                   <MenuItem value="vandalism">🏚️ Vandalism</MenuItem>
@@ -208,6 +247,7 @@ const ReportIncidentPage = () => {
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
                 error={!!errors.description}
                 helperText={errors.description || "Provide detailed description of the incident"}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
 
@@ -220,6 +260,7 @@ const ReportIncidentPage = () => {
                 error={!!errors.location}
                 helperText={errors.location || "Enter the specific location where the incident occurred"}
                 placeholder="e.g., Bole, Kazanchis, Meskel Square, etc."
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
 
@@ -233,6 +274,7 @@ const ReportIncidentPage = () => {
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
                 error={!!errors.date}
                 helperText={errors.date}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
 
@@ -246,19 +288,21 @@ const ReportIncidentPage = () => {
                 onChange={(e) => setFormData({...formData, time: e.target.value})}
                 error={!!errors.time}
                 helperText={errors.time}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl fullWidth>
+              <FormControl fullWidth size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Severity Level</InputLabel>
                 <Select
                   value={formData.severity}
                   label="Severity Level"
                   onChange={(e) => setFormData({...formData, severity: e.target.value})}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   {severityOptions.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem key={option.value} value={option.value} sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {option.label}
                     </MenuItem>
                   ))}
@@ -267,7 +311,7 @@ const ReportIncidentPage = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={{ my: { xs: 2, md: 2 } }} />
               <Button 
                 type="submit" 
                 variant="contained" 
@@ -275,6 +319,7 @@ const ReportIncidentPage = () => {
                 size="large"
                 disabled={loading}
                 startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Security />}
+                sx={{ fontSize: { xs: '1rem', md: '1.1rem' }, py: { xs: 1, md: 1.5 }, fontWeight: 600 }}
               >
                 {loading ? 'Submitting Report...' : 'Submit Report'}
               </Button>
