@@ -25,7 +25,9 @@ import {
   Alert,
   Divider,
   IconButton,
-  Tooltip
+  Tooltip,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   People,
@@ -86,6 +88,9 @@ const CommunityPage = () => {
   const [commentDialogOpen, setCommentDialogOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [commentText, setCommentText] = useState('');
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // Handle URL parameters for section scrolling
   useEffect(() => {
@@ -507,8 +512,30 @@ const CommunityPage = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Typography 
+        variant={isMobile ? 'h5' : 'h4'} 
+        component="h1" 
+        gutterBottom 
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1, 
+          fontWeight: 700, 
+          fontSize: { xs: '1.5rem', md: '2.125rem' },
+          textAlign: { xs: 'center', md: 'left' },
+          mb: { xs: 2, md: 3 },
+          lineHeight: { xs: 1.3, md: 1.2 }
+        }}
+      >
         👥 Community
       </Typography>
 
@@ -531,18 +558,18 @@ const CommunityPage = () => {
       )}
 
       {/* Quick Navigation */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Card sx={{ mb: { xs: 2, md: 3 }, p: { xs: 1, md: 2 } }}>
+        <CardContent sx={{ p: { xs: 0, md: 2 } }}>
+          <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
             <NavigateNext color="primary" />
             Quick Navigation
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap' }}>
             <Button
               variant="outlined"
               startIcon={<Security />}
               onClick={() => scrollToSection('neighborhood-watch')}
-              sx={{ minWidth: 200 }}
+              sx={{ minWidth: { xs: 120, md: 200 }, fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
             >
               Neighborhood Watch
             </Button>
@@ -550,7 +577,7 @@ const CommunityPage = () => {
               variant="outlined"
               startIcon={<Event />}
               onClick={() => scrollToSection('community-events')}
-              sx={{ minWidth: 200 }}
+              sx={{ minWidth: { xs: 120, md: 200 }, fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
             >
               Community Events
             </Button>
@@ -558,7 +585,7 @@ const CommunityPage = () => {
               variant="outlined"
               startIcon={<Forum />}
               onClick={() => scrollToSection('community-forum')}
-              sx={{ minWidth: 200 }}
+              sx={{ minWidth: { xs: 120, md: 200 }, fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
             >
               Community Forum
             </Button>
@@ -566,75 +593,78 @@ const CommunityPage = () => {
         </CardContent>
       </Card>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
         {/* Neighborhood Watch Section */}
         <Grid item xs={12} md={8}>
           <Card id="neighborhood-watch">
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                              <Typography 
-                variant="h6" 
-                sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 1, 
-                  color: activeSection === 'neighborhood-watch' ? 'secondary.main' : 'primary.main',
-                  fontWeight: activeSection === 'neighborhood-watch' ? 'bold' : 'normal'
-                }}
-              >
-                <Security color={activeSection === 'neighborhood-watch' ? 'secondary' : 'primary'} />
-                🛡️ Neighborhood Watch
-                {activeSection === 'neighborhood-watch' && ' (Active)'}
-              </Typography>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 1, md: 2 } }}>
+                <Typography 
+                  variant={isMobile ? 'h6' : 'h5'} 
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 1, 
+                    color: activeSection === 'neighborhood-watch' ? 'secondary.main' : 'primary.main',
+                    fontWeight: activeSection === 'neighborhood-watch' ? 'bold' : 600,
+                    fontSize: { xs: '1.1rem', md: '1.25rem' }
+                  }}
+                >
+                  <Security color={activeSection === 'neighborhood-watch' ? 'secondary' : 'primary'} />
+                  🛡️ Neighborhood Watch
+                  {activeSection === 'neighborhood-watch' && ' (Active)'}
+                </Typography>
                 <Chip 
                   label={isJoined ? "Member" : "Join Now"} 
                   color={isJoined ? "success" : "primary"}
                   icon={isJoined ? <CheckCircle /> : <Add />}
                   onClick={!isJoined ? handleJoinClick : undefined}
                   clickable={!isJoined}
-                  sx={{ cursor: !isJoined ? 'pointer' : 'default' }}
+                  sx={{ cursor: !isJoined ? 'pointer' : 'default', fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                 />
               </Box>
               
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                 Connect with your neighbors and stay informed about community safety. Join our neighborhood watch program to help keep our community safe.
               </Typography>
 
-              <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+              <Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, mb: { xs: 2, md: 3 }, flexDirection: { xs: 'column', md: 'row' } }}>
                 <Button 
                   variant="contained" 
                   onClick={handleJoinClick}
                   disabled={isJoined}
                   startIcon={<People />}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', md: 'auto' } }}
                 >
                   {isJoined ? 'Already Joined' : 'Join Neighborhood Watch'}
                 </Button>
                 <Button 
                   variant="outlined"
                   onClick={() => navigate('/safety')}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', md: 'auto' } }}
                 >
                   Safety Resources
                 </Button>
               </Box>
 
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={{ my: { xs: 1, md: 2 } }} />
 
-              <Typography variant="h6" gutterBottom>
+              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 Current Members ({neighborhoodWatchMembers.length})
               </Typography>
               
               <List>
                 {neighborhoodWatchMembers.map((member) => (
-                  <ListItem key={member.id} sx={{ px: 0 }}>
+                  <ListItem key={member.id} sx={{ px: 0, flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'flex-start', md: 'center' }, gap: { xs: 1, md: 0 } }}>
                     <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.main' }}>
+                      <Avatar sx={{ bgcolor: 'primary.main', width: { xs: 40, md: 40 }, height: { xs: 40, md: 40 } }}>
                         {member.name.charAt(0)}
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography variant="subtitle1">
+                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'flex-start', md: 'center' }, gap: { xs: 0.5, md: 1 } }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 600, fontSize: { xs: '1rem', md: '1.1rem' } }}>
                             {member.name}
                           </Typography>
                           <Chip 
@@ -642,21 +672,22 @@ const CommunityPage = () => {
                             size="small" 
                             color="primary" 
                             variant="outlined"
+                            sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                           />
                         </Box>
                       }
                       secondary={
                         <Box>
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                             {member.area} • {member.phone}
                           </Typography>
-                          <Typography variant="caption" color="text.secondary">
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                             Joined: {new Date(member.joinedDate).toLocaleDateString()}
                           </Typography>
                         </Box>
                       }
                     />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1, mt: { xs: 1, md: 0 } }}>
                       <Tooltip title="Call">
                         <IconButton size="small" onClick={() => window.open(`tel:${member.phone}`)}>
                           <Phone />
@@ -678,16 +709,17 @@ const CommunityPage = () => {
         {/* Community Events Section */}
         <Grid item xs={12} md={4}>
           <Card id="community-events">
-            <CardContent>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
               <Typography 
-                variant="h6" 
+                variant={isMobile ? 'h6' : 'h5'} 
                 gutterBottom 
                 sx={{ 
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: 1, 
                   color: activeSection === 'community-events' ? 'secondary.main' : 'primary.main',
-                  fontWeight: activeSection === 'community-events' ? 'bold' : 'normal'
+                  fontWeight: activeSection === 'community-events' ? 'bold' : 600,
+                  fontSize: { xs: '1.1rem', md: '1.25rem' }
                 }}
               >
                 <Event color={activeSection === 'community-events' ? 'secondary' : 'primary'} />
@@ -701,7 +733,7 @@ const CommunityPage = () => {
                     <ListItem key={event.id} sx={{ px: 0, flexDirection: 'column', alignItems: 'flex-start' }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                         {getEventIcon(event.type)}
-                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: { xs: '1rem', md: '1.1rem' } }}>
                           {event.title}
                         </Typography>
                         <Chip 
@@ -709,23 +741,24 @@ const CommunityPage = () => {
                           size="small" 
                           color={getEventColor(event.type)}
                           variant="outlined"
+                          sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                         />
                       </Box>
                       
-                      <Typography variant="body2" color="text.secondary" paragraph>
+                      <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                         {event.description}
                       </Typography>
                       
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                           <Event fontSize="small" color="action" />
-                          <Typography variant="caption">
+                          <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                             {new Date(event.date).toLocaleDateString()} at {event.time}
                           </Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                           <LocationOn fontSize="small" color="action" />
-                          <Typography variant="caption">
+                          <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                             {event.location}
                           </Typography>
                         </Box>
@@ -733,7 +766,7 @@ const CommunityPage = () => {
                       
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1 }}>
                         <People fontSize="small" color="action" />
-                        <Typography variant="caption">
+                        <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                           {event.attendees} attending
                         </Typography>
                       </Box>
@@ -741,7 +774,7 @@ const CommunityPage = () => {
                   ))}
                 </List>
               ) : (
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                   No upcoming events scheduled.
                 </Typography>
               )}
@@ -749,7 +782,7 @@ const CommunityPage = () => {
               <Button 
                 variant="outlined" 
                 fullWidth 
-                sx={{ mt: 2 }}
+                sx={{ mt: 2, fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
                 startIcon={<Add />}
                 onClick={handleSuggestEventClick}
               >
@@ -761,19 +794,20 @@ const CommunityPage = () => {
       </Grid>
 
       {/* Community Forum Section */}
-      <Grid container spacing={3} sx={{ mt: 2 }}>
+      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mt: 2 }}>
         <Grid item xs={12}>
           <Card id="community-forum">
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'center' }, mb: { xs: 2, md: 3 }, gap: { xs: 1, md: 0 } }}>
                 <Typography 
-                  variant="h6" 
+                  variant={isMobile ? 'h6' : 'h5'} 
                   sx={{ 
                     display: 'flex', 
                     alignItems: 'center', 
                     gap: 1, 
                     color: activeSection === 'community-forum' ? 'secondary.main' : 'primary.main',
-                    fontWeight: activeSection === 'community-forum' ? 'bold' : 'normal'
+                    fontWeight: activeSection === 'community-forum' ? 'bold' : 600,
+                    fontSize: { xs: '1.1rem', md: '1.25rem' }
                   }}
                 >
                   <Forum color={activeSection === 'community-forum' ? 'secondary' : 'primary'} />
@@ -784,42 +818,44 @@ const CommunityPage = () => {
                   variant="contained" 
                   onClick={handleForumClick}
                   startIcon={<Add />}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', md: 'auto' } }}
                 >
                   New Post
                 </Button>
               </Box>
               
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                 Connect with your neighbors, share updates, and discuss community matters. Stay informed about what's happening in your neighborhood.
               </Typography>
 
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={{ my: { xs: 1, md: 2 } }} />
 
               {/* Forum Posts */}
               <Box>
                 {forumPosts.map((post) => (
                   <Card key={post.id} variant="outlined" sx={{ mb: 2 }}>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                    <CardContent sx={{ p: { xs: 1, md: 2 } }}>
+                      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'flex-start' }, mb: { xs: 1, md: 2 }, gap: { xs: 1, md: 0 } }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                          <Avatar sx={{ bgcolor: 'primary.main' }}>
+                          <Avatar sx={{ bgcolor: 'primary.main', width: { xs: 40, md: 40 }, height: { xs: 40, md: 40 } }}>
                             {post.authorAvatar}
                           </Avatar>
                           <Box>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 600, fontSize: { xs: '1rem', md: '1.1rem' } }}>
                               {post.title}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                               by {post.author} • {new Date(post.timestamp).toLocaleDateString()}
                             </Typography>
                           </Box>
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: { xs: 1, md: 0 } }}>
                           <Chip 
                             label={post.category} 
                             size="small" 
                             color={getCategoryColor(post.category)}
                             variant="outlined"
+                            sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                           />
                           <IconButton size="small">
                             <MoreVert />
@@ -827,17 +863,18 @@ const CommunityPage = () => {
                         </Box>
                       </Box>
                       
-                      <Typography variant="body2" color="text.secondary" paragraph>
+                      <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                         {post.content}
                       </Typography>
                       
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
                         <Button
                           size="small"
                           startIcon={<ThumbUp />}
                           onClick={() => handleLikePost(post.id)}
                           color={post.isLiked ? "primary" : "inherit"}
                           variant={post.isLiked ? "contained" : "text"}
+                          sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}
                         >
                           {post.likes}
                         </Button>
@@ -845,6 +882,7 @@ const CommunityPage = () => {
                           size="small"
                           startIcon={<Comment />}
                           onClick={() => handleCommentPost(post.id)}
+                          sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}
                         >
                           {post.comments}
                         </Button>
@@ -852,6 +890,7 @@ const CommunityPage = () => {
                           size="small"
                           startIcon={<Share />}
                           onClick={() => handleSharePost(post.id)}
+                          sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, py: { xs: 0.5, md: 1 } }}
                         >
                           Share
                         </Button>
