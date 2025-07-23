@@ -36,7 +36,9 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
-  AlertTitle
+  AlertTitle,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Edit,
@@ -240,8 +242,19 @@ const ProfilePage = () => {
     return status === 'success' ? <CheckCircle /> : <Warning />;
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
       {/* Success/Error Alerts */}
       {showSuccess && (
         <Alert severity="success" sx={{ mb: 3 }} onClose={() => setShowSuccess(false)}>
@@ -255,15 +268,29 @@ const ProfilePage = () => {
         </Alert>
       )}
 
-      <Typography variant="h4" component="h1" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Typography 
+        variant={isMobile ? 'h5' : 'h4'} 
+        component="h1" 
+        gutterBottom 
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1, 
+          fontWeight: 700, 
+          fontSize: { xs: '1.5rem', md: '2.125rem' },
+          textAlign: { xs: 'center', md: 'left' },
+          mb: { xs: 2, md: 3 },
+          lineHeight: { xs: 1.3, md: 1.2 }
+        }}
+      >
         👤 User Profile
       </Typography>
 
       {/* Profile Header */}
-      <Card sx={{ mb: 3 }}>
+      <Card sx={{ mb: { xs: 2, md: 3 } }}>
         <CardContent>
-          <Grid container spacing={3} alignItems="center">
-            <Grid item>
+          <Grid container spacing={{ xs: 2, md: 3 }} alignItems="center">
+            <Grid item xs={12} sm="auto">
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -280,16 +307,16 @@ const ProfilePage = () => {
                   </IconButton>
                 }
               >
-                <Avatar sx={{ width: 120, height: 120, fontSize: '3rem' }}>
+                <Avatar sx={{ width: 100, height: 100, fontSize: { xs: '2.5rem', md: '3rem' } }}>
                   {user?.firstName?.charAt(0) || 'U'}
                 </Avatar>
               </Badge>
             </Grid>
             <Grid item xs>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 {user?.firstName} {user?.lastName}
               </Typography>
-              <Typography variant="body1" color="text.secondary" gutterBottom>
+              <Typography variant="body1" color="text.secondary" gutterBottom sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                 {user?.email}
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
@@ -299,6 +326,7 @@ const ProfilePage = () => {
                   color="success" 
                   variant="outlined" 
                   size="small" 
+                  sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                 />
                 <Chip 
                   icon={<Shield />} 
@@ -306,6 +334,7 @@ const ProfilePage = () => {
                   color="primary" 
                   variant="outlined" 
                   size="small" 
+                  sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                 />
                 <Chip 
                   icon={<Star />} 
@@ -313,15 +342,17 @@ const ProfilePage = () => {
                   color="warning" 
                   variant="outlined" 
                   size="small" 
+                  sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                 />
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sm="auto">
               <Button
                 variant="contained"
                 startIcon={<Edit />}
                 onClick={handleProfileEdit}
                 disabled={editMode}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', sm: 'auto' } }}
               >
                 Edit Profile
               </Button>
@@ -331,12 +362,12 @@ const ProfilePage = () => {
       </Card>
 
       {/* Tabs */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: { xs: 2, md: 3 } }}>
         <Tabs value={activeTab} onChange={handleTabChange} variant="scrollable">
-          <Tab label="Profile Information" icon={<Person />} />
-          <Tab label="Security" icon={<Security />} />
-          <Tab label="Preferences" icon={<Settings />} />
-          <Tab label="Activity History" icon={<History />} />
+          <Tab label="Profile Information" icon={<Person />} sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }} />
+          <Tab label="Security" icon={<Security />} sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }} />
+          <Tab label="Preferences" icon={<Settings />} sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }} />
+          <Tab label="Activity History" icon={<History />} sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }} />
         </Tabs>
       </Box>
 

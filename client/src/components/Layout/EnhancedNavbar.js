@@ -350,16 +350,16 @@ const EnhancedNavbar = ({ children }) => {
         <>
           <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
           <List sx={{ p: 0 }}>
-            <ListItemButton onClick={() => { handleMenuClose(); navigate('/profile'); }}>
+            <ListItemButton onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/profile'); }}>
               <ListItemIcon sx={{ color: 'white' }}><AccountCircle fontSize="small" /></ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
-            <ListItemButton onClick={() => { handleMenuClose(); navigate('/settings'); }}>
+            <ListItemButton onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/settings'); }}>
               <ListItemIcon sx={{ color: 'white' }}><Settings fontSize="small" /></ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
             <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
-            <ListItemButton onClick={handleLogout}>
+            <ListItemButton onClick={() => { setDrawerOpen(false); handleLogout(); }}>
               <ListItemIcon sx={{ color: 'white' }}><Logout fontSize="small" /></ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
