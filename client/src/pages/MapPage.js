@@ -10,7 +10,9 @@ import {
   CardContent,
   Grid,
   IconButton,
-  Tooltip
+  Tooltip,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   MapContainer, 
@@ -137,10 +139,40 @@ const MapPage = () => {
     console.log('Refreshing incidents...');
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" component="h1">
+    <Container 
+      maxWidth="xl" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'space-between', 
+          alignItems: { xs: 'flex-start', md: 'center' }, 
+          mb: { xs: 2, md: 3 },
+          gap: { xs: 2, md: 0 }
+        }}
+      >
+        <Typography 
+          variant={isMobile ? 'h5' : 'h4'} 
+          component="h1" 
+          sx={{ 
+            fontWeight: 700, 
+            fontSize: { xs: '1.5rem', md: '2.125rem' },
+            textAlign: { xs: 'center', md: 'left' },
+            mb: { xs: 1, md: 0 },
+            lineHeight: { xs: 1.3, md: 1.2 }
+          }}
+        >
           🗺️ Addis Ababa Safety Map
         </Typography>
         <Box sx={{ display: 'flex', gap: 1 }}>
@@ -152,13 +184,23 @@ const MapPage = () => {
         </Box>
       </Box>
       
-      <Alert severity="info" sx={{ mb: 3 }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mb: { xs: 2, md: 3 },
+          fontSize: { xs: '0.95rem', md: '1rem' },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.95rem', md: '1rem' },
+            lineHeight: { xs: 1.4, md: 1.5 }
+          }
+        }}
+      >
         View recent safety incidents and alerts in Addis Ababa. Click on markers for detailed information.
       </Alert>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
         <Grid item xs={12} md={8}>
-          <Paper elevation={3} sx={{ height: '70vh', overflow: 'hidden' }}>
+          <Paper elevation={3} sx={{ height: { xs: '50vh', md: '70vh' }, overflow: 'hidden' }}>
             <Box sx={{ height: '100%', width: '100%' }}>
               <MapContainer
                 center={ADDIS_ABABA_CENTER}
@@ -182,10 +224,10 @@ const MapPage = () => {
                   >
                     <Popup>
                       <Box sx={{ minWidth: 200 }}>
-                        <Typography variant="h6" gutterBottom>
+                        <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                           {incident.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
+                        <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                           {incident.description}
                         </Typography>
                         <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
@@ -194,22 +236,25 @@ const MapPage = () => {
                             size="small"
                             sx={{ 
                               bgcolor: getSeverityColor(incident.severity),
-                              color: 'white'
+                              color: 'white',
+                              fontSize: { xs: '0.8rem', md: '0.9rem' },
+                              fontWeight: 600
                             }}
                           />
                           <Chip 
                             label={incident.status} 
                             size="small"
                             variant="outlined"
+                            sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                           />
                         </Box>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                           📍 {incident.location}
                         </Typography>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                           📅 {new Date(incident.date).toLocaleDateString()}
                         </Typography>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                           👤 Reported by: {incident.reporter}
                         </Typography>
                       </Box>
@@ -228,7 +273,7 @@ const MapPage = () => {
                   }}
                 >
                   <Popup>
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       🛡️ Bole Airport Security Zone
                     </Typography>
                   </Popup>
@@ -240,41 +285,41 @@ const MapPage = () => {
 
         <Grid item xs={12} md={4}>
           <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 📊 Incident Summary
               </Typography>
               <Box sx={{ mb: 2 }}>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                   Total Incidents: {incidents.length}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                   Active Alerts: {incidents.filter(i => i.status === 'Active').length}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                   Resolved: {incidents.filter(i => i.status === 'Resolved').length}
                 </Typography>
               </Box>
               
-              <Typography variant="h6" gutterBottom>
+              <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 🎯 Legend
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: '#d32f2f' }} />
-                  <Typography variant="caption">High Severity</Typography>
+                  <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>High Severity</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: '#ed6c02' }} />
-                  <Typography variant="caption">Medium Severity</Typography>
+                  <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>Medium Severity</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: '#2e7d32' }} />
-                  <Typography variant="caption">Low Severity</Typography>
+                  <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>Low Severity</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: '#1976d2' }} />
-                  <Typography variant="caption">Information</Typography>
+                  <Typography variant="caption" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>Information</Typography>
                 </Box>
               </Box>
             </CardContent>
@@ -282,14 +327,14 @@ const MapPage = () => {
 
           {selectedIncident && (
             <Card sx={{ mt: 2 }}>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
+              <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                   📋 Selected Incident
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1rem', md: '1.1rem' } }}>
                   {selectedIncident.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
+                <Typography variant="body2" color="text.secondary" paragraph sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                   {selectedIncident.description}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
@@ -298,13 +343,16 @@ const MapPage = () => {
                     size="small"
                     sx={{ 
                       bgcolor: getSeverityColor(selectedIncident.severity),
-                      color: 'white'
+                      color: 'white',
+                      fontSize: { xs: '0.8rem', md: '0.9rem' },
+                      fontWeight: 600
                     }}
                   />
                   <Chip 
                     label={selectedIncident.type} 
                     size="small"
                     variant="outlined"
+                    sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                   />
                 </Box>
               </CardContent>
