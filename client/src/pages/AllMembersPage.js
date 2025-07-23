@@ -30,7 +30,9 @@ import {
   Divider,
   Alert,
   Skeleton,
-  Pagination
+  Pagination,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Search,
@@ -58,6 +60,8 @@ const AllMembersPage = () => {
   const [error, setError] = useState(null);
   const membersPerPage = 10;
   const { user, token } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // Fetch real members from API
   useEffect(() => {
@@ -162,13 +166,45 @@ const AllMembersPage = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Typography 
+        variant={isMobile ? 'h5' : 'h4'} 
+        component="h1" 
+        gutterBottom 
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1, 
+          fontWeight: 700, 
+          fontSize: { xs: '1.5rem', md: '2.125rem' },
+          textAlign: { xs: 'center', md: 'left' },
+          mb: { xs: 2, md: 3 },
+          lineHeight: { xs: 1.3, md: 1.2 }
+        }}
+      >
         <People />
         All Community Members
       </Typography>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mb: { xs: 2, md: 3 },
+          fontSize: { xs: '0.95rem', md: '1rem' },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.95rem', md: '1rem' },
+            lineHeight: { xs: 1.4, md: 1.5 }
+          }
+        }}
+      >
         Connect with your neighbors and community members. Find contact information and see who's active in your neighborhood.
       </Alert>
 
@@ -178,8 +214,8 @@ const AllMembersPage = () => {
       )}
 
       {/* Search and Filters */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
+      <Card sx={{ mb: { xs: 2, md: 3 }, p: { xs: 1, md: 2 } }}>
+        <CardContent sx={{ p: { xs: 0, md: 2 } }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={6}>
               <TextField
@@ -194,15 +230,17 @@ const AllMembersPage = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Role</InputLabel>
                 <Select
                   value={roleFilter}
                   label="Role"
                   onChange={(e) => setRoleFilter(e.target.value)}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   <MenuItem value="all">All Roles</MenuItem>
                   <MenuItem value="Coordinator">Coordinator</MenuItem>
@@ -212,12 +250,13 @@ const AllMembersPage = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Status</InputLabel>
                 <Select
                   value={statusFilter}
                   label="Status"
                   onChange={(e) => setStatusFilter(e.target.value)}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   <MenuItem value="all">All Status</MenuItem>
                   <MenuItem value="active">Active</MenuItem>
@@ -231,15 +270,16 @@ const AllMembersPage = () => {
 
       {/* Members List */}
       <Card>
-        <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">
+        <CardContent sx={{ p: { xs: 1, md: 2 } }}>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'center' }, mb: { xs: 1, md: 2 }, gap: { xs: 1, md: 0 } }}>
+            <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
               Members ({filteredMembers.length})
             </Typography>
             <Chip 
               label={`${filteredMembers.filter(m => m.status === 'active').length} Active`}
               color="success"
               size="small"
+              sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
             />
           </Box>
 
@@ -269,40 +309,47 @@ const AllMembersPage = () => {
                       px: 0, 
                       borderBottom: 1, 
                       borderColor: 'divider',
-                      '&:last-child': { borderBottom: 0 }
+                      '&:last-child': { borderBottom: 0 },
+                      flexDirection: { xs: 'column', md: 'row' },
+                      alignItems: { xs: 'flex-start', md: 'center' },
+                      gap: { xs: 1, md: 0 }
                     }}
                   >
                     <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.main' }}>
+                      <Avatar sx={{ bgcolor: 'primary.main', width: { xs: 40, md: 40 }, height: { xs: 40, md: 40 } }}>
                         {member.avatar}
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography variant="subtitle1">
+                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'flex-start', md: 'center' }, gap: { xs: 0.5, md: 1 } }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 600, fontSize: { xs: '1rem', md: '1.1rem' } }}>
                             {member.firstName} {member.lastName}
                           </Typography>
-                          <Chip 
-                            label={member.role} 
-                            size="small" 
-                            color={getRoleColor(member.role)}
-                            variant="outlined"
-                          />
-                          <Chip 
-                            label={member.status} 
-                            size="small" 
-                            color={getStatusColor(member.status)}
-                            icon={getStatusIcon(member.status)}
-                          />
+                          <Box sx={{ display: 'flex', gap: 0.5, mt: { xs: 0.5, md: 0 }, mb: { xs: 0.5, md: 0 } }}>
+                            <Chip 
+                              label={member.role} 
+                              size="small" 
+                              color={getRoleColor(member.role)}
+                              variant="outlined"
+                              sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
+                            />
+                            <Chip 
+                              label={member.status} 
+                              size="small" 
+                              color={getStatusColor(member.status)}
+                              icon={getStatusIcon(member.status)}
+                              sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
+                            />
+                          </Box>
                         </Box>
                       }
                       secondary={
                         <Box>
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                             {member.area} • {member.neighborhood}
                           </Typography>
-                          <Typography variant="caption" color="text.secondary">
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
                             Joined: {new Date(member.joinedDate).toLocaleDateString()} • 
                             Last active: {new Date(member.lastActive).toLocaleDateString()} • 
                             Incidents reported: {member.incidentsReported}
@@ -310,7 +357,7 @@ const AllMembersPage = () => {
                         </Box>
                       }
                     />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1, mt: { xs: 1, md: 0 } }}>
                       <Tooltip title="View Details">
                         <IconButton 
                           size="small" 
@@ -354,10 +401,10 @@ const AllMembersPage = () => {
             </>
           ) : (
             <Box sx={{ textAlign: 'center', py: 4 }}>
-              <Typography variant="h6" color="text.secondary" gutterBottom>
+              <Typography variant={isMobile ? 'h6' : 'h5'} color="text.secondary" gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                 No members found
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                 Try adjusting your search or filters
               </Typography>
             </Box>
@@ -380,7 +427,7 @@ const AllMembersPage = () => {
                   {selectedMember.avatar}
                 </Avatar>
                 <Box>
-                  <Typography variant="h6">
+                  <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
                     {selectedMember.firstName} {selectedMember.lastName}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
@@ -388,12 +435,14 @@ const AllMembersPage = () => {
                       label={selectedMember.role} 
                       size="small" 
                       color={getRoleColor(selectedMember.role)}
+                      sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                     />
                     <Chip 
                       label={selectedMember.status} 
                       size="small" 
                       color={getStatusColor(selectedMember.status)}
                       icon={getStatusIcon(selectedMember.status)}
+                      sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                     />
                   </Box>
                 </Box>
@@ -404,38 +453,38 @@ const AllMembersPage = () => {
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <Email color="action" />
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {selectedMember.email}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <Phone color="action" />
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {selectedMember.phone}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <LocationOn color="action" />
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {selectedMember.area} • {selectedMember.neighborhood}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <Security color="action" />
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       Incidents reported: {selectedMember.incidentsReported}
                     </Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
-                  <Typography variant="subtitle2" gutterBottom>
+                  <Typography variant="subtitle2" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }}>
                     Member Information
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                     Joined: {new Date(selectedMember.joinedDate).toLocaleDateString()}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                     Last active: {new Date(selectedMember.lastActive).toLocaleDateString()}
                   </Typography>
                 </Grid>
@@ -447,6 +496,7 @@ const AllMembersPage = () => {
                 variant="contained" 
                 startIcon={<Message />}
                 onClick={() => window.open(`mailto:${selectedMember.email}`)}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
               >
                 Send Message
               </Button>
