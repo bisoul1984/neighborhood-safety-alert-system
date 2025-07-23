@@ -16,7 +16,9 @@ import {
   MenuItem,
   IconButton,
   Tooltip,
-  Divider
+  Divider,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   Add, 
@@ -166,17 +168,52 @@ const IncidentsPage = () => {
     }
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" component="h1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' }, 
+          justifyContent: 'space-between', 
+          alignItems: { xs: 'flex-start', md: 'center' }, 
+          mb: { xs: 2, md: 3 },
+          gap: { xs: 2, md: 0 }
+        }}
+      >
+        <Typography 
+          variant={isMobile ? 'h5' : 'h4'} 
+          component="h1" 
+          sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1, 
+            fontWeight: 700, 
+            fontSize: { xs: '1.5rem', md: '2.125rem' },
+            textAlign: { xs: 'center', md: 'left' },
+            mb: { xs: 1, md: 0 },
+            lineHeight: { xs: 1.3, md: 1.2 },
+            width: { xs: '100%', md: 'auto' }
+          }}
+        >
           {isMyReports ? '📋 My Reports' : isRecent ? '🕒 Recent Incidents' : '🚨 All Incidents'}
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, width: { xs: '100%', md: 'auto' }, justifyContent: { xs: 'center', md: 'flex-end' } }}>
           {(isMyReports || isRecent) && (
             <Button 
               variant="outlined"
               onClick={() => navigate('/incidents')}
+              sx={{ fontSize: { xs: '0.875rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '50%', md: 'auto' } }}
             >
               View All Incidents
             </Button>
@@ -185,13 +222,24 @@ const IncidentsPage = () => {
             variant="contained" 
             startIcon={<Add />}
             onClick={() => navigate('/report')}
+            sx={{ fontSize: { xs: '0.875rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: (isMyReports || isRecent) ? '50%' : '100%', md: 'auto' } }}
           >
             Report Incident
           </Button>
         </Box>
       </Box>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mb: { xs: 2, md: 3 },
+          fontSize: { xs: '0.95rem', md: '1rem' },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.95rem', md: '1rem' },
+            lineHeight: { xs: 1.4, md: 1.5 }
+          }
+        }}
+      >
         {isMyReports 
           ? "View and manage your reported incidents. Track their status and updates."
           : isRecent
@@ -201,8 +249,8 @@ const IncidentsPage = () => {
       </Alert>
 
       {/* Search and Filters */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
+      <Card sx={{ mb: { xs: 2, md: 3 }, p: { xs: 1, md: 2 } }}>
+        <CardContent sx={{ p: { xs: 0, md: 2 } }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={4}>
               <TextField
@@ -213,15 +261,17 @@ const IncidentsPage = () => {
                 InputProps={{
                   startAdornment: <Search sx={{ mr: 1, color: 'text.secondary' }} />
                 }}
+                sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Status</InputLabel>
                 <Select
                   value={statusFilter}
                   label="Status"
                   onChange={(e) => setStatusFilter(e.target.value)}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   <MenuItem value="all">All Status</MenuItem>
                   <MenuItem value="Active">Active</MenuItem>
@@ -232,12 +282,13 @@ const IncidentsPage = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth size={isMobile ? 'small' : 'medium'}>
                 <InputLabel>Severity</InputLabel>
                 <Select
                   value={severityFilter}
                   label="Severity"
                   onChange={(e) => setSeverityFilter(e.target.value)}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
                 >
                   <MenuItem value="all">All Severity</MenuItem>
                   <MenuItem value="critical">Critical</MenuItem>
@@ -248,7 +299,11 @@ const IncidentsPage = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={2}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography 
+                variant="body2" 
+                color="text.secondary"
+                sx={{ fontSize: { xs: '0.9rem', md: '1rem' }, textAlign: { xs: 'center', md: 'right' } }}
+              >
                 {filteredIncidents.length} incidents found
               </Typography>
             </Grid>
@@ -258,44 +313,54 @@ const IncidentsPage = () => {
 
       {/* Incidents List */}
       {loading ? (
-        <Typography align="center" sx={{ mt: 4 }}>Loading incidents...</Typography>
+        <Typography align="center" sx={{ mt: 4, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>Loading incidents...</Typography>
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={{ xs: 2, md: 3 }}>
           {filteredIncidents.length > 0 ? (
             filteredIncidents.map((incident) => (
               <Grid item xs={12} key={incident._id || incident.id}>
-                <Card>
-                  <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                <Card sx={{ p: { xs: 1, md: 2 } }}>
+                  <CardContent sx={{ p: { xs: 1, md: 2 } }}>
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'flex-start' }, mb: { xs: 1, md: 2 }, gap: { xs: 1, md: 0 } }}>
                       <Box sx={{ flex: 1 }}>
-                        <Typography variant="h6" gutterBottom>
+                        <Typography 
+                          variant={isMobile ? 'h6' : 'h5'} 
+                          gutterBottom
+                          sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mb: { xs: 0.5, md: 1 } }}
+                        >
                           {incident.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
+                        <Typography 
+                          variant="body2" 
+                          color="text.secondary" 
+                          paragraph
+                          sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, lineHeight: { xs: 1.4, md: 1.5 }, mb: { xs: 1, md: 2 } }}
+                        >
                           {incident.description}
                         </Typography>
                       </Box>
-                      <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+                      <Box sx={{ display: 'flex', gap: 1, ml: { xs: 0, md: 2 }, mt: { xs: 1, md: 0 }, alignItems: 'center' }}>
                         <Chip
                           label={incident.severity}
                           color={getSeverityColor(incident.severity)}
                           size="small"
+                          sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                         />
                         <Chip
                           label={incident.status}
                           color={getStatusColor(incident.status)}
                           size="small"
                           variant="outlined"
+                          sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600 }}
                         />
                       </Box>
                     </Box>
-                    
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'flex-start', md: 'center' }, gap: { xs: 1, md: 3 }, mb: { xs: 1, md: 2 } }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <LocationOn fontSize="small" color="action" />
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                           {typeof incident.location === 'string' ? incident.location :
                             incident.location && incident.location.address
                               ? `${incident.location.address.street || ''}${incident.location.address.city ? ', ' + incident.location.address.city : ''}`
@@ -304,24 +369,27 @@ const IncidentsPage = () => {
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <Schedule fontSize="small" color="action" />
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                           {new Date(incident.date).toLocaleDateString()} at {incident.time}
                         </Typography>
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <Person fontSize="small" color="action" />
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
                           {incident.reporter && typeof incident.reporter === 'object'
                             ? `${incident.reporter.firstName || ''} ${incident.reporter.lastName || ''}`.trim()
                             : incident.reporter || ''}
                         </Typography>
                       </Box>
                     </Box>
-
-                    <Divider sx={{ my: 1 }} />
-                    
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Chip label={incident.type} size="small" variant="outlined" />
+                    <Divider sx={{ my: { xs: 1, md: 2 } }} />
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'center' }, gap: { xs: 1, md: 0 } }}>
+                      <Chip 
+                        label={incident.type} 
+                        size="small" 
+                        variant="outlined" 
+                        sx={{ fontSize: { xs: '0.8rem', md: '0.9rem' }, fontWeight: 600, mb: { xs: 1, md: 0 } }}
+                      />
                       <Box sx={{ display: 'flex', gap: 1 }}>
                         <Tooltip title="View Details">
                           <IconButton size="small" onClick={() => handleViewDetails(incident._id || incident.id)}>
@@ -343,7 +411,12 @@ const IncidentsPage = () => {
             <Grid item xs={12}>
               <Card>
                 <CardContent>
-                  <Typography variant="body1" color="text.secondary" align="center">
+                  <Typography 
+                    variant="body1" 
+                    color="text.secondary" 
+                    align="center"
+                    sx={{ fontSize: { xs: '1rem', md: '1.1rem' }, py: { xs: 2, md: 3 } }}
+                  >
                     No incidents found matching your criteria. Try adjusting your filters or search terms.
                   </Typography>
                 </CardContent>
