@@ -489,14 +489,12 @@ const HomePage = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
-                  color: '#ffd600',
+                  color: '#fff',
                   fontWeight: 700,
-                  textShadow: '0 1px 8px #fff, 0 0px 2px #ffd600',
                   letterSpacing: 0.5,
                   transition: 'color 0.2s',
                   '&:hover': {
-                    color: '#fffde7',
-                    opacity: 1
+                    opacity: 0.8
                   }
                 }}
               >
