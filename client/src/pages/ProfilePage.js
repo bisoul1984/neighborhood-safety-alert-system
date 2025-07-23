@@ -251,9 +251,10 @@ const ProfilePage = () => {
       sx={{ 
         mt: { xs: 8, md: 4 }, 
         mb: 4, 
-        px: { xs: 0.5, md: 3 },
+        px: { xs: 0, md: 3 },
         pt: { xs: 2, md: 0 },
-        width: '100%',
+        width: '100vw',
+        maxWidth: '100vw',
         overflowX: 'hidden',
         minWidth: 0
       }}
@@ -290,7 +291,7 @@ const ProfilePage = () => {
       </Typography>
 
       {/* Profile Header */}
-      <Card sx={{ mb: { xs: 2, md: 3 }, width: { xs: '100%', md: 'auto' } }}>
+      <Card sx={{ mb: { xs: 2, md: 3 }, width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
         <CardContent>
           <Grid 
             container 
@@ -300,7 +301,7 @@ const ProfilePage = () => {
             justifyContent={isMobile ? 'center' : 'flex-start'}
             sx={{ textAlign: isMobile ? 'center' : 'left', width: '100%', minWidth: 0 }}
           >
-            <Grid item xs={12} sm="auto" sx={{ width: { xs: '100%', sm: 'auto' } }}>
+            <Grid item xs={12} sm={12} sx={{ width: { xs: '100%', sm: 'auto' } }}>
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -322,7 +323,7 @@ const ProfilePage = () => {
                 </Avatar>
               </Badge>
             </Grid>
-            <Grid item xs={12} sm sx={{ width: { xs: '100%', sm: 'auto' } }}>
+            <Grid item xs={12} sm={12} sx={{ width: { xs: '100%', sm: 'auto' } }}>
               <Typography variant={isMobile ? 'h6' : 'h5'} gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mt: isMobile ? 2 : 0 }}>
                 {user?.firstName} {user?.lastName}
               </Typography>
@@ -356,7 +357,7 @@ const ProfilePage = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} sm="auto" sx={{ width: { xs: '100%', sm: 'auto' } }}>
+            <Grid item xs={12} sm={12} sx={{ width: { xs: '100%', sm: 'auto' } }}>
               <Button
                 variant="contained"
                 startIcon={<Edit />}
@@ -384,8 +385,8 @@ const ProfilePage = () => {
       {/* Tab Content */}
       {activeTab === 0 && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={8} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Person />
@@ -501,8 +502,8 @@ const ProfilePage = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={4} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Security />
@@ -555,8 +556,8 @@ const ProfilePage = () => {
 
       {activeTab === 1 && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={8} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Security />
@@ -636,8 +637,8 @@ const ProfilePage = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={4} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Security Score
@@ -667,8 +668,8 @@ const ProfilePage = () => {
 
       {activeTab === 2 && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={8} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Settings />
@@ -760,8 +761,8 @@ const ProfilePage = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4} sx={{ width: '100%' }}>
-            <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <Grid item xs={12} md={4} sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
+            <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 400 }, mx: { xs: -1, md: 0 } }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Data & Privacy
@@ -806,7 +807,7 @@ const ProfilePage = () => {
       )}
 
       {activeTab === 3 && (
-        <Card sx={{ width: { xs: '100%', md: 'auto' } }}>
+        <Card sx={{ width: { xs: '100vw', md: 'auto' }, maxWidth: { xs: '100vw', md: 700 }, mx: { xs: -1, md: 0 } }}>
           <CardContent>
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <History />
@@ -837,7 +838,7 @@ const ProfilePage = () => {
       )}
 
       {/* Password Change Dialog */}
-      <Dialog open={showPasswordDialog} onClose={() => setShowPasswordDialog(false)} maxWidth="sm" fullWidth PaperProps={{ sx: { width: '100%', m: 0 } }}>
+      <Dialog open={showPasswordDialog} onClose={() => setShowPasswordDialog(false)} maxWidth="sm" fullWidth fullScreen={isMobile} PaperProps={{ sx: { width: '100vw', maxWidth: '100vw', m: 0 } }}>
         <DialogTitle>Change Password</DialogTitle>
         <DialogContent>
           <TextField
@@ -893,7 +894,7 @@ const ProfilePage = () => {
       </Dialog>
 
       {/* Delete Account Dialog */}
-      <Dialog open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} maxWidth="sm" fullWidth PaperProps={{ sx: { width: '100%', m: 0 } }}>
+      <Dialog open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} maxWidth="sm" fullWidth fullScreen={isMobile} PaperProps={{ sx: { width: '100vw', maxWidth: '100vw', m: 0 } }}>
         <DialogTitle>Delete Account</DialogTitle>
         <DialogContent>
           <Alert severity="warning" sx={{ mb: 2 }}>
