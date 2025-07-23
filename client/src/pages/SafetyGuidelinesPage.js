@@ -15,7 +15,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Divider
+  Divider,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   Security, 
@@ -36,6 +38,8 @@ import { useNavigate } from 'react-router-dom';
 const SafetyGuidelinesPage = () => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState('general');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -253,29 +257,71 @@ const SafetyGuidelinesPage = () => {
   ];
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" component="h1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        mt: { xs: 8, md: 4 }, 
+        mb: 4, 
+        px: { xs: 1, md: 3 },
+        pt: { xs: 2, md: 0 }
+      }}
+    >
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' }, 
+          justifyContent: 'space-between', 
+          alignItems: { xs: 'flex-start', md: 'center' }, 
+          mb: { xs: 2, md: 3 },
+          gap: { xs: 2, md: 0 }
+        }}
+      >
+        <Typography 
+          variant={isMobile ? 'h5' : 'h4'} 
+          component="h1" 
+          sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1, 
+            fontWeight: 700, 
+            fontSize: { xs: '1.5rem', md: '2.125rem' },
+            textAlign: { xs: 'center', md: 'left' },
+            mb: { xs: 1, md: 0 },
+            lineHeight: { xs: 1.3, md: 1.2 },
+            width: { xs: '100%', md: 'auto' }
+          }}
+        >
           📋 Safety Guidelines
         </Typography>
         <Button 
           variant="outlined"
           onClick={() => navigate('/safety')}
+          sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 }, width: { xs: '100%', md: 'auto' } }}
         >
           Back to Safety Resources
         </Button>
       </Box>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mb: { xs: 2, md: 3 },
+          fontSize: { xs: '0.95rem', md: '1rem' },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.95rem', md: '1rem' },
+            lineHeight: { xs: 1.4, md: 1.5 }
+          }
+        }}
+      >
+        <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: { xs: '1.05rem', md: '1.1rem' } }}>
           🛡️ Comprehensive Safety Guidelines
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body2" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
           These guidelines provide essential safety information for various situations. Review them regularly and share with family and friends.
         </Typography>
       </Alert>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
         <Grid item xs={12} md={8}>
           {safetyGuidelines.map((category) => (
             <Accordion 
@@ -286,10 +332,10 @@ const SafetyGuidelinesPage = () => {
             >
               <AccordionSummary expandIcon={<ExpandMore />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  {category.icon}
+                  {React.cloneElement(category.icon, { sx: { fontSize: { xs: '1.7rem', md: '2.2rem' } } })}
                   <Box>
-                    <Typography variant="h6">{category.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant={isMobile ? 'h6' : 'h5'} sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>{category.title}</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>
                       {category.description}
                     </Typography>
                   </Box>
@@ -300,8 +346,12 @@ const SafetyGuidelinesPage = () => {
                   {category.guidelines.map((guideline, index) => (
                     <Grid item xs={12} key={index}>
                       <Card variant="outlined">
-                        <CardContent>
-                          <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <CardContent sx={{ p: { xs: 1, md: 2 } }}>
+                          <Typography 
+                            variant={isMobile ? 'h6' : 'h5'} 
+                            gutterBottom 
+                            sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, fontSize: { xs: '1.05rem', md: '1.15rem' } }}
+                          >
                             <CheckCircle color="success" fontSize="small" />
                             {guideline.title}
                           </Typography>
@@ -311,7 +361,7 @@ const SafetyGuidelinesPage = () => {
                                 <ListItemIcon sx={{ minWidth: 30 }}>
                                   <Info color="primary" fontSize="small" />
                                 </ListItemIcon>
-                                <ListItemText primary={tip} />
+                                <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>{tip}</Typography>} />
                               </ListItem>
                             ))}
                           </List>
@@ -327,8 +377,12 @@ const SafetyGuidelinesPage = () => {
 
         <Grid item xs={12} md={4}>
           <Card sx={{ position: 'sticky', top: 20 }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
+            <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+              <Typography 
+                variant={isMobile ? 'h6' : 'h5'} 
+                gutterBottom
+                sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mb: { xs: 1, md: 2 }, textAlign: { xs: 'center', md: 'left' } }}
+              >
                 🚨 Emergency Quick Actions
               </Typography>
               <List dense>
@@ -337,8 +391,8 @@ const SafetyGuidelinesPage = () => {
                     <Warning color="error" />
                   </ListItemIcon>
                   <ListItemText 
-                    primary="Call 911 immediately for emergencies"
-                    secondary="Life-threatening situations"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Call 911 immediately for emergencies</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>Life-threatening situations</Typography>}
                   />
                 </ListItem>
                 <ListItem>
@@ -346,8 +400,8 @@ const SafetyGuidelinesPage = () => {
                     <LocalHospital color="primary" />
                   </ListItemIcon>
                   <ListItemText 
-                    primary="Seek medical attention"
-                    secondary="For injuries or health concerns"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Seek medical attention</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>For injuries or health concerns</Typography>}
                   />
                 </ListItem>
                 <ListItem>
@@ -355,34 +409,38 @@ const SafetyGuidelinesPage = () => {
                     <Security color="warning" />
                   </ListItemIcon>
                   <ListItemText 
-                    primary="Report suspicious activity"
-                    secondary="Contact local authorities"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Report suspicious activity</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>Contact local authorities</Typography>}
                   />
                 </ListItem>
               </List>
               
               <Divider sx={{ my: 2 }} />
               
-              <Typography variant="h6" gutterBottom>
+              <Typography 
+                variant={isMobile ? 'h6' : 'h5'} 
+                gutterBottom
+                sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mb: { xs: 1, md: 2 }, textAlign: { xs: 'center', md: 'left' } }}
+              >
                 📱 Safety Apps & Tools
               </Typography>
               <List dense>
                 <ListItem>
                   <ListItemText 
-                    primary="Emergency Contacts"
-                    secondary="Save important numbers"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Emergency Contacts</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>Save important numbers</Typography>}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText 
-                    primary="Location Sharing"
-                    secondary="Share location with trusted contacts"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Location Sharing</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>Share location with trusted contacts</Typography>}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText 
-                    primary="Safety Alerts"
-                    secondary="Enable emergency notifications"
+                    primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>Safety Alerts</Typography>}
+                    secondary={<Typography sx={{ fontSize: { xs: '0.85rem', md: '0.95rem' } }}>Enable emergency notifications</Typography>}
                   />
                 </ListItem>
               </List>
@@ -392,7 +450,7 @@ const SafetyGuidelinesPage = () => {
                   variant="contained" 
                   fullWidth 
                   onClick={() => navigate('/safety/contacts')}
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 1, fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
                 >
                   View Emergency Contacts
                 </Button>
@@ -400,6 +458,7 @@ const SafetyGuidelinesPage = () => {
                   variant="outlined" 
                   fullWidth
                   onClick={() => navigate('/report')}
+                  sx={{ fontSize: { xs: '0.95rem', md: '1rem' }, py: { xs: 1, md: 1.5 } }}
                 >
                   Report Incident
                 </Button>
@@ -410,41 +469,45 @@ const SafetyGuidelinesPage = () => {
       </Grid>
 
       {/* Additional Resources */}
-      <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
+      <Card sx={{ mt: { xs: 2, md: 3 } }}>
+        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+          <Typography 
+            variant={isMobile ? 'h6' : 'h5'} 
+            gutterBottom
+            sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', md: '1.25rem' }, mb: { xs: 1, md: 2 }, textAlign: { xs: 'center', md: 'left' } }}
+          >
             📚 Additional Safety Resources
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <Typography variant="subtitle2" color="primary" gutterBottom>
+              <Typography variant="subtitle2" color="primary" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }}>
                 Online Resources:
               </Typography>
               <List dense>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• Red Cross Safety Tips" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• Red Cross Safety Tips</Typography>} />
                 </ListItem>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• FEMA Emergency Preparedness" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• FEMA Emergency Preparedness</Typography>} />
                 </ListItem>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• Local Police Department Guidelines" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• Local Police Department Guidelines</Typography>} />
                 </ListItem>
               </List>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="subtitle2" color="primary" gutterBottom>
+              <Typography variant="subtitle2" color="primary" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }}>
                 Community Programs:
               </Typography>
               <List dense>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• Neighborhood Watch Programs" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• Neighborhood Watch Programs</Typography>} />
                 </ListItem>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• Community Emergency Response Teams" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• Community Emergency Response Teams</Typography>} />
                 </ListItem>
                 <ListItem sx={{ py: 0 }}>
-                  <ListItemText primary="• Local Safety Workshops" />
+                  <ListItemText primary={<Typography sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}>• Local Safety Workshops</Typography>} />
                 </ListItem>
               </List>
             </Grid>
