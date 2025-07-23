@@ -159,7 +159,7 @@ const HomePage = () => {
           background: '#081f37',
           color: 'white',
           py: { xs: 6, md: 12 },
-          pt: { xs: 14, md: 16 }, // Add extra top padding for mobile
+          pt: { xs: 18, md: 16 }, // Increase extra top padding for mobile
           px: { xs: 2, sm: 4, md: 0 }, // Add horizontal padding on mobile
           position: 'relative',
           overflow: 'hidden'
