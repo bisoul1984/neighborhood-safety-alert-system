@@ -345,6 +345,28 @@ const EnhancedNavbar = ({ children }) => {
         </Box>
       )}
 
+      {/* User Menu for mobile */}
+      {isMobile && user && (
+        <>
+          <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
+          <List sx={{ p: 0 }}>
+            <ListItemButton onClick={() => { handleMenuClose(); navigate('/profile'); }}>
+              <ListItemIcon sx={{ color: 'white' }}><AccountCircle fontSize="small" /></ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItemButton>
+            <ListItemButton onClick={() => { handleMenuClose(); navigate('/settings'); }}>
+              <ListItemIcon sx={{ color: 'white' }}><Settings fontSize="small" /></ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItemButton>
+            <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon sx={{ color: 'white' }}><Logout fontSize="small" /></ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </List>
+        </>
+      )}
+
       {/* Navigation Menu */}
       <List sx={{ pt: 1 }}>
         {menuItems.map((item) => (
@@ -502,7 +524,7 @@ const EnhancedNavbar = ({ children }) => {
             onSubmit={handleSearch}
             sx={{
               p: '2px 4px',
-              display: 'flex',
+              display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               width: { xs: '200px', sm: '300px' },
               mr: 2,
@@ -568,8 +590,8 @@ const EnhancedNavbar = ({ children }) => {
               </Tooltip>
             )}
 
-            {/* User Menu - Only show when authenticated */}
-            {user && (
+            {/* User Menu - Only show when authenticated and not mobile */}
+            {user && !isMobile && (
               <Tooltip title="User Menu">
                 <IconButton
                   color="inherit"
