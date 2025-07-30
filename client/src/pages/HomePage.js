@@ -181,80 +181,121 @@ const HomePage = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37',
-          color: 'white',
-          py: { xs: 6, md: 12 },
-          pt: { xs: 18, md: 16 },
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
+            : 'linear-gradient(135deg, #F5F7FA 0%, #E8ECF1 100%)',
+          color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+          py: { xs: 8, md: 16 },
+          pt: { xs: 20, md: 20 },
           px: { xs: 2, sm: 4, md: 0 },
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
-        <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
+        {/* Background Pattern */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: theme.palette.mode === 'dark'
+              ? 'radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)'
+              : 'radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.05) 0%, transparent 50%)',
+            zIndex: 1
+          }}
+        />
+        
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <Grid container spacing={6} alignItems="center">
             <Grid item xs={12} md={6}>
               <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
                 <Typography
-                  variant="h2"
+                  variant="h1"
                   component="h1"
                   sx={{
-                    fontWeight: 700,
-                    mb: { xs: 2, md: 3 },
-                    fontSize: { xs: '1.7rem', sm: '2.2rem', md: '3.2rem' },
-                    lineHeight: { xs: 1.25, md: 1.2 },
-                    textAlign: { xs: 'center', md: 'left' }
+                    fontWeight: 800,
+                    mb: { xs: 3, md: 4 },
+                    fontSize: { xs: '2.5rem', sm: '3rem', md: '4rem' },
+                    lineHeight: { xs: 1.2, md: 1.1 },
+                    textAlign: { xs: 'center', md: 'left' },
+                    background: theme.palette.mode === 'dark'
+                      ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
+                      : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    letterSpacing: '-0.02em'
                   }}
                 >
                   Stay Safe, Stay Informed
                 </Typography>
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   sx={{
-                    mb: { xs: 2.5, md: 4 },
-                    opacity: 0.9,
-                    fontSize: { xs: '1rem', md: '1.25rem' },
-                    lineHeight: { xs: 1.5, md: 1.6 },
-                    textAlign: { xs: 'center', md: 'left' }
+                    mb: { xs: 4, md: 6 },
+                    opacity: 0.8,
+                    fontSize: { xs: '1.1rem', md: '1.4rem' },
+                    lineHeight: { xs: 1.6, md: 1.5 },
+                    textAlign: { xs: 'center', md: 'left' },
+                    fontWeight: 400,
+                    maxWidth: '600px'
                   }}
                 >
                   Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
                 </Typography>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
                   <Button
                     variant="contained"
                     size="large"
                     onClick={handleGetStarted}
                     sx={{
-                      bgcolor: 'white',
-                      color: theme.palette.mode === 'dark' ? '#1a1a1a' : 'primary.main',
-                      px: 4,
-                      py: 1.5,
+                      bgcolor: '#00BFA6',
+                      color: 'white',
+                      px: 6,
+                      py: 2,
                       fontSize: '1.1rem',
+                      fontWeight: 600,
+                      borderRadius: '16px',
+                      boxShadow: '0 8px 32px rgba(0, 191, 166, 0.3)',
+                      transition: 'all 0.3s ease',
                       '&:hover': {
-                        bgcolor: 'grey.100'
+                        bgcolor: '#00A896',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 12px 40px rgba(0, 191, 166, 0.4)'
                       },
                       width: { xs: '100%', sm: 'auto' }
                     }}
                   >
                     Get Started
-                    <ArrowForward sx={{ ml: 1 }} />
+                    <ArrowForward sx={{ ml: 1, transition: 'transform 0.3s ease' }} />
                   </Button>
                   <Button
                     variant="outlined"
                     size="large"
                     onClick={() => navigate('/login')}
                     sx={{
-                      borderColor: 'white',
-                      color: 'white',
-                      px: 4,
-                      py: 1.5,
+                      borderColor: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                      color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                      px: 6,
+                      py: 2,
                       fontSize: '1.1rem',
+                      fontWeight: 600,
+                      borderRadius: '16px',
+                      borderWidth: '2px',
+                      transition: 'all 0.3s ease',
                       '&:hover': {
-                        borderColor: 'white',
-                        bgcolor: 'rgba(255,255,255,0.1)'
+                        borderColor: theme.palette.mode === 'dark' ? '#00BFA6' : '#00BFA6',
+                        color: theme.palette.mode === 'dark' ? '#00BFA6' : '#00BFA6',
+                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
+                        transform: 'translateY(-2px)'
                       },
                       width: { xs: '100%', sm: 'auto' },
-                      mt: { xs: 1, sm: 0 }
+                      mt: { xs: 2, sm: 0 }
                     }}
                   >
                     Sign In
@@ -273,10 +314,12 @@ const HomePage = () => {
               >
                 <Box
                   sx={{
-                    width: { xs: 300, md: 400 },
-                    height: { xs: 300, md: 400 },
-                    background: 'rgba(255,255,255,0.1)',
-                    borderRadius: '50%',
+                    width: { xs: 280, md: 400 },
+                    height: { xs: 280, md: 400 },
+                    background: theme.palette.mode === 'dark'
+                      ? 'linear-gradient(135deg, rgba(0, 191, 166, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%)'
+                      : 'linear-gradient(135deg, rgba(0, 191, 166, 0.05) 0%, rgba(255, 107, 107, 0.05) 100%)',
+                    borderRadius: '24px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -294,44 +337,103 @@ const HomePage = () => {
 
       {/* Stats Section */}
       <Box sx={{ 
-        py: { xs: 4, md: 6 }, 
-        bgcolor: theme.palette.background.default, 
-        px: { xs: 2, sm: 4, md: 0 }, 
-        mt: { xs: 2, md: 0 } 
+        py: { xs: 8, md: 12 }, 
+        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#FFFFFF', 
+        px: { xs: 2, sm: 4, md: 0 }
       }}>
         <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+            <Typography 
+              variant="h2" 
+              sx={{ 
+                fontWeight: 700, 
+                mb: 2, 
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
+                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
+              Trusted by Communities
+            </Typography>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(45,45,45,0.7)',
+                fontWeight: 400,
+                maxWidth: '600px',
+                mx: 'auto'
+              }}
+            >
+              Join thousands of active users keeping their neighborhoods safe
+            </Typography>
+          </Box>
+          
           <Grid container spacing={4}>
             {stats.map((stat, index) => (
               <Grid item xs={6} md={3} key={index}>
                 <Box
                   sx={{
                     textAlign: 'center',
-                    p: 3,
-                    bgcolor: theme.palette.background.paper,
-                    borderRadius: 2,
+                    p: { xs: 3, md: 4 },
+                    bgcolor: theme.palette.mode === 'dark' ? '#2D2D2D' : '#F8F9FA',
+                    borderRadius: '20px',
                     boxShadow: theme.palette.mode === 'dark' 
-                      ? '0 4px 12px rgba(0,0,0,0.3)' 
-                      : '0 4px 12px rgba(8, 31, 55, 0.1)',
+                      ? '0 8px 32px rgba(0,0,0,0.3)' 
+                      : '0 8px 32px rgba(0,0,0,0.08)',
                     border: `1px solid ${theme.palette.mode === 'dark' 
                       ? 'rgba(255,255,255,0.1)' 
-                      : 'rgba(8, 31, 55, 0.05)'}`,
-                    transition: 'transform 0.2s, box-shadow 0.2s',
+                      : 'rgba(0,0,0,0.05)'}`,
+                    transition: 'all 0.3s ease',
                     '&:hover': {
-                      transform: 'translateY(-2px)',
+                      transform: 'translateY(-8px)',
                       boxShadow: theme.palette.mode === 'dark' 
-                        ? '0 8px 24px rgba(0,0,0,0.4)' 
-                        : '0 8px 24px rgba(8, 31, 55, 0.15)'
+                        ? '0 16px 48px rgba(0,0,0,0.4)' 
+                        : '0 16px 48px rgba(0,0,0,0.12)',
+                      borderColor: '#00BFA6'
                     },
                     mb: { xs: 2, md: 0 }
                   }}
                 >
-                  <Box sx={{ color: theme.palette.primary.main, mb: 1 }}>
-                    {stat.icon}
+                  <Box sx={{ 
+                    color: '#00BFA6', 
+                    mb: 2,
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}>
+                    <Box sx={{ 
+                      p: 2, 
+                      borderRadius: '16px',
+                      bgcolor: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {React.cloneElement(stat.icon, { sx: { fontSize: 32 } })}
+                    </Box>
                   </Box>
-                  <Typography variant="h4" component="div" sx={{ fontWeight: 700, mb: 1, color: theme.palette.text.primary }}>
+                  <Typography 
+                    variant="h3" 
+                    component="div" 
+                    sx={{ 
+                      fontWeight: 800, 
+                      mb: 1, 
+                      color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                      fontSize: { xs: '1.8rem', md: '2.2rem' }
+                    }}
+                  >
                     {stat.value}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(45,45,45,0.7)',
+                      fontWeight: 500
+                    }}
+                  >
                     {stat.label}
                   </Typography>
                 </Box>
@@ -343,28 +445,40 @@ const HomePage = () => {
 
       {/* Features Section */}
       <Box sx={{ 
-        py: { xs: 4, md: 8 }, 
-        bgcolor: theme.palette.background.paper,
+        py: { xs: 8, md: 12 }, 
+        bgcolor: theme.palette.mode === 'dark' ? '#2D2D2D' : '#F8F9FA',
         px: { xs: 2, sm: 4, md: 0 }
       }}>
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: { xs: 'center', md: 'center' }, mb: 6 }}>
-            <Typography variant="h3" component="h2" sx={{ 
-              fontWeight: 700, 
-              mb: 2, 
-              color: theme.palette.text.primary, 
-              fontSize: { xs: '1.3rem', md: '2.2rem' }, 
-              lineHeight: { xs: 1.3, md: 1.2 } 
-            }}>
+          <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+            <Typography 
+              variant="h2" 
+              component="h2" 
+              sx={{ 
+                fontWeight: 700, 
+                mb: 3, 
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
+                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
               Why Choose Our Platform?
             </Typography>
-            <Typography variant="h6" sx={{ 
-              maxWidth: 600, 
-              mx: 'auto', 
-              color: theme.palette.text.secondary, 
-              fontSize: { xs: '1rem', md: '1.15rem' }, 
-              lineHeight: { xs: 1.5, md: 1.6 } 
-            }}>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                maxWidth: 700, 
+                mx: 'auto', 
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(45,45,45,0.7)', 
+                fontSize: { xs: '1.1rem', md: '1.3rem' }, 
+                lineHeight: { xs: 1.6, md: 1.5 },
+                fontWeight: 400
+              }}
+            >
               Comprehensive safety features designed to keep your community informed and protected
             </Typography>
           </Box>
@@ -375,28 +489,64 @@ const HomePage = () => {
                 <Card
                   sx={{
                     height: '100%',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    transition: 'all 0.3s ease',
                     border: `1px solid ${theme.palette.mode === 'dark' 
                       ? 'rgba(255,255,255,0.1)' 
-                      : 'rgba(8, 31, 55, 0.1)'}`,
+                      : 'rgba(0,0,0,0.05)'}`,
+                    borderRadius: '20px',
+                    bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
+                    boxShadow: theme.palette.mode === 'dark' 
+                      ? '0 8px 32px rgba(0,0,0,0.3)' 
+                      : '0 8px 32px rgba(0,0,0,0.08)',
                     '&:hover': {
-                      transform: 'translateY(-4px)',
+                      transform: 'translateY(-8px)',
                       boxShadow: theme.palette.mode === 'dark' 
-                        ? '0 12px 32px rgba(0,0,0,0.4)' 
-                        : '0 12px 32px rgba(8, 31, 55, 0.15)',
-                      borderColor: theme.palette.primary.main
+                        ? '0 16px 48px rgba(0,0,0,0.4)' 
+                        : '0 16px 48px rgba(0,0,0,0.12)',
+                      borderColor: '#00BFA6'
                     },
                     mb: { xs: 2, md: 0 }
                   }}
                 >
-                  <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                    <Box sx={{ color: feature.color, mb: 2 }}>
-                      {feature.icon}
+                  <CardContent sx={{ textAlign: 'center', p: { xs: 4, md: 5 } }}>
+                    <Box sx={{ 
+                      color: '#00BFA6', 
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}>
+                      <Box sx={{ 
+                        p: 3, 
+                        borderRadius: '20px',
+                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        {React.cloneElement(feature.icon, { sx: { fontSize: 48 } })}
+                      </Box>
                     </Box>
-                    <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, color: theme.palette.text.primary }}>
+                    <Typography 
+                      variant="h5" 
+                      component="h3" 
+                      sx={{ 
+                        fontWeight: 700, 
+                        mb: 3, 
+                        color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                        fontSize: { xs: '1.2rem', md: '1.4rem' }
+                      }}
+                    >
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(45,45,45,0.7)',
+                        lineHeight: 1.6,
+                        fontSize: { xs: '0.95rem', md: '1rem' }
+                      }}
+                    >
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -411,30 +561,58 @@ const HomePage = () => {
       <Box
         sx={{
           background: theme.palette.mode === 'dark' 
-            ? 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)'
-            : 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
+            ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
+            : 'linear-gradient(135deg, #2D2D2D 0%, #1E1E1E 100%)',
           color: 'white',
-          py: { xs: 5, md: 8 },
+          py: { xs: 8, md: 12 },
           px: { xs: 2, sm: 4, md: 0 },
-          mt: { xs: 2, md: 0 }
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
-        <Container maxWidth="md">
-          <Box sx={{ textAlign: { xs: 'center', md: 'center' } }}>
-            <Typography variant="h3" component="h2" sx={{ 
-              fontWeight: 700, 
-              mb: 3, 
-              fontSize: { xs: '1.3rem', md: '2.2rem' }, 
-              lineHeight: { xs: 1.3, md: 1.2 } 
-            }}>
+        {/* Background Pattern */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)',
+            zIndex: 1
+          }}
+        />
+        
+        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h2" 
+              component="h2" 
+              sx={{ 
+                fontWeight: 800, 
+                mb: 4, 
+                fontSize: { xs: '2rem', md: '3rem' }, 
+                lineHeight: { xs: 1.2, md: 1.1 },
+                background: 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
               Ready to Make Your Neighborhood Safer?
             </Typography>
-            <Typography variant="h6" sx={{ 
-              mb: 4, 
-              opacity: 0.9, 
-              fontSize: { xs: '1rem', md: '1.15rem' }, 
-              lineHeight: { xs: 1.5, md: 1.6 } 
-            }}>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                mb: 6, 
+                opacity: 0.9, 
+                fontSize: { xs: '1.1rem', md: '1.3rem' }, 
+                lineHeight: { xs: 1.6, md: 1.5 },
+                fontWeight: 400,
+                maxWidth: '700px',
+                mx: 'auto'
+              }}
+            >
               Join thousands of community members who are already using our platform to stay informed and stay safe.
             </Typography>
             <Button
@@ -442,19 +620,24 @@ const HomePage = () => {
               size="large"
               onClick={handleGetStarted}
               sx={{
-                bgcolor: 'white',
-                color: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37',
-                px: 6,
-                py: 2,
+                bgcolor: '#00BFA6',
+                color: 'white',
+                px: 8,
+                py: 3,
                 fontSize: '1.2rem',
-                fontWeight: 600,
+                fontWeight: 700,
+                borderRadius: '20px',
+                boxShadow: '0 12px 40px rgba(0, 191, 166, 0.4)',
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                  bgcolor: '#f8f9fa'
+                  bgcolor: '#00A896',
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 16px 48px rgba(0, 191, 166, 0.5)'
                 }
               }}
             >
               Start Protecting Your Community
-              <ArrowForward sx={{ ml: 2 }} />
+              <ArrowForward sx={{ ml: 2, transition: 'transform 0.3s ease' }} />
             </Button>
           </Box>
         </Container>
@@ -462,9 +645,9 @@ const HomePage = () => {
 
       {/* Footer */}
       <Box sx={{ 
-        bgcolor: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37', 
+        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#2D2D2D', 
         color: 'white', 
-        py: { xs: 3, md: 4 },
+        py: { xs: 4, md: 6 },
         px: { xs: 2, sm: 4, md: 0 }
       }}>
         <Container maxWidth="lg">
