@@ -645,10 +645,11 @@ const HomePage = () => {
 
       {/* Footer */}
       <Box sx={{ 
-        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#2D2D2D', 
-        color: 'white', 
-        py: { xs: 4, md: 6 },
-        px: { xs: 2, sm: 4, md: 0 }
+        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F7FA', 
+        color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+        py: { xs: 6, md: 8 },
+        px: { xs: 2, sm: 4, md: 0 },
+        borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
       }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
@@ -656,11 +657,22 @@ const HomePage = () => {
               <Typography variant="h6" sx={{ 
                 mb: 2, 
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
-                textAlign: { xs: 'center', md: 'left' } 
+                textAlign: { xs: 'center', md: 'left' },
+                fontWeight: 600,
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
+                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
               }}>
                 Neighborhood Safety Alert System
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+              <Typography variant="body2" sx={{ 
+                opacity: 0.8,
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)',
+                lineHeight: 1.6
+              }}>
                 Empowering communities with real-time safety information and emergency alerts.
               </Typography>
             </Grid>
@@ -668,7 +680,9 @@ const HomePage = () => {
               <Typography variant="h6" sx={{ 
                 mb: 2, 
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
-                textAlign: { xs: 'center', md: 'left' } 
+                textAlign: { xs: 'center', md: 'left' },
+                fontWeight: 600,
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
               }}>
                 Quick Links
               </Typography>
@@ -676,16 +690,17 @@ const HomePage = () => {
                 <Button
                   onClick={() => navigate('/login')}
                   sx={{
-                    color: 'white',
+                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
                     minHeight: 'auto',
                     textTransform: 'none',
                     fontSize: '0.9rem',
+                    fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f0f0f0'
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
+                      color: theme.palette.primary.main
                     }
                   }}
                 >
@@ -694,16 +709,17 @@ const HomePage = () => {
                 <Button 
                   onClick={() => navigate('/register')}
                   sx={{
-                    color: 'white',
+                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
                     minHeight: 'auto',
                     textTransform: 'none',
                     fontSize: '0.9rem',
+                    fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f0f0f0'
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
+                      color: theme.palette.primary.main
                     }
                   }}
                 >
@@ -712,16 +728,17 @@ const HomePage = () => {
                 <Button 
                   onClick={() => navigate('/safety')}
                   sx={{
-                    color: 'white',
+                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
                     minHeight: 'auto',
                     textTransform: 'none',
                     fontSize: '0.9rem',
+                    fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: '#f0f0f0'
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
+                      color: theme.palette.primary.main
                     }
                   }}
                 >
@@ -733,28 +750,44 @@ const HomePage = () => {
               <Typography variant="h6" sx={{ 
                 mb: 2, 
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
-                textAlign: { xs: 'center', md: 'left' } 
+                textAlign: { xs: 'center', md: 'left' },
+                fontWeight: 600,
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
               }}>
                 Contact
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
+              <Typography variant="body2" sx={{ 
+                opacity: 0.8, 
+                mb: 1,
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+              }}>
                 Email: support@neighborhoodsafety.com
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
+              <Typography variant="body2" sx={{ 
+                opacity: 0.8, 
+                mb: 1,
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+              }}>
                 Phone: (555) 123-4567
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+              <Typography variant="body2" sx={{ 
+                opacity: 0.8,
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+              }}>
                 Emergency: 911
               </Typography>
             </Grid>
           </Grid>
           <Box sx={{ 
-            borderTop: '1px solid rgba(255,255,255,0.1)', 
+            borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`, 
             mt: 4, 
             pt: 2, 
             textAlign: 'center' 
           }}>
-            <Typography variant="body2" sx={{ opacity: 0.6 }}>
+            <Typography variant="body2" sx={{ 
+              opacity: 0.6,
+              color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(45,45,45,0.6)'
+            }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
             </Typography>
           </Box>

@@ -320,22 +320,48 @@ const EnhancedNavbar = ({ children }) => {
   ];
 
   const drawer = (
-    <Box sx={{ width: 280, height: '100%', background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)', color: 'white', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ 
+      width: 280, 
+      height: '100%', 
+      background: theme.palette.mode === 'dark' 
+        ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)' 
+        : 'linear-gradient(135deg, #F5F7FA 0%, #E8ECF1 100%)', 
+      color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+      display: 'flex', 
+      flexDirection: 'column',
+      borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
+    }}>
 
 
       {/* User Info */}
       {user && (
-        <Box sx={{ p: 2, borderBottom: 1, borderColor: 'rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}>
+        <Box sx={{ 
+          p: 2, 
+          borderBottom: 1, 
+          borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', 
+          background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' 
+        }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <Avatar 
               src={user.profile?.avatar} 
-              sx={{ width: 40, height: 40, mr: 2, border: '2px solid #1a4a6b' }}
+              sx={{ 
+                width: 40, 
+                height: 40, 
+                mr: 2, 
+                border: `2px solid ${theme.palette.primary.main}`,
+                boxShadow: '0 4px 12px rgba(0, 191, 166, 0.2)'
+              }}
             />
             <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: 'white' }}>
+              <Typography variant="subtitle2" sx={{ 
+                fontWeight: 'bold', 
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+              }}>
                 {user.name || user.email}
               </Typography>
-              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+              <Typography variant="caption" sx={{ 
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)' 
+              }}>
                 {user.role || 'Community Member'}
               </Typography>
             </Box>
@@ -345,13 +371,22 @@ const EnhancedNavbar = ({ children }) => {
             size="small" 
             color="success" 
             variant="outlined"
-            sx={{ fontSize: '0.7rem', color: 'white', borderColor: '#4caf50' }}
+            sx={{ 
+              fontSize: '0.7rem', 
+              color: theme.palette.success.main, 
+              borderColor: theme.palette.success.main,
+              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)'
+            }}
           />
         </Box>
       )}
 
       {/* Dark Mode Toggle in Drawer */}
-      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'rgba(255,255,255,0.1)' }}>
+      <Box sx={{ 
+        p: 2, 
+        borderBottom: 1, 
+        borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' 
+      }}>
         <FormControlLabel
           control={
             <Switch 
@@ -359,13 +394,13 @@ const EnhancedNavbar = ({ children }) => {
               onChange={toggleDarkMode}
               sx={{
                 '& .MuiSwitch-switchBase.Mui-checked': {
-                  color: '#fff',
+                  color: theme.palette.primary.main,
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 191, 166, 0.08)',
                   },
                 },
                 '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                  backgroundColor: '#fff',
+                  backgroundColor: theme.palette.primary.main,
                 },
               }}
             />
@@ -373,15 +408,17 @@ const EnhancedNavbar = ({ children }) => {
           label={
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               {darkMode ? <Brightness7 /> : <Brightness4 />}
-              <Typography variant="body2">
+              <Typography variant="body2" sx={{ 
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+              }}>
                 {darkMode ? 'Light Mode' : 'Dark Mode'}
               </Typography>
             </Box>
           }
           sx={{ 
-            color: 'white',
+            color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
             '& .MuiFormControlLabel-label': {
-              color: 'white'
+              color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
             }
           }}
         />
@@ -390,19 +427,34 @@ const EnhancedNavbar = ({ children }) => {
       {/* User Menu for mobile */}
       {isMobile && user && (
         <>
-          <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
+          <Divider sx={{ 
+            my: 1, 
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' 
+          }} />
           <List sx={{ p: 0 }}>
-            <ListItemButton onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/profile'); }}>
-              <ListItemIcon sx={{ color: 'white' }}><AccountCircle fontSize="small" /></ListItemIcon>
+            <ListItemButton 
+              onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/profile'); }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+            >
+              <ListItemIcon sx={{ color: theme.palette.primary.main }}><AccountCircle fontSize="small" /></ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
-            <ListItemButton onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/settings'); }}>
-              <ListItemIcon sx={{ color: 'white' }}><Settings fontSize="small" /></ListItemIcon>
+            <ListItemButton 
+              onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/settings'); }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+            >
+              <ListItemIcon sx={{ color: theme.palette.primary.main }}><Settings fontSize="small" /></ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
-            <Divider sx={{ my: 1, borderColor: 'rgba(255,255,255,0.1)' }} />
-            <ListItemButton onClick={() => { setDrawerOpen(false); handleLogout(); }}>
-              <ListItemIcon sx={{ color: 'white' }}><Logout fontSize="small" /></ListItemIcon>
+            <Divider sx={{ 
+              my: 1, 
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' 
+            }} />
+            <ListItemButton 
+              onClick={() => { setDrawerOpen(false); handleLogout(); }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+            >
+              <ListItemIcon sx={{ color: theme.palette.error.main }}><Logout fontSize="small" /></ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
           </List>
@@ -419,24 +471,24 @@ const EnhancedNavbar = ({ children }) => {
               borderRadius: 1,
               mx: 1,
               mb: 0.5,
-              color: 'white',
+              color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
               '&:hover': {
-                background: 'rgba(26, 74, 107, 0.2)',
+                background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
               },
             }}
           >
-            <ListItemIcon sx={{ color: '#90caf9', minWidth: 40 }}>
+            <ListItemIcon sx={{ color: theme.palette.primary.main, minWidth: 40 }}>
               <Search />
             </ListItemIcon>
             <ListItemText 
               primary="Search"
               secondary="Search incidents, locations, and more"
               sx={{ 
-                color: 'white',
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                 '& .MuiListItemText-secondary': {
                   fontSize: '0.75rem',
                   opacity: 0.7,
-                  color: '#b0bec5'
+                  color: theme.palette.mode === 'dark' ? '#B0BEC5' : '#6B7280'
                 }
               }}
             />
@@ -457,22 +509,22 @@ const EnhancedNavbar = ({ children }) => {
                 selected={isActiveRoute(item.path)}
                 sx={{
                   '&.Mui-selected': {
-                    background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
                     color: 'white',
-                    boxShadow: '0 2px 8px rgba(25, 118, 210, 0.15)',
+                    boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
                     '& .MuiListItemIcon-root': { color: 'white' },
                   },
                   borderRadius: 1,
                   mx: 1,
                   mb: 0.5,
-                  color: 'white',
+                  color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                   '&:hover': {
-                    background: 'rgba(26, 74, 107, 0.2)',
+                    background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
                   },
                 }}
               >
                 <ListItemIcon sx={{ 
-                  color: isActiveRoute(item.path) ? 'white' : '#90caf9',
+                  color: isActiveRoute(item.path) ? 'white' : theme.palette.primary.main,
                   minWidth: 40
                 }}>
                   {item.icon}
@@ -481,11 +533,11 @@ const EnhancedNavbar = ({ children }) => {
                   primary={item.text}
                   secondary={item.description}
                   sx={{ 
-                    color: 'white',
+                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                     '& .MuiListItemText-secondary': {
                       fontSize: '0.75rem',
                       opacity: 0.7,
-                      color: '#b0bec5'
+                      color: theme.palette.mode === 'dark' ? '#B0BEC5' : '#6B7280'
                     }
                   }}
                 />
@@ -497,16 +549,28 @@ const EnhancedNavbar = ({ children }) => {
             {/* Sub-menu items */}
             {item.subItems && (
               <Collapse in={expandedMenu[item.text]} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding sx={{ background: 'rgba(255,255,255,0.02)' }}>
+                <List component="div" disablePadding sx={{ 
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)' 
+                }}>
                   {item.subItems.map((subItem) => (
                     <ListItemButton
                       key={subItem.text}
-                      sx={{ pl: 4, py: 0.5, color: 'white', '&:hover': { background: 'rgba(26, 74, 107, 0.15)' } }}
+                      sx={{ 
+                        pl: 4, 
+                        py: 0.5, 
+                        color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+                        '&:hover': { 
+                          background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.08)' : 'rgba(0, 191, 166, 0.03)' 
+                        } 
+                      }}
                       onClick={() => handleNavigation(subItem.path)}
                     >
                       <ListItemText 
                         primary={subItem.text}
-                        sx={{ fontSize: '0.9rem', color: 'white' }}
+                        sx={{ 
+                          fontSize: '0.9rem', 
+                          color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+                        }}
                       />
                     </ListItemButton>
                   ))}
@@ -518,9 +582,16 @@ const EnhancedNavbar = ({ children }) => {
       </List>
 
       {/* Emergency Section */}
-      <Box sx={{ p: 2, mt: 'auto', background: 'rgba(255,255,255,0.03)' }}>
-        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.1)' }} />
-        <Typography variant="subtitle2" color="error" sx={{ mb: 1 }}>
+      <Box sx={{ 
+        p: 2, 
+        mt: 'auto', 
+        background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' 
+      }}>
+        <Divider sx={{ 
+          mb: 2, 
+          borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' 
+        }} />
+        <Typography variant="subtitle2" color="error" sx={{ mb: 1, fontWeight: 600 }}>
           🚨 Emergency
         </Typography>
         <Button
@@ -529,7 +600,14 @@ const EnhancedNavbar = ({ children }) => {
           fullWidth
           startIcon={<Warning />}
           onClick={handleEmergencyAlert}
-          sx={{ mb: 1, fontWeight: 600 }}
+          sx={{ 
+            mb: 1, 
+            fontWeight: 600,
+            background: `linear-gradient(135deg, ${theme.palette.error.main} 0%, ${theme.palette.error.light} 100%)`,
+            '&:hover': {
+              background: `linear-gradient(135deg, ${theme.palette.error.dark} 0%, ${theme.palette.error.main} 100%)`,
+            }
+          }}
         >
           Emergency Alert
         </Button>
@@ -539,7 +617,16 @@ const EnhancedNavbar = ({ children }) => {
           fullWidth
           startIcon={<Phone />}
           onClick={() => window.open('tel:911')}
-          sx={{ fontWeight: 600, borderColor: '#d32f2f', color: '#d32f2f' }}
+          sx={{ 
+            fontWeight: 600, 
+            borderColor: theme.palette.error.main, 
+            color: theme.palette.error.main,
+            '&:hover': {
+              borderColor: theme.palette.error.dark,
+              color: theme.palette.error.dark,
+              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 107, 107, 0.1)' : 'rgba(255, 107, 107, 0.05)'
+            }
+          }}
         >
           Call 911
         </Button>
@@ -554,9 +641,14 @@ const EnhancedNavbar = ({ children }) => {
         position="fixed" 
         sx={{ 
           zIndex: theme.zIndex.drawer + 1,
-          background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
-          boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
+            : 'linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+          boxShadow: theme.palette.mode === 'dark' 
+            ? '0 4px 20px rgba(0,0,0,0.3)' 
+            : '0 4px 20px rgba(0,0,0,0.08)'
         }}
       >
         <Toolbar>
@@ -564,7 +656,14 @@ const EnhancedNavbar = ({ children }) => {
             color="inherit"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' }, background: 'rgba(255,255,255,0.08)' }}
+            sx={{ 
+              mr: 2, 
+              display: { md: 'none' }, 
+              background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+              '&:hover': {
+                background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
+              }
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -580,9 +679,15 @@ const EnhancedNavbar = ({ children }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                color: 'white',
+                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
                 cursor: 'pointer',
                 letterSpacing: 1,
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
+                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
                 '&:hover': {
                   opacity: 0.8
                 }
@@ -602,9 +707,14 @@ const EnhancedNavbar = ({ children }) => {
               alignItems: 'center',
               width: { xs: '200px', sm: '300px' },
               mr: 2,
-              backgroundColor: 'rgba(255, 255, 255, 0.10)',
+              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
               boxShadow: 'none',
-              borderRadius: 2,
+              borderRadius: 12,
+              border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+              '&:hover': {
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)',
+                borderColor: theme.palette.primary.main,
+              },
             }}
           >
             <SearchIconWrapper>
@@ -618,7 +728,7 @@ const EnhancedNavbar = ({ children }) => {
             />
             <IconButton 
               type="submit" 
-              sx={{ p: '10px', color: 'white' }}
+              sx={{ p: '10px', color: theme.palette.primary.main }}
               aria-label="search"
             >
               <Search />
@@ -633,9 +743,9 @@ const EnhancedNavbar = ({ children }) => {
               sx={{ 
                 display: { xs: 'flex', sm: 'none' },
                 mr: 1,
-                backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
                 '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                 }
               }}
             >
@@ -651,9 +761,9 @@ const EnhancedNavbar = ({ children }) => {
                 onClick={toggleDarkMode}
                 sx={{ 
                   ml: 1,
-                  backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                   }
                 }}
               >
@@ -668,9 +778,9 @@ const EnhancedNavbar = ({ children }) => {
                   color="inherit"
                   onClick={handleNotificationOpen}
                   sx={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                     }
                   }}
                 >
@@ -689,9 +799,9 @@ const EnhancedNavbar = ({ children }) => {
                   onClick={handleMenuOpen}
                   sx={{ 
                     ml: 1,
-                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                     }
                   }}
                 >
