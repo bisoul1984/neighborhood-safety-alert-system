@@ -323,10 +323,8 @@ const EnhancedNavbar = ({ children }) => {
     <Box sx={{ 
       width: 280, 
       height: '100%', 
-      background: theme.palette.mode === 'dark' 
-        ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)' 
-        : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)', 
-      color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A', 
+      background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)', 
+      color: '#F1F5F9', 
       display: 'flex', 
       flexDirection: 'column',
       borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`
@@ -641,9 +639,7 @@ const EnhancedNavbar = ({ children }) => {
          position="fixed" 
          sx={{ 
            zIndex: theme.zIndex.drawer + 1,
-           background: theme.palette.mode === 'dark' 
-             ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)'
-             : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)',
+           background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)',
            backdropFilter: 'blur(20px)',
            borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
            boxShadow: theme.palette.mode === 'dark' 
@@ -832,10 +828,8 @@ const EnhancedNavbar = ({ children }) => {
              top: 0,
              height: '100%',
              zIndex: theme.zIndex.drawer,
-             background: theme.palette.mode === 'dark' 
-               ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)'
-               : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)',
-             color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+             background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)',
+             color: '#F1F5F9',
              borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
            },
          }}

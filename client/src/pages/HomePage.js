@@ -643,10 +643,10 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* Footer */}
-      <Box sx={{ 
-        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F7FA', 
-        color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+            {/* Footer */}
+      <Box sx={{
+        bgcolor: '#0b061f',
+        color: '#F1F5F9',
         py: { xs: 6, md: 8 },
         px: { xs: 2, sm: 4, md: 0 },
         borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
