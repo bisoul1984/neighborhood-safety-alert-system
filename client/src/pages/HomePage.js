@@ -778,9 +778,32 @@ const HomePage = () => {
           }}>
             <Typography variant="body2" sx={{ 
               opacity: 0.6,
-              color: '#ECF0F1'
+              color: '#ECF0F1',
+              mb: 1
             }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
+            </Typography>
+            <Typography variant="body2" sx={{ 
+              opacity: 0.8,
+              color: '#ECF0F1'
+            }}>
+              Built by{' '}
+              <Link 
+                href="https://www.bisrat-tadesse.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                sx={{
+                  color: '#ECF0F1',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  '&:hover': {
+                    textDecoration: 'underline',
+                    color: '#34495E'
+                  }
+                }}
+              >
+                Bisrate Tadesse
+              </Link>
             </Typography>
           </Box>
         </Container>
