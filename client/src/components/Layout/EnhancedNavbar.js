@@ -324,7 +324,7 @@ const EnhancedNavbar = ({ children }) => {
       width: 280, 
       height: '100%', 
       background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)', 
-      color: '#ECF0F1', 
+      color: theme.palette.mode === 'dark' ? '#ECF0F1' : 'white', 
       display: 'flex', 
       flexDirection: 'column',
       borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.2)' : 'rgba(44, 62, 80, 0.1)'}`
@@ -353,12 +353,12 @@ const EnhancedNavbar = ({ children }) => {
             <Box>
               <Typography variant="subtitle2" sx={{ 
                 fontWeight: 'bold', 
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+                color: theme.palette.mode === 'dark' ? 'white' : 'white' 
               }}>
                 {user.name || user.email}
               </Typography>
               <Typography variant="caption" sx={{ 
-                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)' 
+                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.7)' 
               }}>
                 {user.role || 'Community Member'}
               </Typography>
@@ -407,16 +407,16 @@ const EnhancedNavbar = ({ children }) => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               {darkMode ? <Brightness7 /> : <Brightness4 />}
               <Typography variant="body2" sx={{ 
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+                color: theme.palette.mode === 'dark' ? 'white' : 'white' 
               }}>
                 {darkMode ? 'Light Mode' : 'Dark Mode'}
               </Typography>
             </Box>
           }
           sx={{ 
-            color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+            color: theme.palette.mode === 'dark' ? 'white' : 'white',
             '& .MuiFormControlLabel-label': {
-              color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
+              color: theme.palette.mode === 'dark' ? 'white' : 'white'
             }
           }}
         />
@@ -432,25 +432,25 @@ const EnhancedNavbar = ({ children }) => {
           <List sx={{ p: 0 }}>
             <ListItemButton 
               onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/profile'); }}
-              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
               <ListItemIcon sx={{ color: theme.palette.primary.main }}><AccountCircle fontSize="small" /></ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
             <ListItemButton 
               onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/settings'); }}
-              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
               <ListItemIcon sx={{ color: theme.palette.primary.main }}><Settings fontSize="small" /></ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
             <Divider sx={{ 
               my: 1, 
-              borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' 
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.1)' 
             }} />
             <ListItemButton 
               onClick={() => { setDrawerOpen(false); handleLogout(); }}
-              sx={{ color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' }}
+              sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
               <ListItemIcon sx={{ color: theme.palette.error.main }}><Logout fontSize="small" /></ListItemIcon>
               <ListItemText primary="Logout" />
@@ -469,7 +469,7 @@ const EnhancedNavbar = ({ children }) => {
               borderRadius: 1,
               mx: 1,
               mb: 0.5,
-              color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+              color: theme.palette.mode === 'dark' ? 'white' : 'white',
               '&:hover': {
                 background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
               },
@@ -482,11 +482,11 @@ const EnhancedNavbar = ({ children }) => {
               primary="Search"
               secondary="Search incidents, locations, and more"
               sx={{ 
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                color: theme.palette.mode === 'dark' ? 'white' : 'white',
                 '& .MuiListItemText-secondary': {
                   fontSize: '0.75rem',
                   opacity: 0.7,
-                  color: theme.palette.mode === 'dark' ? '#B0BEC5' : '#6B7280'
+                  color: theme.palette.mode === 'dark' ? '#B0BEC5' : 'rgba(255,255,255,0.7)'
                 }
               }}
             />
@@ -515,7 +515,7 @@ const EnhancedNavbar = ({ children }) => {
                   borderRadius: 1,
                   mx: 1,
                   mb: 0.5,
-                  color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                  color: theme.palette.mode === 'dark' ? 'white' : 'white',
                   '&:hover': {
                     background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
                   },
@@ -531,11 +531,11 @@ const EnhancedNavbar = ({ children }) => {
                   primary={item.text}
                   secondary={item.description}
                   sx={{ 
-                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                    color: theme.palette.mode === 'dark' ? 'white' : 'white',
                     '& .MuiListItemText-secondary': {
                       fontSize: '0.75rem',
                       opacity: 0.7,
-                      color: theme.palette.mode === 'dark' ? '#B0BEC5' : '#6B7280'
+                      color: theme.palette.mode === 'dark' ? '#B0BEC5' : 'rgba(255,255,255,0.7)'
                     }
                   }}
                 />
@@ -556,7 +556,7 @@ const EnhancedNavbar = ({ children }) => {
                       sx={{ 
                         pl: 4, 
                         py: 0.5, 
-                        color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+                        color: theme.palette.mode === 'dark' ? 'white' : 'white', 
                         '&:hover': { 
                           background: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.08)' : 'rgba(0, 191, 166, 0.03)' 
                         } 
@@ -567,7 +567,7 @@ const EnhancedNavbar = ({ children }) => {
                         primary={subItem.text}
                         sx={{ 
                           fontSize: '0.9rem', 
-                          color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D' 
+                          color: theme.palette.mode === 'dark' ? 'white' : 'white' 
                         }}
                       />
                     </ListItemButton>
@@ -829,7 +829,7 @@ const EnhancedNavbar = ({ children }) => {
              height: '100%',
              zIndex: theme.zIndex.drawer,
              background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)',
-             color: '#ECF0F1',
+             color: theme.palette.mode === 'dark' ? '#ECF0F1' : 'white',
              borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.2)' : 'rgba(44, 62, 80, 0.1)'}`,
            },
          }}
