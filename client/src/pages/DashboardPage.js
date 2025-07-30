@@ -71,7 +71,7 @@ const DashboardPage = () => {
           gutterBottom 
           sx={{ 
             fontWeight: 700, 
-            color: theme.palette.text.primary,
+            color: '#0b061f',
             fontSize: { xs: '1.5rem', md: '2.125rem' },
             textAlign: { xs: 'center', md: 'left' },
             mb: { xs: 2, md: 3 },
@@ -88,17 +88,16 @@ const DashboardPage = () => {
               sx={{ 
                 height: { xs: 'auto', md: 200 },
                 mb: { xs: 2, md: 0 },
-                bgcolor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.mode === 'dark' 
-                  ? 'rgba(255,255,255,0.1)' 
-                  : 'rgba(0,0,0,0.1)'}`
+                bgcolor: '#fdfdfd',
+                border: '1px solid rgba(11, 6, 31, 0.1)',
+                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
               }}
             >
               <CardHeader
                 title="Recent Incidents"
                 titleTypographyProps={{ 
                   variant: 'h6', 
-                  color: theme.palette.text.primary,
+                  color: '#0b061f',
                   fontSize: { xs: '1rem', md: '1.125rem' }
                 }}
                 action={
@@ -134,17 +133,16 @@ const DashboardPage = () => {
               sx={{ 
                 height: { xs: 'auto', md: 200 },
                 mb: { xs: 2, md: 0 },
-                bgcolor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.mode === 'dark' 
-                  ? 'rgba(255,255,255,0.1)' 
-                  : 'rgba(0,0,0,0.1)'}`
+                bgcolor: '#fdfdfd',
+                border: '1px solid rgba(11, 6, 31, 0.1)',
+                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
               }}
             >
               <CardHeader
                 title="Safety Score"
                 titleTypographyProps={{ 
                   variant: 'h6', 
-                  color: theme.palette.text.primary,
+                  color: '#0b061f',
                   fontSize: { xs: '1rem', md: '1.125rem' }
                 }}
               />
@@ -179,10 +177,9 @@ const DashboardPage = () => {
               sx={{ 
                 height: { xs: 'auto', md: 150 },
                 mb: { xs: 2, md: 0 },
-                bgcolor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.mode === 'dark' 
-                  ? 'rgba(255,255,255,0.1)' 
-                  : 'rgba(0,0,0,0.1)'}`
+                bgcolor: '#fdfdfd',
+                border: '1px solid rgba(11, 6, 31, 0.1)',
+                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
               }}
             >
               <CardContent sx={{ textAlign: 'center' }}>
@@ -203,10 +200,9 @@ const DashboardPage = () => {
               sx={{ 
                 height: { xs: 'auto', md: 150 },
                 mb: { xs: 2, md: 0 },
-                bgcolor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.mode === 'dark' 
-                  ? 'rgba(255,255,255,0.1)' 
-                  : 'rgba(0,0,0,0.1)'}`
+                bgcolor: '#fdfdfd',
+                border: '1px solid rgba(11, 6, 31, 0.1)',
+                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
               }}
             >
               <CardContent sx={{ textAlign: 'center' }}>
@@ -230,10 +226,9 @@ const DashboardPage = () => {
               sx={{ 
                 height: { xs: 'auto', md: 150 },
                 mb: { xs: 2, md: 0 },
-                bgcolor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.mode === 'dark' 
-                  ? 'rgba(255,255,255,0.1)' 
-                  : 'rgba(0,0,0,0.1)'}`
+                bgcolor: '#fdfdfd',
+                border: '1px solid rgba(11, 6, 31, 0.1)',
+                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
               }}
             >
               <CardContent sx={{ textAlign: 'center' }}>

@@ -178,37 +178,33 @@ const HomePage = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Hero Section */}
-              <Box
-          sx={{
-            background: theme.palette.mode === 'dark'
-              ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
-              : 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)',
-            color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
-            py: { xs: 8, md: 16 },
-            pt: { xs: 20, md: 20 },
-            px: { xs: 2, sm: 4, md: 0 },
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          {/* Background Pattern */}
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: theme.palette.mode === 'dark'
-                ? 'radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)'
-                : 'radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 50%)',
-              zIndex: 1
-            }}
-          />
+               {/* Hero Section */}
+         <Box
+           sx={{
+             background: 'linear-gradient(135deg, #fdfdfd 0%, #f8f9fa 100%)',
+             color: '#0b061f',
+             py: { xs: 8, md: 16 },
+             pt: { xs: 20, md: 20 },
+             px: { xs: 2, sm: 4, md: 0 },
+             position: 'relative',
+             overflow: 'hidden',
+             minHeight: '100vh',
+             display: 'flex',
+             alignItems: 'center'
+           }}
+         >
+           {/* Background Pattern */}
+           <Box
+             sx={{
+               position: 'absolute',
+               top: 0,
+               left: 0,
+               right: 0,
+               bottom: 0,
+               background: 'radial-gradient(circle at 20% 80%, rgba(11, 6, 31, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.03) 0%, transparent 50%)',
+               zIndex: 1
+             }}
+           />
         
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <Grid container spacing={6} alignItems="center">
@@ -223,17 +219,15 @@ const HomePage = () => {
                     fontSize: { xs: '2.5rem', sm: '3rem', md: '4rem' },
                     lineHeight: { xs: 1.2, md: 1.1 },
                     textAlign: { xs: 'center', md: 'left' },
-                                             background: theme.palette.mode === 'dark'
-                           ? 'linear-gradient(135deg, #F1F5F9 0%, #3B82F6 100%)'
-                           : 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
-                         backgroundClip: 'text',
-                         WebkitBackgroundClip: 'text',
-                         WebkitTextFillColor: 'transparent',
-                         letterSpacing: '-0.02em'
-                       }}
-                     >
-                       Stay Safe, Stay Informed
-                     </Typography>
+                    background: 'linear-gradient(135deg, #0b061f 0%, #1E3A8A 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  Stay Safe, Stay Informed
+                </Typography>
                 <Typography
                   variant="h4"
                   sx={{
@@ -249,38 +243,38 @@ const HomePage = () => {
                   Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
                 </Typography>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-                                           <Button
-                           variant="contained"
-                           size="large"
-                           onClick={handleGetStarted}
-                           sx={{
-                             bgcolor: '#1E3A8A',
-                             color: 'white',
-                             px: 6,
-                             py: 2,
-                             fontSize: '1.1rem',
-                             fontWeight: 600,
-                             borderRadius: '8px',
-                             boxShadow: '0 8px 32px rgba(30, 58, 138, 0.3)',
-                             transition: 'all 0.3s ease',
-                             '&:hover': {
-                               bgcolor: '#1E40AF',
-                               transform: 'translateY(-2px)',
-                               boxShadow: '0 12px 40px rgba(30, 58, 138, 0.4)'
-                             },
-                             width: { xs: '100%', sm: 'auto' }
-                           }}
-                         >
-                           Get Started
-                           <ArrowForward sx={{ ml: 1, transition: 'transform 0.3s ease' }} />
-                         </Button>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={handleGetStarted}
+                    sx={{
+                      bgcolor: '#0b061f',
+                      color: 'white',
+                      px: 6,
+                      py: 2,
+                      fontSize: '1.1rem',
+                      fontWeight: 600,
+                      borderRadius: '8px',
+                      boxShadow: '0 8px 32px rgba(11, 6, 31, 0.3)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        bgcolor: '#1a1a2e',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 12px 40px rgba(11, 6, 31, 0.4)'
+                      },
+                      width: { xs: '100%', sm: 'auto' }
+                    }}
+                  >
+                    Get Started
+                    <ArrowForward sx={{ ml: 1, transition: 'transform 0.3s ease' }} />
+                  </Button>
                   <Button
                     variant="outlined"
                     size="large"
                     onClick={() => navigate('/login')}
                     sx={{
-                      borderColor: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
-                      color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+                      borderColor: '#0b061f',
+                      color: '#0b061f',
                       px: 6,
                       py: 2,
                       fontSize: '1.1rem',
@@ -289,9 +283,9 @@ const HomePage = () => {
                       borderWidth: '2px',
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        borderColor: theme.palette.mode === 'dark' ? '#3B82F6' : '#1E3A8A',
-                        color: theme.palette.mode === 'dark' ? '#3B82F6' : '#1E3A8A',
-                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(30, 58, 138, 0.05)',
+                        borderColor: '#1a1a2e',
+                        color: '#1a1a2e',
+                        bgcolor: 'rgba(11, 6, 31, 0.05)',
                         transform: 'translateY(-2px)'
                       },
                       width: { xs: '100%', sm: 'auto' },
@@ -620,19 +614,19 @@ const HomePage = () => {
               size="large"
               onClick={handleGetStarted}
               sx={{
-                bgcolor: '#00BFA6',
+                bgcolor: '#0b061f',
                 color: 'white',
                 px: 8,
                 py: 3,
                 fontSize: '1.2rem',
                 fontWeight: 700,
                 borderRadius: '20px',
-                boxShadow: '0 12px 40px rgba(0, 191, 166, 0.4)',
+                boxShadow: '0 12px 40px rgba(11, 6, 31, 0.4)',
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  bgcolor: '#00A896',
+                  bgcolor: '#1a1a2e',
                   transform: 'translateY(-4px)',
-                  boxShadow: '0 16px 48px rgba(0, 191, 166, 0.5)'
+                  boxShadow: '0 16px 48px rgba(11, 6, 31, 0.5)'
                 }
               }}
             >
@@ -659,9 +653,7 @@ const HomePage = () => {
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
                 textAlign: { xs: 'center', md: 'left' },
                 fontWeight: 600,
-                background: theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
-                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                background: 'linear-gradient(135deg, #fdfdfd 0%, #1E3A8A 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
@@ -670,7 +662,7 @@ const HomePage = () => {
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8,
-                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)',
+                color: '#fdfdfd',
                 lineHeight: 1.6
               }}>
                 Empowering communities with real-time safety information and emergency alerts.
@@ -682,7 +674,7 @@ const HomePage = () => {
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
                 textAlign: { xs: 'center', md: 'left' },
                 fontWeight: 600,
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
+                color: '#fdfdfd'
               }}>
                 Quick Links
               </Typography>
@@ -690,7 +682,7 @@ const HomePage = () => {
                 <Button
                   onClick={() => navigate('/login')}
                   sx={{
-                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                    color: '#fdfdfd',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
@@ -699,8 +691,8 @@ const HomePage = () => {
                     fontSize: '0.9rem',
                     fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
-                      color: theme.palette.primary.main
+                      backgroundColor: 'rgba(253, 253, 253, 0.1)',
+                      color: '#1E3A8A'
                     }
                   }}
                 >
@@ -709,7 +701,7 @@ const HomePage = () => {
                 <Button 
                   onClick={() => navigate('/register')}
                   sx={{
-                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                    color: '#fdfdfd',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
@@ -718,8 +710,8 @@ const HomePage = () => {
                     fontSize: '0.9rem',
                     fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
-                      color: theme.palette.primary.main
+                      backgroundColor: 'rgba(253, 253, 253, 0.1)',
+                      color: '#1E3A8A'
                     }
                   }}
                 >
@@ -728,7 +720,7 @@ const HomePage = () => {
                 <Button 
                   onClick={() => navigate('/safety')}
                   sx={{
-                    color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                    color: '#fdfdfd',
                     textAlign: 'left',
                     justifyContent: 'flex-start',
                     padding: '8px 0',
@@ -737,8 +729,8 @@ const HomePage = () => {
                     fontSize: '0.9rem',
                     fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 191, 166, 0.05)',
-                      color: theme.palette.primary.main
+                      backgroundColor: 'rgba(253, 253, 253, 0.1)',
+                      color: '#1E3A8A'
                     }
                   }}
                 >
@@ -752,41 +744,41 @@ const HomePage = () => {
                 fontSize: { xs: '1.1rem', md: '1.25rem' }, 
                 textAlign: { xs: 'center', md: 'left' },
                 fontWeight: 600,
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D'
+                color: '#fdfdfd'
               }}>
                 Contact
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8, 
                 mb: 1,
-                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+                color: '#fdfdfd'
               }}>
                 Email: support@neighborhoodsafety.com
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8, 
                 mb: 1,
-                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+                color: '#fdfdfd'
               }}>
                 Phone: (555) 123-4567
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8,
-                color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : 'rgba(45,45,45,0.8)'
+                color: '#fdfdfd'
               }}>
                 Emergency: 911
               </Typography>
             </Grid>
           </Grid>
           <Box sx={{ 
-            borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`, 
+            borderTop: '1px solid rgba(253, 253, 253, 0.1)', 
             mt: 4, 
             pt: 2, 
             textAlign: 'center' 
           }}>
             <Typography variant="body2" sx={{ 
               opacity: 0.6,
-              color: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(45,45,45,0.6)'
+              color: '#fdfdfd'
             }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
             </Typography>
