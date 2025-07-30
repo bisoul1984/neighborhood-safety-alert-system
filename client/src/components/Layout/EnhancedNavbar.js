@@ -29,7 +29,9 @@ import {
   Collapse,
   SpeedDial,
   SpeedDialAction,
-  SpeedDialIcon
+  SpeedDialIcon,
+  FormControlLabel,
+  Switch
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -46,12 +48,15 @@ import {
   Warning,
   ExpandLess,
   ExpandMore,
-  Phone
+  Phone,
+  Brightness4,
+  Brightness7
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSocket } from '../../contexts/SocketContext';
+import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 
 
 
@@ -81,6 +86,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const EnhancedNavbar = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { darkMode, toggleDarkMode } = useCustomTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -89,7 +95,7 @@ const EnhancedNavbar = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
-  const { sendTestNotification } = useSocket();
+  // const { sendTestNotification } = useSocket();
 
   // Mock notifications data with state management
   const [notifications, setNotifications] = useState([]);
@@ -345,6 +351,43 @@ const EnhancedNavbar = ({ children }) => {
         </Box>
       )}
 
+      {/* Dark Mode Toggle in Drawer */}
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'rgba(255,255,255,0.1)' }}>
+        <FormControlLabel
+          control={
+            <Switch 
+              checked={darkMode} 
+              onChange={toggleDarkMode}
+              sx={{
+                '& .MuiSwitch-switchBase.Mui-checked': {
+                  color: '#fff',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  },
+                },
+                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                  backgroundColor: '#fff',
+                },
+              }}
+            />
+          }
+          label={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {darkMode ? <Brightness7 /> : <Brightness4 />}
+              <Typography variant="body2">
+                {darkMode ? 'Light Mode' : 'Dark Mode'}
+              </Typography>
+            </Box>
+          }
+          sx={{ 
+            color: 'white',
+            '& .MuiFormControlLabel-label': {
+              color: 'white'
+            }
+          }}
+        />
+      </Box>
+
       {/* User Menu for mobile */}
       {isMobile && user && (
         <>
@@ -569,6 +612,23 @@ const EnhancedNavbar = ({ children }) => {
                 </IconButton>
               </Tooltip>
             )}
+
+            {/* Dark Mode Toggle */}
+            <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+              <IconButton
+                color="inherit"
+                onClick={toggleDarkMode}
+                sx={{ 
+                  ml: 1,
+                  backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                  }
+                }}
+              >
+                {darkMode ? <Brightness7 /> : <Brightness4 />}
+              </IconButton>
+            </Tooltip>
 
             {/* Notifications - Only show when authenticated */}
             {user && (

@@ -10,8 +10,7 @@ import {
   Stack,
   useTheme,
   AppBar,
-  Toolbar,
-  Link
+  Toolbar
 } from '@mui/material';
 import {
   Security,
@@ -30,43 +29,44 @@ import { useAuth } from '../contexts/AuthContext';
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const theme = useTheme();
 
   const features = [
     {
       icon: <Security sx={{ fontSize: 40 }} />,
       title: 'Real-Time Alerts',
       description: 'Get instant notifications about safety incidents in your neighborhood',
-      color: '#1976d2'
+      color: theme.palette.primary.main
     },
     {
       icon: <Map sx={{ fontSize: 40 }} />,
       title: 'Interactive Map',
       description: 'View incidents on a live map with detailed location information',
-      color: '#2e7d32'
+      color: theme.palette.success.main
     },
     {
       icon: <People sx={{ fontSize: 40 }} />,
       title: 'Community Reports',
       description: 'Anonymous reporting system for community members',
-      color: '#ed6c02'
+      color: theme.palette.warning.main
     },
     {
       icon: <VerifiedUser sx={{ fontSize: 40 }} />,
       title: 'Verified Information',
       description: 'Integration with police and emergency services for verified alerts',
-      color: '#9c27b0'
+      color: theme.palette.secondary.main
     },
     {
       icon: <Speed sx={{ fontSize: 40 }} />,
       title: 'Fast Response',
       description: 'Quick incident reporting and emergency response coordination',
-      color: '#d32f2f'
+      color: theme.palette.error.main
     },
     {
       icon: <Notifications sx={{ fontSize: 40 }} />,
       title: 'Smart Notifications',
       description: 'Customizable alerts based on location and incident type',
-      color: '#1565c0'
+      color: theme.palette.info.main
     }
   ];
 
@@ -91,7 +91,9 @@ const HomePage = () => {
       <AppBar 
         position="fixed" 
         sx={{ 
-          background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%)'
+            : 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
           boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
           px: { xs: 1, md: 0 }
@@ -120,7 +122,7 @@ const HomePage = () => {
             🛡️ Neighborhood Safety Alert System
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
             <Button
               color="inherit"
               onClick={() => navigate('/login')}
@@ -140,7 +142,7 @@ const HomePage = () => {
               onClick={() => navigate('/register')}
               sx={{ 
                 bgcolor: 'white',
-                color: '#081f37',
+                color: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37',
                 fontWeight: 600,
                 '&:hover': {
                   bgcolor: '#f8f9fa'
@@ -156,11 +158,11 @@ const HomePage = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: '#081f37',
+          background: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37',
           color: 'white',
           py: { xs: 6, md: 12 },
-          pt: { xs: 18, md: 16 }, // Increase extra top padding for mobile
-          px: { xs: 2, sm: 4, md: 0 }, // Add horizontal padding on mobile
+          pt: { xs: 18, md: 16 },
+          px: { xs: 2, sm: 4, md: 0 },
           position: 'relative',
           overflow: 'hidden'
         }}
@@ -194,14 +196,14 @@ const HomePage = () => {
                 >
                   Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
                 </Typography>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ alignItems: { xs: 'center', sm: 'flex-start' }, mt: { xs: 2, md: 0 } }}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                   <Button
                     variant="contained"
                     size="large"
                     onClick={handleGetStarted}
                     sx={{
                       bgcolor: 'white',
-                      color: 'primary.main',
+                      color: theme.palette.mode === 'dark' ? '#1a1a1a' : 'primary.main',
                       px: 4,
                       py: 1.5,
                       fontSize: '1.1rem',
@@ -268,7 +270,12 @@ const HomePage = () => {
       </Box>
 
       {/* Stats Section */}
-      <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: '#f8f9fa', px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
+      <Box sx={{ 
+        py: { xs: 4, md: 6 }, 
+        bgcolor: theme.palette.background.default, 
+        px: { xs: 2, sm: 4, md: 0 }, 
+        mt: { xs: 2, md: 0 } 
+      }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {stats.map((stat, index) => (
@@ -277,25 +284,31 @@ const HomePage = () => {
                   sx={{
                     textAlign: 'center',
                     p: 3,
-                    bgcolor: 'white',
+                    bgcolor: theme.palette.background.paper,
                     borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(8, 31, 55, 0.1)',
-                    border: '1px solid rgba(8, 31, 55, 0.05)',
+                    boxShadow: theme.palette.mode === 'dark' 
+                      ? '0 4px 12px rgba(0,0,0,0.3)' 
+                      : '0 4px 12px rgba(8, 31, 55, 0.1)',
+                    border: `1px solid ${theme.palette.mode === 'dark' 
+                      ? 'rgba(255,255,255,0.1)' 
+                      : 'rgba(8, 31, 55, 0.05)'}`,
                     transition: 'transform 0.2s, box-shadow 0.2s',
                     '&:hover': {
                       transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 24px rgba(8, 31, 55, 0.15)'
+                      boxShadow: theme.palette.mode === 'dark' 
+                        ? '0 8px 24px rgba(0,0,0,0.4)' 
+                        : '0 8px 24px rgba(8, 31, 55, 0.15)'
                     },
                     mb: { xs: 2, md: 0 }
                   }}
                 >
-                  <Box sx={{ color: '#081f37', mb: 1 }}>
+                  <Box sx={{ color: theme.palette.primary.main, mb: 1 }}>
                     {stat.icon}
                   </Box>
-                  <Typography variant="h4" component="div" sx={{ fontWeight: 700, mb: 1, color: '#081f37' }}>
+                  <Typography variant="h4" component="div" sx={{ fontWeight: 700, mb: 1, color: theme.palette.text.primary }}>
                     {stat.value}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
                     {stat.label}
                   </Typography>
                 </Box>
@@ -306,13 +319,29 @@ const HomePage = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: { xs: 4, md: 8 }, bgcolor: 'white', px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
+      <Box sx={{ 
+        py: { xs: 4, md: 8 }, 
+        bgcolor: theme.palette.background.paper,
+        px: { xs: 2, sm: 4, md: 0 }
+      }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: { xs: 'center', md: 'center' }, mb: 6 }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 2, color: '#081f37', fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
+            <Typography variant="h3" component="h2" sx={{ 
+              fontWeight: 700, 
+              mb: 2, 
+              color: theme.palette.text.primary, 
+              fontSize: { xs: '1.3rem', md: '2.2rem' }, 
+              lineHeight: { xs: 1.3, md: 1.2 } 
+            }}>
               Why Choose Our Platform?
             </Typography>
-            <Typography variant="h6" sx={{ maxWidth: 600, mx: 'auto', color: '#5a6c7d', fontSize: { xs: '1rem', md: '1.15rem' }, lineHeight: { xs: 1.5, md: 1.6 } }}>
+            <Typography variant="h6" sx={{ 
+              maxWidth: 600, 
+              mx: 'auto', 
+              color: theme.palette.text.secondary, 
+              fontSize: { xs: '1rem', md: '1.15rem' }, 
+              lineHeight: { xs: 1.5, md: 1.6 } 
+            }}>
               Comprehensive safety features designed to keep your community informed and protected
             </Typography>
           </Box>
@@ -324,23 +353,27 @@ const HomePage = () => {
                   sx={{
                     height: '100%',
                     transition: 'transform 0.2s, box-shadow 0.2s',
-                    border: '1px solid rgba(8, 31, 55, 0.1)',
+                    border: `1px solid ${theme.palette.mode === 'dark' 
+                      ? 'rgba(255,255,255,0.1)' 
+                      : 'rgba(8, 31, 55, 0.1)'}`,
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      boxShadow: '0 12px 32px rgba(8, 31, 55, 0.15)',
-                      borderColor: '#081f37'
+                      boxShadow: theme.palette.mode === 'dark' 
+                        ? '0 12px 32px rgba(0,0,0,0.4)' 
+                        : '0 12px 32px rgba(8, 31, 55, 0.15)',
+                      borderColor: theme.palette.primary.main
                     },
                     mb: { xs: 2, md: 0 }
                   }}
                 >
                   <CardContent sx={{ textAlign: 'center', p: 4 }}>
-                    <Box sx={{ color: '#081f37', mb: 2 }}>
+                    <Box sx={{ color: feature.color, mb: 2 }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, color: '#081f37' }}>
+                    <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 2, color: theme.palette.text.primary }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#5a6c7d' }}>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -354,7 +387,9 @@ const HomePage = () => {
       {/* CTA Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)'
+            : 'linear-gradient(135deg, #081f37 0%, #1a4a6b 100%)',
           color: 'white',
           py: { xs: 5, md: 8 },
           px: { xs: 2, sm: 4, md: 0 },
@@ -363,10 +398,20 @@ const HomePage = () => {
       >
         <Container maxWidth="md">
           <Box sx={{ textAlign: { xs: 'center', md: 'center' } }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 700, mb: 3, fontSize: { xs: '1.3rem', md: '2.2rem' }, lineHeight: { xs: 1.3, md: 1.2 } }}>
+            <Typography variant="h3" component="h2" sx={{ 
+              fontWeight: 700, 
+              mb: 3, 
+              fontSize: { xs: '1.3rem', md: '2.2rem' }, 
+              lineHeight: { xs: 1.3, md: 1.2 } 
+            }}>
               Ready to Make Your Neighborhood Safer?
             </Typography>
-            <Typography variant="h6" sx={{ mb: 4, opacity: 0.9, fontSize: { xs: '1rem', md: '1.15rem' }, lineHeight: { xs: 1.5, md: 1.6 } }}>
+            <Typography variant="h6" sx={{ 
+              mb: 4, 
+              opacity: 0.9, 
+              fontSize: { xs: '1rem', md: '1.15rem' }, 
+              lineHeight: { xs: 1.5, md: 1.6 } 
+            }}>
               Join thousands of community members who are already using our platform to stay informed and stay safe.
             </Typography>
             <Button
@@ -375,7 +420,7 @@ const HomePage = () => {
               onClick={handleGetStarted}
               sx={{
                 bgcolor: 'white',
-                color: '#081f37',
+                color: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37',
                 px: 6,
                 py: 2,
                 fontSize: '1.2rem',
@@ -393,11 +438,20 @@ const HomePage = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: '#081f37', color: 'white', py: { xs: 3, md: 4 }, px: { xs: 2, sm: 4, md: 0 }, mt: { xs: 2, md: 0 } }}>
+      <Box sx={{ 
+        bgcolor: theme.palette.mode === 'dark' ? '#1a1a1a' : '#081f37', 
+        color: 'white', 
+        py: { xs: 3, md: 4 },
+        px: { xs: 2, sm: 4, md: 0 }
+      }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
+              <Typography variant="h6" sx={{ 
+                mb: 2, 
+                fontSize: { xs: '1.1rem', md: '1.25rem' }, 
+                textAlign: { xs: 'center', md: 'left' } 
+              }}>
                 Neighborhood Safety Alert System
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
@@ -405,11 +459,15 @@ const HomePage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
+              <Typography variant="h6" sx={{ 
+                mb: 2, 
+                fontSize: { xs: '1.1rem', md: '1.25rem' }, 
+                textAlign: { xs: 'center', md: 'left' } 
+              }}>
                 Quick Links
               </Typography>
               <Stack spacing={1}>
-                <Button 
+                <Button
                   onClick={() => navigate('/login')}
                   sx={{
                     color: 'white',
@@ -466,40 +524,32 @@ const HomePage = () => {
               </Stack>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 2, fontSize: { xs: '1.1rem', md: '1.25rem' }, textAlign: { xs: 'center', md: 'left' } }}>
+              <Typography variant="h6" sx={{ 
+                mb: 2, 
+                fontSize: { xs: '1.1rem', md: '1.25rem' }, 
+                textAlign: { xs: 'center', md: 'left' } 
+              }}>
                 Contact
+              </Typography>
+              <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
+                Email: support@neighborhoodsafety.com
+              </Typography>
+              <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
+                Phone: (555) 123-4567
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
                 Emergency: 911
-                <br />
-                Support: fikeretetadesse1403@gmail.com
-                <br />
-                Phone: +251967044111
               </Typography>
             </Grid>
           </Grid>
-          <Box sx={{ borderTop: 1, borderColor: 'rgba(255,255,255,0.2)', mt: { xs: 2, md: 4 }, pt: 2, textAlign: 'center' }}>
+          <Box sx={{ 
+            borderTop: '1px solid rgba(255,255,255,0.1)', 
+            mt: 4, 
+            pt: 2, 
+            textAlign: 'center' 
+          }}>
             <Typography variant="body2" sx={{ opacity: 0.6 }}>
               © 2024 Neighborhood Safety Alert System. All rights reserved.
-            </Typography>
-            <Typography variant="body2" sx={{ opacity: 0.6, mt: 1 }}>
-              Built by{' '}
-              <Link
-                href="https://www.bisrat-tadesse.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  color: '#fff',
-                  fontWeight: 700,
-                  letterSpacing: 0.5,
-                  transition: 'color 0.2s',
-                  '&:hover': {
-                    opacity: 0.8
-                  }
-                }}
-              >
-                Bisrate Tadesse
-              </Link>
             </Typography>
           </Box>
         </Container>

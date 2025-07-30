@@ -72,9 +72,11 @@ import {
   StarBorder
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 
 const ProfilePage = () => {
   const { user } = useAuth();
+  const { darkMode, toggleDarkMode } = useCustomTheme();
   const [activeTab, setActiveTab] = useState(0);
   const [editMode, setEditMode] = useState(false);
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
@@ -108,7 +110,6 @@ const ProfilePage = () => {
     smsNotifications: false,
     pushNotifications: true,
     locationSharing: true,
-    darkMode: false,
     language: 'en',
     privacyLevel: 'community'
   });
@@ -750,8 +751,8 @@ const ProfilePage = () => {
                 <FormControlLabel
                   control={
                     <Switch 
-                      checked={preferences.darkMode} 
-                      onChange={() => handlePreferenceChange('darkMode')} 
+                      checked={darkMode} 
+                      onChange={toggleDarkMode} 
                     />
                   }
                   label="Dark Mode"
