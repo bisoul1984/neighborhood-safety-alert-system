@@ -156,10 +156,18 @@ const SearchPage = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery.trim()) {
-      setSearchParams({ q: searchQuery });
+      setSearchParams({ q: searchQuery.trim() });
       performSearch();
     }
   };
+
+  // Auto-focus search input on mount
+  useEffect(() => {
+    const searchInput = document.querySelector('input[aria-label="search"]');
+    if (searchInput && !searchQuery) {
+      searchInput.focus();
+    }
+  }, [searchQuery]);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -210,7 +218,20 @@ const SearchPage = () => {
       </Typography>
 
       {/* Search Bar */}
-      <Paper sx={{ p: { xs: 1, md: 2 }, mb: { xs: 2, md: 3 } }}>
+      <Paper 
+        sx={{ 
+          p: { xs: 2, md: 3 }, 
+          mb: { xs: 3, md: 4 },
+          borderRadius: '16px',
+          boxShadow: theme.palette.mode === 'dark' 
+            ? '0 8px 32px rgba(0,0,0,0.3)' 
+            : '0 8px 32px rgba(0,0,0,0.08)',
+          border: `1px solid ${theme.palette.mode === 'dark' 
+            ? 'rgba(255,255,255,0.1)' 
+            : 'rgba(0,0,0,0.05)'}`,
+          background: theme.palette.mode === 'dark' ? '#2D2D2D' : '#F8F9FA'
+        }}
+      >
         <form onSubmit={handleSearch}>
           <TextField
             fullWidth
@@ -221,7 +242,7 @@ const SearchPage = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Search />
+                  <Search sx={{ color: '#00BFA6' }} />
                 </InputAdornment>
               ),
               endAdornment: (
@@ -233,14 +254,35 @@ const SearchPage = () => {
                         setSearchQuery('');
                         setSearchParams({});
                       }}
+                      sx={{ color: '#00BFA6' }}
                     >
                       <Clear />
                     </IconButton>
                   )}
                 </InputAdornment>
               ),
+              sx: {
+                borderRadius: '12px',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#00BFA6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#00BFA6',
+                  },
+                },
+              }
             }}
-            sx={{ fontSize: { xs: '0.95rem', md: '1rem' } }}
+            sx={{ 
+              fontSize: { xs: '1rem', md: '1.1rem' },
+              '& .MuiInputBase-input': {
+                fontSize: { xs: '1rem', md: '1.1rem' },
+                padding: { xs: '16px 14px', md: '18px 16px' }
+              }
+            }}
           />
         </form>
       </Paper>

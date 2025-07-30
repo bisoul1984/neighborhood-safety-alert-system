@@ -214,12 +214,26 @@ const EnhancedNavbar = ({ children }) => {
     console.log('Search submitted:', searchQuery);
     if (searchQuery.trim()) {
       console.log('Navigating to search page with query:', searchQuery);
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     } else {
       console.log('Search query is empty');
     }
   };
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Ctrl/Cmd + K to focus search
+      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+        event.preventDefault();
+        navigate('/search');
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
 
   // Handle emergency alert
   const handleEmergencyAlert = () => {
@@ -397,6 +411,38 @@ const EnhancedNavbar = ({ children }) => {
 
       {/* Navigation Menu */}
       <List sx={{ pt: 1 }}>
+        {/* Search Option for Mobile */}
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => { setDrawerOpen(false); navigate('/search'); }}
+            sx={{
+              borderRadius: 1,
+              mx: 1,
+              mb: 0.5,
+              color: 'white',
+              '&:hover': {
+                background: 'rgba(26, 74, 107, 0.2)',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: '#90caf9', minWidth: 40 }}>
+              <Search />
+            </ListItemIcon>
+            <ListItemText 
+              primary="Search"
+              secondary="Search incidents, locations, and more"
+              sx={{ 
+                color: 'white',
+                '& .MuiListItemText-secondary': {
+                  fontSize: '0.75rem',
+                  opacity: 0.7,
+                  color: '#b0bec5'
+                }
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+        
         {menuItems.map((item) => (
           <React.Fragment key={item.text}>
             <ListItem disablePadding>
@@ -578,6 +624,24 @@ const EnhancedNavbar = ({ children }) => {
               <Search />
             </IconButton>
           </Paper>
+
+          {/* Mobile Search Button */}
+          <Tooltip title="Search">
+            <IconButton
+              color="inherit"
+              onClick={() => navigate('/search')}
+              sx={{ 
+                display: { xs: 'flex', sm: 'none' },
+                mr: 1,
+                backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                }
+              }}
+            >
+              <Search />
+            </IconButton>
+          </Tooltip>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             {/* Dark Mode Toggle */}
