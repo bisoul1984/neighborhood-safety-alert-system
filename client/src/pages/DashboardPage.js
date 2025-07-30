@@ -71,7 +71,7 @@ const DashboardPage = () => {
           gutterBottom 
                      sx={{ 
              fontWeight: 700, 
-             color: '#2C3E50',
+             color: theme.palette.mode === 'dark' ? 'white' : '#2C3E50',
              fontSize: { xs: '1.5rem', md: '2.125rem' },
              textAlign: { xs: 'center', md: 'left' },
              mb: { xs: 2, md: 3 },
