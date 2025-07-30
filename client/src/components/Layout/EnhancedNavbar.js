@@ -307,22 +307,7 @@ const EnhancedNavbar = ({ children }) => {
 
   const drawer = (
     <Box sx={{ width: 280, height: '100%', background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)', color: 'white', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <Box sx={{ 
-        p: 2, 
-        borderBottom: 1, 
-        borderColor: 'rgba(255,255,255,0.1)',
-        background: 'transparent',
-        color: 'white',
-        boxShadow: '0 4px 12px rgba(8, 31, 55, 0.2)'
-      }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', letterSpacing: 1 }}>
-          🛡️ Safety Alert System
-        </Typography>
-        <Typography variant="caption" sx={{ opacity: 0.8 }}>
-          Keeping our community safe
-        </Typography>
-      </Box>
+
 
       {/* User Info */}
       {user && (
@@ -557,7 +542,7 @@ const EnhancedNavbar = ({ children }) => {
                 }
               }}
             >
-              🛡️ Neighborhood Safety Alert System
+              Safety Alert
             </Typography>
           </Tooltip>
 
