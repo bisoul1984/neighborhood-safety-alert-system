@@ -434,14 +434,14 @@ const EnhancedNavbar = ({ children }) => {
               onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/profile'); }}
               sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
-              <ListItemIcon sx={{ color: theme.palette.primary.main }}><AccountCircle fontSize="small" /></ListItemIcon>
+                             <ListItemIcon sx={{ color: 'white' }}><AccountCircle fontSize="small" /></ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
             <ListItemButton 
               onClick={() => { setDrawerOpen(false); handleMenuClose(); navigate('/settings'); }}
               sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
-              <ListItemIcon sx={{ color: theme.palette.primary.main }}><Settings fontSize="small" /></ListItemIcon>
+                             <ListItemIcon sx={{ color: 'white' }}><Settings fontSize="small" /></ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
             <Divider sx={{ 
@@ -452,7 +452,7 @@ const EnhancedNavbar = ({ children }) => {
               onClick={() => { setDrawerOpen(false); handleLogout(); }}
               sx={{ color: theme.palette.mode === 'dark' ? 'white' : 'white' }}
             >
-              <ListItemIcon sx={{ color: theme.palette.error.main }}><Logout fontSize="small" /></ListItemIcon>
+                             <ListItemIcon sx={{ color: 'white' }}><Logout fontSize="small" /></ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
           </List>
@@ -475,9 +475,9 @@ const EnhancedNavbar = ({ children }) => {
               },
             }}
           >
-            <ListItemIcon sx={{ color: theme.palette.primary.main, minWidth: 40 }}>
-              <Search />
-            </ListItemIcon>
+                         <ListItemIcon sx={{ color: 'white', minWidth: 40 }}>
+               <Search />
+             </ListItemIcon>
             <ListItemText 
               primary="Search"
               secondary="Search incidents, locations, and more"
@@ -521,12 +521,12 @@ const EnhancedNavbar = ({ children }) => {
                   },
                 }}
               >
-                <ListItemIcon sx={{ 
-                  color: isActiveRoute(item.path) ? 'white' : theme.palette.primary.main,
-                  minWidth: 40
-                }}>
-                  {item.icon}
-                </ListItemIcon>
+                                 <ListItemIcon sx={{ 
+                   color: 'white',
+                   minWidth: 40
+                 }}>
+                   {item.icon}
+                 </ListItemIcon>
                 <ListItemText 
                   primary={item.text}
                   secondary={item.description}
