@@ -580,24 +580,6 @@ const EnhancedNavbar = ({ children }) => {
           </Paper>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {/* Emergency Alert Button - Only show when authenticated */}
-            {user && (
-              <Tooltip title="Emergency Alert">
-                <IconButton
-                  color="inherit"
-                  onClick={handleEmergencyAlert}
-                  sx={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.10)',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.20)',
-                    }
-                  }}
-                >
-                  <Warning />
-                </IconButton>
-              </Tooltip>
-            )}
-
             {/* Dark Mode Toggle */}
             <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
               <IconButton
