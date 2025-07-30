@@ -10,7 +10,9 @@ import {
   Stack,
   useTheme,
   AppBar,
-  Toolbar
+  Toolbar,
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import {
   Security,
@@ -21,15 +23,19 @@ import {
   VerifiedUser,
   ArrowForward,
   LocationOn,
-  Warning
+  Warning,
+  Brightness4,
+  Brightness7
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const theme = useTheme();
+  const { darkMode, toggleDarkMode } = useCustomTheme();
 
   const features = [
     {
@@ -121,6 +127,23 @@ const HomePage = () => {
           >
             🛡️ Neighborhood Safety Alert System
           </Typography>
+
+          {/* Dark Mode Toggle */}
+          <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+            <IconButton
+              color="inherit"
+              onClick={toggleDarkMode}
+              sx={{ 
+                mr: 1,
+                backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.20)',
+                }
+              }}
+            >
+              {darkMode ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
+          </Tooltip>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
             <Button
