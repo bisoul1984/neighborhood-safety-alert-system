@@ -82,22 +82,7 @@ const DashboardPage = () => {
         >
           Welcome back, {user?.firstName || 'User'}!
         </Typography>
-        <Alert 
-          severity="info" 
-          sx={{ 
-            mb: { xs: 2, md: 3 },
-            fontSize: { xs: '0.875rem', md: '1rem' },
-            '& .MuiAlert-message': {
-              fontSize: { xs: '0.875rem', md: '1rem' },
-              lineHeight: { xs: 1.4, md: 1.5 }
-            }
-          }}
-        >
-          {user?.firstName 
-            ? `Welcome to your neighborhood safety dashboard, ${user.firstName}! Stay informed about safety in your area and connect with your community.`
-            : "Welcome to your neighborhood safety dashboard! Stay informed about safety in your area and connect with your community."
-          }
-        </Alert>
+
         <Grid container spacing={{ xs: 2, md: 4 }}>
           {/* Recent Incidents */}
           <Grid item xs={12} md={6}>
