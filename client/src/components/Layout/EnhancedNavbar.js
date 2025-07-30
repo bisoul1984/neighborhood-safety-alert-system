@@ -676,15 +676,9 @@ const EnhancedNavbar = ({ children }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+                color: theme.palette.mode === 'dark' ? '#F1F5F9' : 'white',
                 cursor: 'pointer',
                 letterSpacing: 1,
-                background: theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #F1F5F9 0%, #3B82F6 100%)'
-                  : 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
                 '&:hover': {
                   opacity: 0.8
                 }
