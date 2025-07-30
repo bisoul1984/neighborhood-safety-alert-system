@@ -323,11 +323,11 @@ const EnhancedNavbar = ({ children }) => {
     <Box sx={{ 
       width: 280, 
       height: '100%', 
-      background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)', 
-      color: '#F1F5F9', 
+      background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)', 
+      color: '#ECF0F1', 
       display: 'flex', 
       flexDirection: 'column',
-      borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`
+      borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.2)' : 'rgba(44, 62, 80, 0.1)'}`
     }}>
 
 
@@ -639,12 +639,12 @@ const EnhancedNavbar = ({ children }) => {
          position="fixed" 
          sx={{ 
            zIndex: theme.zIndex.drawer + 1,
-           background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)',
+           background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)',
            backdropFilter: 'blur(20px)',
-           borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
+           borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.2)' : 'rgba(44, 62, 80, 0.1)'}`,
            boxShadow: theme.palette.mode === 'dark' 
              ? '0 4px 20px rgba(0,0,0,0.4)' 
-             : '0 4px 20px rgba(0,0,0,0.08)',
+             : '0 4px 20px rgba(44, 62, 80, 0.08)',
            borderRadius: 0
          }}
        >
@@ -828,9 +828,9 @@ const EnhancedNavbar = ({ children }) => {
              top: 0,
              height: '100%',
              zIndex: theme.zIndex.drawer,
-             background: 'linear-gradient(135deg, #0b061f 0%, #1a1a2e 100%)',
-             color: '#F1F5F9',
-             borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
+             background: 'linear-gradient(135deg, #2C3E50 0%, #34495E 100%)',
+             color: '#ECF0F1',
+             borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.2)' : 'rgba(44, 62, 80, 0.1)'}`,
            },
          }}
        >

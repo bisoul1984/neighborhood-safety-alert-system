@@ -69,37 +69,37 @@ const DashboardPage = () => {
           variant={isMobile ? "h5" : "h4"} 
           component="h1" 
           gutterBottom 
-          sx={{ 
-            fontWeight: 700, 
-            color: '#0b061f',
-            fontSize: { xs: '1.5rem', md: '2.125rem' },
-            textAlign: { xs: 'center', md: 'left' },
-            mb: { xs: 2, md: 3 },
-            lineHeight: { xs: 1.3, md: 1.2 }
-          }}
+                     sx={{ 
+             fontWeight: 700, 
+             color: '#2C3E50',
+             fontSize: { xs: '1.5rem', md: '2.125rem' },
+             textAlign: { xs: 'center', md: 'left' },
+             mb: { xs: 2, md: 3 },
+             lineHeight: { xs: 1.3, md: 1.2 }
+           }}
         >
           Welcome back, {user?.firstName || 'User'}!
         </Typography>
 
         <Grid container spacing={{ xs: 2, md: 4 }}>
-          {/* Recent Incidents */}
-          <Grid item xs={12} md={6}>
-            <Card 
-              sx={{ 
-                height: { xs: 'auto', md: 200 },
-                mb: { xs: 2, md: 0 },
-                bgcolor: '#fdfdfd',
-                border: '1px solid rgba(11, 6, 31, 0.1)',
-                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
-              }}
-            >
-              <CardHeader
-                title="Recent Incidents"
-                titleTypographyProps={{ 
-                  variant: 'h6', 
-                  color: '#0b061f',
-                  fontSize: { xs: '1rem', md: '1.125rem' }
-                }}
+                     {/* Recent Incidents */}
+           <Grid item xs={12} md={6}>
+             <Card 
+               sx={{ 
+                 height: { xs: 'auto', md: 200 },
+                 mb: { xs: 2, md: 0 },
+                 bgcolor: '#FFFFFF',
+                 border: '1px solid rgba(44, 62, 80, 0.1)',
+                 boxShadow: '0 4px 12px rgba(44, 62, 80, 0.1)'
+               }}
+             >
+                             <CardHeader
+                 title="Recent Incidents"
+                 titleTypographyProps={{ 
+                   variant: 'h6', 
+                   color: '#2C3E50',
+                   fontSize: { xs: '1rem', md: '1.125rem' }
+                 }}
                 action={
                   <Button 
                     size="small" 
@@ -127,25 +127,25 @@ const DashboardPage = () => {
             </Card>
           </Grid>
 
-          {/* Safety Score */}
-          <Grid item xs={12} md={6}>
-            <Card 
-              sx={{ 
-                height: { xs: 'auto', md: 200 },
-                mb: { xs: 2, md: 0 },
-                bgcolor: '#fdfdfd',
-                border: '1px solid rgba(11, 6, 31, 0.1)',
-                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
-              }}
-            >
-              <CardHeader
-                title="Safety Score"
-                titleTypographyProps={{ 
-                  variant: 'h6', 
-                  color: '#0b061f',
-                  fontSize: { xs: '1rem', md: '1.125rem' }
-                }}
-              />
+                     {/* Safety Score */}
+           <Grid item xs={12} md={6}>
+             <Card 
+               sx={{ 
+                 height: { xs: 'auto', md: 200 },
+                 mb: { xs: 2, md: 0 },
+                 bgcolor: '#FFFFFF',
+                 border: '1px solid rgba(44, 62, 80, 0.1)',
+                 boxShadow: '0 4px 12px rgba(44, 62, 80, 0.1)'
+               }}
+             >
+               <CardHeader
+                 title="Safety Score"
+                 titleTypographyProps={{ 
+                   variant: 'h6', 
+                   color: '#2C3E50',
+                   fontSize: { xs: '1rem', md: '1.125rem' }
+                 }}
+               />
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <CheckCircle sx={{ color: theme.palette.success.main, mr: 1 }} />
@@ -171,17 +171,17 @@ const DashboardPage = () => {
             </Card>
           </Grid>
 
-          {/* Active Members */}
-          <Grid item xs={12} md={4}>
-            <Card 
-              sx={{ 
-                height: { xs: 'auto', md: 150 },
-                mb: { xs: 2, md: 0 },
-                bgcolor: '#fdfdfd',
-                border: '1px solid rgba(11, 6, 31, 0.1)',
-                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
-              }}
-            >
+                     {/* Active Members */}
+           <Grid item xs={12} md={4}>
+             <Card 
+               sx={{ 
+                 height: { xs: 'auto', md: 150 },
+                 mb: { xs: 2, md: 0 },
+                 bgcolor: '#FFFFFF',
+                 border: '1px solid rgba(44, 62, 80, 0.1)',
+                 boxShadow: '0 4px 12px rgba(44, 62, 80, 0.1)'
+               }}
+             >
               <CardContent sx={{ textAlign: 'center' }}>
                 <People sx={{ fontSize: 40, color: theme.palette.primary.main, mb: 1 }} />
                 <Typography variant="h4" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', mb: 1 }}>
@@ -194,17 +194,17 @@ const DashboardPage = () => {
             </Card>
           </Grid>
 
-          {/* Neighborhood Status */}
-          <Grid item xs={12} md={4}>
-            <Card 
-              sx={{ 
-                height: { xs: 'auto', md: 150 },
-                mb: { xs: 2, md: 0 },
-                bgcolor: '#fdfdfd',
-                border: '1px solid rgba(11, 6, 31, 0.1)',
-                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
-              }}
-            >
+                     {/* Neighborhood Status */}
+           <Grid item xs={12} md={4}>
+             <Card 
+               sx={{ 
+                 height: { xs: 'auto', md: 150 },
+                 mb: { xs: 2, md: 0 },
+                 bgcolor: '#FFFFFF',
+                 border: '1px solid rgba(44, 62, 80, 0.1)',
+                 boxShadow: '0 4px 12px rgba(44, 62, 80, 0.1)'
+               }}
+             >
               <CardContent sx={{ textAlign: 'center' }}>
                 <LocationOn sx={{ fontSize: 40, color: theme.palette.success.main, mb: 1 }} />
                 <Typography variant="h6" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', mb: 1 }}>
@@ -220,17 +220,17 @@ const DashboardPage = () => {
             </Card>
           </Grid>
 
-          {/* Quick Actions */}
-          <Grid item xs={12} md={4}>
-            <Card 
-              sx={{ 
-                height: { xs: 'auto', md: 150 },
-                mb: { xs: 2, md: 0 },
-                bgcolor: '#fdfdfd',
-                border: '1px solid rgba(11, 6, 31, 0.1)',
-                boxShadow: '0 4px 12px rgba(11, 6, 31, 0.1)'
-              }}
-            >
+                     {/* Quick Actions */}
+           <Grid item xs={12} md={4}>
+             <Card 
+               sx={{ 
+                 height: { xs: 'auto', md: 150 },
+                 mb: { xs: 2, md: 0 },
+                 bgcolor: '#FFFFFF',
+                 border: '1px solid rgba(44, 62, 80, 0.1)',
+                 boxShadow: '0 4px 12px rgba(44, 62, 80, 0.1)'
+               }}
+             >
               <CardContent sx={{ textAlign: 'center' }}>
                 <Security sx={{ fontSize: 40, color: theme.palette.warning.main, mb: 1 }} />
                 <Typography variant="h6" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', mb: 1 }}>
