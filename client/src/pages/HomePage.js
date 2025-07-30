@@ -179,36 +179,36 @@ const HomePage = () => {
       </AppBar>
 
       {/* Hero Section */}
-      <Box
-        sx={{
-          background: theme.palette.mode === 'dark' 
-            ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
-            : 'linear-gradient(135deg, #F5F7FA 0%, #E8ECF1 100%)',
-          color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
-          py: { xs: 8, md: 16 },
-          pt: { xs: 20, md: 20 },
-          px: { xs: 2, sm: 4, md: 0 },
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        {/* Background Pattern */}
-        <Box
+              <Box
           sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
             background: theme.palette.mode === 'dark'
-              ? 'radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)'
-              : 'radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.05) 0%, transparent 50%)',
-            zIndex: 1
+              ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
+              : 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)',
+            color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+            py: { xs: 8, md: 16 },
+            pt: { xs: 20, md: 20 },
+            px: { xs: 2, sm: 4, md: 0 },
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center'
           }}
-        />
+        >
+          {/* Background Pattern */}
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: theme.palette.mode === 'dark'
+                ? 'radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)'
+                : 'radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 50%)',
+              zIndex: 1
+            }}
+          />
         
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <Grid container spacing={6} alignItems="center">
@@ -223,17 +223,17 @@ const HomePage = () => {
                     fontSize: { xs: '2.5rem', sm: '3rem', md: '4rem' },
                     lineHeight: { xs: 1.2, md: 1.1 },
                     textAlign: { xs: 'center', md: 'left' },
-                    background: theme.palette.mode === 'dark'
-                      ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
-                      : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  Stay Safe, Stay Informed
-                </Typography>
+                                             background: theme.palette.mode === 'dark'
+                           ? 'linear-gradient(135deg, #F1F5F9 0%, #3B82F6 100%)'
+                           : 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
+                         backgroundClip: 'text',
+                         WebkitBackgroundClip: 'text',
+                         WebkitTextFillColor: 'transparent',
+                         letterSpacing: '-0.02em'
+                       }}
+                     >
+                       Stay Safe, Stay Informed
+                     </Typography>
                 <Typography
                   variant="h4"
                   sx={{
@@ -249,49 +249,49 @@ const HomePage = () => {
                   Join thousands of community members who trust our real-time safety alert system to keep their neighborhoods secure.
                 </Typography>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={handleGetStarted}
-                    sx={{
-                      bgcolor: '#00BFA6',
-                      color: 'white',
-                      px: 6,
-                      py: 2,
-                      fontSize: '1.1rem',
-                      fontWeight: 600,
-                      borderRadius: '16px',
-                      boxShadow: '0 8px 32px rgba(0, 191, 166, 0.3)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        bgcolor: '#00A896',
-                        transform: 'translateY(-2px)',
-                        boxShadow: '0 12px 40px rgba(0, 191, 166, 0.4)'
-                      },
-                      width: { xs: '100%', sm: 'auto' }
-                    }}
-                  >
-                    Get Started
-                    <ArrowForward sx={{ ml: 1, transition: 'transform 0.3s ease' }} />
-                  </Button>
+                                           <Button
+                           variant="contained"
+                           size="large"
+                           onClick={handleGetStarted}
+                           sx={{
+                             bgcolor: '#1E3A8A',
+                             color: 'white',
+                             px: 6,
+                             py: 2,
+                             fontSize: '1.1rem',
+                             fontWeight: 600,
+                             borderRadius: '8px',
+                             boxShadow: '0 8px 32px rgba(30, 58, 138, 0.3)',
+                             transition: 'all 0.3s ease',
+                             '&:hover': {
+                               bgcolor: '#1E40AF',
+                               transform: 'translateY(-2px)',
+                               boxShadow: '0 12px 40px rgba(30, 58, 138, 0.4)'
+                             },
+                             width: { xs: '100%', sm: 'auto' }
+                           }}
+                         >
+                           Get Started
+                           <ArrowForward sx={{ ml: 1, transition: 'transform 0.3s ease' }} />
+                         </Button>
                   <Button
                     variant="outlined"
                     size="large"
                     onClick={() => navigate('/login')}
                     sx={{
-                      borderColor: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
-                      color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                      borderColor: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+                      color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
                       px: 6,
                       py: 2,
                       fontSize: '1.1rem',
                       fontWeight: 600,
-                      borderRadius: '16px',
+                      borderRadius: '8px',
                       borderWidth: '2px',
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        borderColor: theme.palette.mode === 'dark' ? '#00BFA6' : '#00BFA6',
-                        color: theme.palette.mode === 'dark' ? '#00BFA6' : '#00BFA6',
-                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(0, 191, 166, 0.1)' : 'rgba(0, 191, 166, 0.05)',
+                        borderColor: theme.palette.mode === 'dark' ? '#3B82F6' : '#1E3A8A',
+                        color: theme.palette.mode === 'dark' ? '#3B82F6' : '#1E3A8A',
+                        bgcolor: theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(30, 58, 138, 0.05)',
                         transform: 'translateY(-2px)'
                       },
                       width: { xs: '100%', sm: 'auto' },

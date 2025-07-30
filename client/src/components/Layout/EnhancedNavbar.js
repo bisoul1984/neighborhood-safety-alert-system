@@ -324,12 +324,12 @@ const EnhancedNavbar = ({ children }) => {
       width: 280, 
       height: '100%', 
       background: theme.palette.mode === 'dark' 
-        ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)' 
-        : 'linear-gradient(135deg, #F5F7FA 0%, #E8ECF1 100%)', 
-      color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D', 
+        ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' 
+        : 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)', 
+      color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A', 
       display: 'flex', 
       flexDirection: 'column',
-      borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`
+      borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`
     }}>
 
 
@@ -642,13 +642,14 @@ const EnhancedNavbar = ({ children }) => {
         sx={{ 
           zIndex: theme.zIndex.drawer + 1,
           background: theme.palette.mode === 'dark' 
-            ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
-            : 'linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%)',
+            ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
+            : 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
           backdropFilter: 'blur(20px)',
-          borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+          borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
           boxShadow: theme.palette.mode === 'dark' 
-            ? '0 4px 20px rgba(0,0,0,0.3)' 
-            : '0 4px 20px rgba(0,0,0,0.08)'
+            ? '0 4px 20px rgba(0,0,0,0.4)' 
+            : '0 4px 20px rgba(0,0,0,0.08)',
+          borderRadius: 0
         }}
       >
         <Toolbar>
@@ -679,12 +680,12 @@ const EnhancedNavbar = ({ children }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                color: theme.palette.mode === 'dark' ? 'white' : '#2D2D2D',
+                color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
                 cursor: 'pointer',
                 letterSpacing: 1,
                 background: theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #FFFFFF 0%, #00BFA6 100%)'
-                  : 'linear-gradient(135deg, #2D2D2D 0%, #00BFA6 100%)',
+                  ? 'linear-gradient(135deg, #F1F5F9 0%, #3B82F6 100%)'
+                  : 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -707,12 +708,12 @@ const EnhancedNavbar = ({ children }) => {
               alignItems: 'center',
               width: { xs: '200px', sm: '300px' },
               mr: 2,
-              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
+              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.10)' : 'rgba(71, 85, 105, 0.05)',
               boxShadow: 'none',
-              borderRadius: 12,
-              border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+              borderRadius: 8,
+              border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
               '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.15)' : 'rgba(71, 85, 105, 0.08)',
                 borderColor: theme.palette.primary.main,
               },
             }}

@@ -27,46 +27,46 @@ export const ThemeProvider = ({ children }) => {
     setDarkMode(prev => !prev);
   };
 
-  // Create theme based on dark mode preference with modern color palette
+  // Create theme based on dark mode preference with professional dark blue/black color palette
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#00BFA6', // Modern teal accent
-        light: '#00D4B8',
-        dark: '#00A896',
+        main: '#1E3A8A', // Professional dark blue
+        light: '#3B82F6',
+        dark: '#1E40AF',
         contrastText: '#FFFFFF',
       },
       secondary: {
-        main: '#FF6B6B', // Modern coral accent
-        light: '#FF8585',
-        dark: '#E55A5A',
+        main: '#DC2626', // Professional red
+        light: '#EF4444',
+        dark: '#B91C1C',
         contrastText: '#FFFFFF',
       },
       error: {
-        main: '#FF6B6B',
-        light: '#FF8585',
-        dark: '#E55A5A',
+        main: '#DC2626',
+        light: '#EF4444',
+        dark: '#B91C1C',
       },
       warning: {
-        main: '#FFB74D',
-        light: '#FFC97D',
-        dark: '#F57C00',
+        main: '#F59E0B',
+        light: '#FBBF24',
+        dark: '#D97706',
       },
       success: {
-        main: '#00BFA6',
-        light: '#00D4B8',
-        dark: '#00A896',
+        main: '#059669',
+        light: '#10B981',
+        dark: '#047857',
       },
       background: {
-        default: darkMode ? '#1E1E1E' : '#F5F7FA',
-        paper: darkMode ? '#2D2D2D' : '#FFFFFF',
+        default: darkMode ? '#0F172A' : '#F8FAFC', // Dark blue/black for dark mode
+        paper: darkMode ? '#1E293B' : '#FFFFFF',
       },
       text: {
-        primary: darkMode ? '#FFFFFF' : '#2D2D2D',
-        secondary: darkMode ? '#B0BEC5' : '#6B7280',
+        primary: darkMode ? '#F1F5F9' : '#0F172A',
+        secondary: darkMode ? '#94A3B8' : '#475569',
       },
-      divider: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+      divider: darkMode ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)',
     },
     typography: {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -100,7 +100,7 @@ export const ThemeProvider = ({ children }) => {
       },
     },
     shape: {
-      borderRadius: 12,
+      borderRadius: 8, // Reduced from 12 to 8 for more professional look
     },
     components: {
       MuiButton: {
@@ -108,20 +108,20 @@ export const ThemeProvider = ({ children }) => {
           root: {
             textTransform: 'none',
             fontWeight: 600,
-            borderRadius: 12,
+            borderRadius: 8,
             padding: '12px 24px',
-            boxShadow: '0 4px 12px rgba(0, 191, 166, 0.2)',
+            boxShadow: '0 4px 12px rgba(30, 58, 138, 0.2)',
             transition: 'all 0.3s ease',
             '&:hover': {
               transform: 'translateY(-1px)',
-              boxShadow: '0 6px 20px rgba(0, 191, 166, 0.3)',
+              boxShadow: '0 6px 20px rgba(30, 58, 138, 0.3)',
             },
           },
           contained: {
             '&.MuiButton-containedPrimary': {
-              background: 'linear-gradient(135deg, #00BFA6 0%, #00D4B8 100%)',
+              background: 'linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%)',
               '&:hover': {
-                background: 'linear-gradient(135deg, #00A896 0%, #00BFA6 100%)',
+                background: 'linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%)',
               },
             },
           },
@@ -130,16 +130,16 @@ export const ThemeProvider = ({ children }) => {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 16,
+            borderRadius: 12,
             boxShadow: darkMode 
-              ? '0 8px 32px rgba(0,0,0,0.3)' 
+              ? '0 8px 32px rgba(0,0,0,0.4)' 
               : '0 8px 32px rgba(0,0,0,0.08)',
-            border: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+            border: `1px solid ${darkMode ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
             transition: 'all 0.3s ease',
             '&:hover': {
               transform: 'translateY(-2px)',
               boxShadow: darkMode 
-                ? '0 12px 40px rgba(0,0,0,0.4)' 
+                ? '0 12px 40px rgba(0,0,0,0.5)' 
                 : '0 12px 40px rgba(0,0,0,0.12)',
             },
           },
@@ -149,22 +149,23 @@ export const ThemeProvider = ({ children }) => {
         styleOverrides: {
           root: {
             background: darkMode 
-              ? 'linear-gradient(135deg, #1E1E1E 0%, #2D2D2D 100%)'
-              : 'linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%)',
+              ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
+              : 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
             backdropFilter: 'blur(20px)',
-            borderBottom: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+            borderBottom: `1px solid ${darkMode ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
             boxShadow: darkMode 
-              ? '0 4px 20px rgba(0,0,0,0.3)' 
+              ? '0 4px 20px rgba(0,0,0,0.4)' 
               : '0 4px 20px rgba(0,0,0,0.08)',
+            borderRadius: 0, // Remove rounded corners from navbar
           },
         },
       },
       MuiPaper: {
         styleOverrides: {
           root: {
-            borderRadius: 12,
+            borderRadius: 8,
             boxShadow: darkMode 
-              ? '0 4px 16px rgba(0,0,0,0.2)' 
+              ? '0 4px 16px rgba(0,0,0,0.3)' 
               : '0 4px 16px rgba(0,0,0,0.06)',
           },
         },
@@ -173,15 +174,15 @@ export const ThemeProvider = ({ children }) => {
         styleOverrides: {
           root: {
             '& .MuiOutlinedInput-root': {
-              borderRadius: 12,
+              borderRadius: 8,
               '& fieldset': {
-                borderColor: darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)',
+                borderColor: darkMode ? 'rgba(148, 163, 184, 0.3)' : 'rgba(71, 85, 105, 0.2)',
               },
               '&:hover fieldset': {
-                borderColor: '#00BFA6',
+                borderColor: '#1E3A8A',
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#00BFA6',
+                borderColor: '#1E3A8A',
               },
             },
           },
@@ -190,7 +191,7 @@ export const ThemeProvider = ({ children }) => {
       MuiChip: {
         styleOverrides: {
           root: {
-            borderRadius: 8,
+            borderRadius: 6,
             fontWeight: 500,
           },
         },
