@@ -649,20 +649,20 @@ const EnhancedNavbar = ({ children }) => {
          }}
        >
         <Toolbar>
-                     <IconButton
-             color="inherit"
-             edge="start"
-             onClick={handleDrawerToggle}
-             sx={{ 
-               mr: 2, 
-               display: { md: 'none' }, 
-               background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
-               color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
-               '&:hover': {
-                 background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
-               }
-             }}
-           >
+                                 <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ 
+                mr: 2, 
+                display: { md: 'none' }, 
+                background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+                color: 'white',
+                '&:hover': {
+                  background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
+                }
+              }}
+            >
             <MenuIcon />
           </IconButton>
 
@@ -710,7 +710,7 @@ const EnhancedNavbar = ({ children }) => {
             }}
           >
             <SearchIconWrapper>
-              <Search sx={{ color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50' }} />
+              <Search sx={{ color: 'white' }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search incidents, locations..."
@@ -718,16 +718,16 @@ const EnhancedNavbar = ({ children }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               inputProps={{ 'aria-label': 'search' }}
               sx={{ 
-                color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
+                color: 'white',
                 '& .MuiInputBase-input::placeholder': {
-                  color: theme.palette.mode === 'dark' ? 'rgba(236, 240, 241, 0.7)' : 'rgba(44, 62, 80, 0.7)',
+                  color: 'rgba(255, 255, 255, 0.7)',
                   opacity: 1
                 }
               }}
             />
             <IconButton 
               type="submit" 
-              sx={{ p: '10px', color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50' }}
+              sx={{ p: '10px', color: 'white' }}
               aria-label="search"
             >
               <Search />
@@ -743,7 +743,7 @@ const EnhancedNavbar = ({ children }) => {
                 display: { xs: 'flex', sm: 'none' },
                 mr: 1,
                 backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
-                color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
+                color: 'white',
                 '&:hover': {
                   backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                 }
@@ -762,7 +762,7 @@ const EnhancedNavbar = ({ children }) => {
                 sx={{ 
                   ml: 1,
                   backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
-                  color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
+                  color: 'white',
                   '&:hover': {
                     backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                   }
@@ -780,7 +780,7 @@ const EnhancedNavbar = ({ children }) => {
                   onClick={handleNotificationOpen}
                   sx={{ 
                     backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
-                    color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
+                    color: 'white',
                     '&:hover': {
                       backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                     }
@@ -802,7 +802,7 @@ const EnhancedNavbar = ({ children }) => {
                   sx={{ 
                     ml: 1,
                     backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.10)' : 'rgba(0, 0, 0, 0.05)',
-                    color: theme.palette.mode === 'dark' ? '#ECF0F1' : '#2C3E50',
+                    color: 'white',
                     '&:hover': {
                       backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.20)' : 'rgba(0, 0, 0, 0.08)',
                     }
