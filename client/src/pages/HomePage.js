@@ -754,14 +754,14 @@ const HomePage = () => {
                 mb: 1,
                 color: '#ECF0F1'
               }}>
-                Email: support@neighborhoodsafety.com
+                Email: fikertetadesse1403@gmail.com
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8, 
                 mb: 1,
                 color: '#ECF0F1'
               }}>
-                Phone: (555) 123-4567
+                Phone: +251967044111
               </Typography>
               <Typography variant="body2" sx={{ 
                 opacity: 0.8,
