@@ -324,8 +324,8 @@ const EnhancedNavbar = ({ children }) => {
       width: 280, 
       height: '100%', 
       background: theme.palette.mode === 'dark' 
-        ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' 
-        : 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)', 
+        ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)' 
+        : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)', 
       color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A', 
       display: 'flex', 
       flexDirection: 'column',
@@ -636,22 +636,22 @@ const EnhancedNavbar = ({ children }) => {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* App Bar */}
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          zIndex: theme.zIndex.drawer + 1,
-          background: theme.palette.mode === 'dark' 
-            ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
-            : 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
-          backdropFilter: 'blur(20px)',
-          borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
-          boxShadow: theme.palette.mode === 'dark' 
-            ? '0 4px 20px rgba(0,0,0,0.4)' 
-            : '0 4px 20px rgba(0,0,0,0.08)',
-          borderRadius: 0
-        }}
-      >
+             {/* App Bar */}
+       <AppBar 
+         position="fixed" 
+         sx={{ 
+           zIndex: theme.zIndex.drawer + 1,
+           background: theme.palette.mode === 'dark' 
+             ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)'
+             : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)',
+           backdropFilter: 'blur(20px)',
+           borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
+           boxShadow: theme.palette.mode === 'dark' 
+             ? '0 4px 20px rgba(0,0,0,0.4)' 
+             : '0 4px 20px rgba(0,0,0,0.08)',
+           borderRadius: 0
+         }}
+       >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -818,25 +818,28 @@ const EnhancedNavbar = ({ children }) => {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer */}
-      <Drawer
-        variant={isMobile ? 'temporary' : 'permanent'}
-        open={isMobile ? drawerOpen : true}
-        onClose={handleDrawerToggle}
-        sx={{
-          width: 280,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: 280,
-            boxSizing: 'border-box',
-            top: 0,
-            height: '100%',
-            zIndex: theme.zIndex.drawer,
-            background: 'linear-gradient(90deg, #081f37 0%, #1a4a6b 100%)',
-            color: 'white',
-          },
-        }}
-      >
+             {/* Drawer */}
+       <Drawer
+         variant={isMobile ? 'temporary' : 'permanent'}
+         open={isMobile ? drawerOpen : true}
+         onClose={handleDrawerToggle}
+         sx={{
+           width: 280,
+           flexShrink: 0,
+           '& .MuiDrawer-paper': {
+             width: 280,
+             boxSizing: 'border-box',
+             top: 0,
+             height: '100%',
+             zIndex: theme.zIndex.drawer,
+             background: theme.palette.mode === 'dark' 
+               ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)'
+               : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)',
+             color: theme.palette.mode === 'dark' ? '#F1F5F9' : '#0F172A',
+             borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
+           },
+         }}
+       >
         <Toolbar /> {/* Spacer for AppBar */}
         {drawer}
       </Drawer>

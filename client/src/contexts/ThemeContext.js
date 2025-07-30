@@ -149,8 +149,8 @@ export const ThemeProvider = ({ children }) => {
         styleOverrides: {
           root: {
             background: darkMode 
-              ? 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)'
-              : 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
+              ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)'
+              : 'linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%)',
             backdropFilter: 'blur(20px)',
             borderBottom: `1px solid ${darkMode ? 'rgba(148, 163, 184, 0.2)' : 'rgba(71, 85, 105, 0.1)'}`,
             boxShadow: darkMode 
