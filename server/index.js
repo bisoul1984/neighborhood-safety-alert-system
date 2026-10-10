@@ -15,19 +15,23 @@ const safetyRoutes = require('./routes/safety');
 
 const app = express();
 const server = http.createServer(app);
+
+// Websites allowed to call this API. Extra ones can be added with the
+// CLIENT_URL environment variable (comma-separated) without changing code.
+const allowedOrigins = [
+  'https://bisrat-safety-alert.netlify.app',
+  'https://neighborhood-safety-alert-system-c8.vercel.app',
+  'https://neighborhood-safety-alert-system-c87h-pb68lqio5.vercel.app',
+  'http://localhost:3000',
+  ...(process.env.CLIENT_URL || '').split(',').map(s => s.trim()).filter(Boolean)
+];
+
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });
-
-// Minimal working CORS setup FIRST
-const allowedOrigins = [
-  'https://neighborhood-safety-alert-system-c8.vercel.app',
-  'https://neighborhood-safety-alert-system-c87h-pb68lqio5.vercel.app',
-  'http://localhost:3000'
-];
 
 const corsOptions = {
   origin: function(origin, callback) {
@@ -119,4 +123,4 @@ server.listen(PORT, () => {
   console.log(`📡 Socket.IO server ready for real-time connections`);
 });
 
-module.exports = { app, io }; 
+module.exports = { app, io };
